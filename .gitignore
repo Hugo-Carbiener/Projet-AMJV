@@ -2,13 +2,13 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Mm]emoryCaptures/
+/Projet-AMJV/[Ll]ibrary/
+/Projet-AMJV/[Tt]emp/
+/Projet-AMJV/[Oo]bj/
+/Projet-AMJV/[Bb]uild/
+/Projet-AMJV/[Bb]uilds/
+/Projet-AMJV/[Ll]ogs/
+/Projet-AMJV/[Mm]emoryCaptures/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -58,3 +58,47 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+/Projet-AMJV/Assets/Materials/Paintings/Bureau/sol.png
+/Projet-AMJV/Assets/Materials/Paintings/Bureau/sol.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Bureau/mur_bureau.png
+/Projet-AMJV/Assets/Materials/Paintings/Bureau/mur_bureau.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Bureau/mur_fenetre.png
+/Projet-AMJV/Assets/Materials/Paintings/Bureau/mur_fenetre.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Bureau/mur_porte.png
+/Projet-AMJV/Assets/Materials/Paintings/Bureau/mur_porte.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Backstage.meta
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Bureau_coulisse_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Bureau_coulisse_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Makeuptable_coulisse_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Makeuptable_coulisse_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Mannequin_coulisse_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Mannequin_coulisse_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/MurMakeup_coulisse_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/MurMakeup_coulisse_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Murbureau_coulisse_work.png
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Murbureau_coulisse_work.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Murreserve_coulisse_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Murreserve_coulisse_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Murrideau_coulisse_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Backstage/Murrideau_coulisse_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Suite.meta
+/Projet-AMJV/Assets/Materials/Paintings/Suite/Murbaignoire_suite_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Suite/Murbaignoire_suite_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Suite/Murcanapé_suite_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Suite/Murcanapé_suite_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Suite/Murlit_suite_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Suite/Murlit_suite_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Suite/Murporte_suite_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Suite/Murporte_suite_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Suite/baignoire_suite_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Suite/baignoire_suite_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Suite/canapé_suite_draft.png
+/Projet-AMJV/Assets/Materials/Paintings/Suite/canapé_suite_draft.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Suite/lit_suite_work.png
+/Projet-AMJV/Assets/Materials/Paintings/Suite/lit_suite_work.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Suite/séparation_2_suite_work.png
+/Projet-AMJV/Assets/Materials/Paintings/Suite/séparation_2_suite_work.png.meta
+/Projet-AMJV/Assets/Materials/Paintings/Suite/séparation_suite_work.png
+/Projet-AMJV/Assets/Materials/Paintings/Suite/séparation_suite_work.png.meta
+/Projet-AMJV/Output-Build.txt
+/tatus
