@@ -41,7 +41,7 @@ public class Knight : Character
     {
         castingSpell = true;
 
-        Debug.Log("Sec spell");
+        Debug.Log("Movement spell");
         castingSpell = false;
         OnCooldown[2] = true;
         yield return new WaitForSeconds(cooldowns[2]);
