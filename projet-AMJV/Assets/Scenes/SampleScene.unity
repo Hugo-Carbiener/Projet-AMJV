@@ -311,6 +311,7 @@ GameObject:
   - component: {fileID: 1355671649}
   - component: {fileID: 1355671648}
   - component: {fileID: 1355671647}
+  - component: {fileID: 1355671650}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -394,6 +395,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355671645}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &1355671650
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355671645}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2d201867e7b4ad7439c164d9881224a9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1460049062
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +426,7 @@ GameObject:
   - component: {fileID: 1460049065}
   - component: {fileID: 1460049064}
   - component: {fileID: 1460049063}
+  - component: {fileID: 1460049067}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -483,12 +504,31 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1460049062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.72, z: 0}
+  m_LocalPosition: {x: 0, y: -2.1, z: 0}
   m_LocalScale: {x: 20, y: 1, z: 20}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1460049067
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460049062}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 946be38a9d7cc9743975da61d967cf10, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2146392967
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,11 +606,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc7637087ff53444b205783022c8f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingSpeed: 1
-  runningSpeed: 2
-  speed: 0
-  facing: {x: 0, y: 0, z: 0}
-  rb: {fileID: 0}
 --- !u!114 &2146392972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,5 +618,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f35d85624bb2104a8e93057e7f5a411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 0
-  health: 0
