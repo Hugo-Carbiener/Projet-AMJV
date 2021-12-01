@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     private GameObject mainMenu;
     private GameObject characterSelect;
     private GameObject parametersMenu;
+    [SerializeField] Slider mainVolumeSlider;
+    [SerializeField] Slider musicVolumeSlider;
+    [SerializeField] Slider effectsVolumeSlider;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,4 +45,19 @@ public class MainMenu : MonoBehaviour
         parametersMenu.SetActive(false);
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Game is exiting");
+    }
+
+    public void SelectGeneralVolume()
+    {
+        AudioListener.volume = mainVolumeSlider.value;
+    }
+
+    public void SelectMusicVolume()
+    {
+
+    }
 }
