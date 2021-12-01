@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class SpellManager : MonoBehaviour
 {
-    
+    private Character character;
+
+    private void Start()
+    {
+        character = GetComponent<PlayerManager>().getCharacter();
+    }
     private void Update()
     {
         if(Input.GetMouseButtonDown(0))
         {
-            // MainSpell();
+            character.CastSpell("MainSpell", 0);
         }
         if (Input.GetMouseButtonDown(1))
         {
-            // SecondarySpell();
+            character.CastSpell("SecondarySpell", 1);
         }
         if (Input.GetKeyDown(KeyCode.Space))
-        { 
-            // MovementSpell();
+        {
+            character.CastSpell("MovementSpell", 2);
         }
     }
 }
