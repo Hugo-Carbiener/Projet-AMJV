@@ -58,7 +58,7 @@ public class ProjManager : MonoBehaviour
 
         if (tag == "Monster")
         {
-            / Testing if the rigidbody exist
+            // Testing if the rigidbody exist
             Rigidbody monsterRigidbody = collision.gameObject.GetComponent<Rigidbody>();
             if (!monsterRigidbody) return; // early return if null
 
