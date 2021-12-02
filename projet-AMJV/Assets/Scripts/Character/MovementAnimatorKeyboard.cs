@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class MovementAnimator : MonoBehaviour
+public class MovementAnimatorKeyboard : MonoBehaviour
 {
     [SerializeField]
     private Animator animator;
@@ -26,45 +26,45 @@ public class MovementAnimator : MonoBehaviour
         if (angle < 0.0f) angle += 360.0f;
         Debug.Log(angle);
         
-        if ((angle >= 337.5 && angle <= 360) || (angle < 22.5 && angle >= 0))
-        {
-            Xpos = 1;
-            Ypos = 0;
-        }
-        else if (angle >= 22.5 && angle < 67.5)
+        if (Input.GetKey(KeyCode.Z) && Input.GetKey(KeyCode.D))
         {
             Xpos = 1;
             Ypos = 1;
         }
-        else if (angle >= 67.5 && angle < 112.5)
+        else if (Input.GetKey(KeyCode.Z) && Input.GetKey(KeyCode.Q))
+        {
+            Xpos = -1;
+            Ypos = 1;
+        }
+        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+        {
+            Xpos = 1;
+            Ypos = -1;
+        }
+        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.Q))
+        {
+            Xpos = -1;
+            Ypos = -1;
+        }
+        else if (Input.GetKey(KeyCode.Z))
         {
             Xpos = 0;
             Ypos = 1;
         }
-        else if (angle >= 112.5 && angle < 157.5)
-        {
-            Xpos = -1;
-            Ypos = 1;
-        }
-        else if (angle >= 157.5 && angle < 202.5)
-        {
-            Xpos = -1;
-            Ypos = 0;
-        }
-        else if (angle >= 202.5 && angle < 247.5)
-        {
-            Xpos = -1;
-            Ypos = -1;
-        }
-        else if (angle >= 247.5 && angle < 292.5)
+        else if (Input.GetKey(KeyCode.S))
         {
             Xpos = 0;
             Ypos = -1;
         }
-        else if (angle >= 292.5 && angle < 337.5)
+        else if (Input.GetKey(KeyCode.D))
         {
             Xpos = 1;
-            Ypos = -1;
+            Ypos = 0;
+        }
+        else if (Input.GetKey(KeyCode.Q))
+        {
+            Xpos = -1;
+            Ypos = 0;
         }
 
         //Debug.Log("X: " + Xpos + " Y: " + Ypos);
