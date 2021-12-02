@@ -8,20 +8,22 @@ public class PlayerMovement : MonoBehaviour
     private float walkingSpeed;
     [SerializeField]
     private float runningSpeed;
+    [SerializeField]
+    private Animator anim;
     private float speed;
-    private Vector3 facing;
-
+    
     private Rigidbody rb;
 
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+        SetDefaultAnimation();
     }
 
     private void Update()
     {
         Vector3 vector = Vector3.zero;
-        
+
         // sprint
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -50,8 +52,26 @@ public class PlayerMovement : MonoBehaviour
             vector += Vector3.right;
         }
 
+        if (rb.velocity != Vector3.zero && speed == runningSpeed)
+        {
+            anim.SetBool("IsRunning", true);
+            anim.SetBool("IsWalking", false);
+        } else if (rb.velocity != Vector3.zero && speed == walkingSpeed)
+        {
+            anim.SetBool("IsRunning", false);
+            anim.SetBool("IsWalking", true);
+        }
+        else 
+        {
+            SetDefaultAnimation();
+        }
+
         rb.velocity = vector * speed;
-        facing = vector;
-        
+    }
+
+    public void SetDefaultAnimation()
+    {
+        anim.SetBool("IsRunning", false);
+        anim.SetBool("IsWalking", false);
     }
 }
