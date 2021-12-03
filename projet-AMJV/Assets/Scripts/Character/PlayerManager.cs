@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     private int health;
 
     public Character getCharacter() { return this.character; }
+    public Classes getClass() { return this.characterClass; }
 
     private void Start()
     {
