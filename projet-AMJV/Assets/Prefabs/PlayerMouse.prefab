@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f35d85624bb2104a8e93057e7f5a411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterClass: 0
+  characterClass: 1
 --- !u!114 &529151627198882199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,8 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc7637087ff53444b205783022c8f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingSpeed: 1
-  runningSpeed: 2
+  walkingSpeed: 10
+  runningSpeed: 20
   anim: {fileID: 3540879844088383679}
 --- !u!114 &6022964862784686821
 MonoBehaviour:
@@ -122,6 +122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3540879844088383679}
+  KnightController: {fileID: 9100000, guid: f95bac5317d28d548bb4e0b39ed6051d, type: 2}
+  MageController: {fileID: 9100000, guid: 69002d17a555c5b43b7fbaa2d05b195c, type: 2}
+  NinjaController: {fileID: 0}
 --- !u!95 &3540879844088383679
 Animator:
   serializedVersion: 3

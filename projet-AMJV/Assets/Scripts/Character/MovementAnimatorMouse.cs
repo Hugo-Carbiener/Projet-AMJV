@@ -7,9 +7,29 @@ public class MovementAnimatorMouse : MonoBehaviour
 {
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private RuntimeAnimatorController KnightController;
+    [SerializeField]
+    private RuntimeAnimatorController MageController;
+    [SerializeField]
+    private RuntimeAnimatorController NinjaController;
 
     private void Start()
     {
+        // Set class animator
+        Classes playerClass = GetComponent<PlayerManager>().getClass();
+        switch (playerClass)
+        {
+            case Classes.Knight:
+                animator.runtimeAnimatorController = KnightController;
+                break;
+            case Classes.Mage:
+                animator.runtimeAnimatorController = MageController;
+                break;
+            case Classes.Ninja:
+                animator.runtimeAnimatorController = NinjaController;
+                break;
+        }
         animator.SetFloat("MoveX", 0);
         animator.SetFloat("MoveY", -1);
     }
