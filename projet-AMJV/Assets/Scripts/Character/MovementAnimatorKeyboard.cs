@@ -14,6 +14,9 @@ public class MovementAnimatorKeyboard : MonoBehaviour
     [SerializeField]
     private RuntimeAnimatorController NinjaController;
 
+    private int Xpos;
+    private int Ypos;
+
     private void Start()
     {
         // Set class animator
@@ -38,9 +41,6 @@ public class MovementAnimatorKeyboard : MonoBehaviour
 
     public void SetOrientation()
     {
-        int Xpos = 0;
-        int Ypos = 0;
-
         //Convert the player to Screen coordinates
         Vector3 startingPos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         Vector3 offset = Input.mousePosition - startingPos;
