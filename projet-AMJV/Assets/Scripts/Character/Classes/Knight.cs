@@ -4,51 +4,50 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Knight : Character
 {
-    [SerializeField] GameObject SwordStrike;
-
     private Classes characterClass = Classes.Knight;
-    private int[] cooldowns = { 1, 5, 5 };
-    private int[] damages = { 5, 2, 3 };
-    private bool[] OnCooldown = { false, false, false };
-
-
     private int health = 50  ;
 
-    
+    [SerializeField]
+    private float knockbackIntensity;
+
+    private void Start()
+    {
+        cooldowns = new int[] {1, 5, 5};
+        OnCooldown = new bool[] { false, false, false };
+    }
+
     public IEnumerator MainSpell()
     {
-        base.castingSpell = true;
-        
+        StartCoroutine(StartSpellCooldown("MainSpell"));
         Debug.Log("Main spell");
-        castingSpell = false;
-        OnCooldown[0] = true;
-        yield return new WaitForSeconds(cooldowns[0]);
-        OnCooldown[0] = false;
+        yield return null;
     }
 
     public IEnumerator SecondarySpell()
     {
-        castingSpell = true;
-
+        StartCoroutine(StartSpellCooldown("SecondarySpell"));
         Debug.Log("Sec spell");
-        castingSpell = false;
-        OnCooldown[1] = true;
-        yield return new WaitForSeconds(cooldowns[1]);
-        OnCooldown[1] = false;
+        yield return null;
     }
 
     public IEnumerator MovementSpell()
     {
-        castingSpell = true;
-
+        StartCoroutine(StartSpellCooldown("MovementSpell"));
+        
         Debug.Log("Movement spell");
-        castingSpell = false;
-        OnCooldown[2] = true;
-        yield return new WaitForSeconds(cooldowns[2]);
-        OnCooldown[2] = false;
+        yield return null;
+    }
+
+    private void SwordStrike(Vector3 center, float radius)
+    {
+        Gizmos.DrawSphere(center, radius);
+
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        foreach (var hitCollider in hitColliders)
+        {
+            // hitCollider.GetComponent<Ennemy>().dealDamage(5);
+            hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - center) * knockbackIntensity);
+            Debug.Log("Hit " + hitCollider.gameObject.name);
+        }
     }
 }
-
-
-/*Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Instantiate(SwordStrike, );*/

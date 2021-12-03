@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    private int[] cooldowns;
-    private int[] damages;
-    private bool[] OnCooldown = { false, false, false };
-    public bool castingSpell = false;
-    public void CastSpell(string spell, int index)
+    protected int[] cooldowns;
+    protected bool[] OnCooldown;
+    protected bool castingSpell = false;
+
+    protected List<string> spells = new List<string>(){ "MainSpell", "SecondarySpell", "MovementSpell" };
+    public void CastSpell(string spell)
     {
+        int index = spells.IndexOf(spell);
+
         if (OnCooldown[index] || castingSpell)
         {
             Debug.Log("On cooldown of" + cooldowns[index]);
@@ -19,5 +22,22 @@ public class Character : MonoBehaviour
         {
             StartCoroutine(spell);
         }
+    }
+
+    protected IEnumerator StartSpellDuration(int duration)
+    {
+        castingSpell = true;
+        yield return new WaitForSeconds(duration);
+        castingSpell = false;
+    }
+
+    protected IEnumerator StartSpellCooldown(string spell)
+    {
+        int spellIndex = spells.IndexOf(spell);
+        Debug.Log("Start cooldown for spell " + spellIndex);
+        OnCooldown[spellIndex] = true;
+        Debug.Log("cooldown duration " + cooldowns[spellIndex]);
+        yield return new WaitForSeconds(cooldowns[spellIndex]);
+        OnCooldown[spellIndex] = false;
     }
 }

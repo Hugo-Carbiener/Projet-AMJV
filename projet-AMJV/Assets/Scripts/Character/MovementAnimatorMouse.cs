@@ -44,7 +44,7 @@ public class MovementAnimatorMouse : MonoBehaviour
         Vector3 offset = Input.mousePosition - startingPos;
         float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
         if (angle < 0.0f) angle += 360.0f;
-        Debug.Log(angle);
+        //Debug.Log(angle);
         
         if ((angle >= 337.5 && angle <= 360) || (angle < 22.5 && angle >= 0))
         {
