@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
     protected int[] cooldowns;
     protected bool[] OnCooldown;
     protected bool castingSpell = false;
+    protected Vector3 worldMousePos;
 
     protected List<string> spells = new List<string>(){ "MainSpell", "SecondarySpell", "MovementSpell" };
     public void CastSpell(string spell)
@@ -39,5 +40,16 @@ public class Character : MonoBehaviour
         Debug.Log("cooldown duration " + cooldowns[spellIndex]);
         yield return new WaitForSeconds(cooldowns[spellIndex]);
         OnCooldown[spellIndex] = false;
+    }
+
+    protected void GetMousePosition()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitData;
+
+        if (Physics.Raycast(ray, out hitData, 1000))
+        {
+            worldMousePos = hitData.point;
+        }
     }
 }

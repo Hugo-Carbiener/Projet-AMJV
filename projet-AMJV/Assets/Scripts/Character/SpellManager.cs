@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpellManager : MonoBehaviour
 {
     private Character character;
+    private Vector3 worldMousePos;
 
     private void Start()
     {
