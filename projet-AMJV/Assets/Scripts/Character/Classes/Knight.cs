@@ -21,15 +21,18 @@ public class Knight : Character
     private float temp2;
 
 
-    private void Start()
+    private void Awake()
     {
+        base.OnAwake();
         cooldowns = new int[] {1, 5, 5};
+        durations = new int[] { 0, 3, 0 };
         OnCooldown = new bool[] { false, false, false };
     }
 
     public IEnumerator MainSpell()
     {
-        StartCoroutine(StartSpellCooldown("MainSpell"));
+        //StartCoroutine(StartSpellCooldown("MainSpell"));
+        StartCoroutine(StartSpellDuration("MainSpell"));
         Debug.Log("Main spell");
        
 
@@ -39,8 +42,8 @@ public class Knight : Character
 
     public IEnumerator SecondarySpell()
     {
-        StartCoroutine(StartSpellCooldown("SecondarySpell"));
-        StartCoroutine(StartSpellDuration(3));
+        //StartCoroutine(StartSpellCooldown("SecondarySpell"));
+        StartCoroutine(StartSpellDuration("SecondarySpell"));
         Debug.Log("Sec spell");
         yield return null;
     }
@@ -48,7 +51,7 @@ public class Knight : Character
     public IEnumerator MovementSpell()
     {
         StartCoroutine(StartSpellCooldown("MovementSpell"));
-        
+        StartCoroutine(StartSpellDuration("MovementSpell"));
         Debug.Log("Movement spell");
         yield return null;
     }
@@ -66,9 +69,12 @@ public class Knight : Character
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
         foreach (var hitCollider in hitColliders)
         {
-            // hitCollider.GetComponent<Ennemy>().dealDamage(5);
-            hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - center) * knockbackIntensity);
-            Debug.Log("Hit " + hitCollider.gameObject.name);
+            if (hitCollider.gameObject.tag != "Player")
+            {
+                // hitCollider.GetComponent<Ennemy>().dealDamage(5);
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - center) * knockbackIntensity);
+                Debug.Log("Hit " + hitCollider.gameObject.name);
+            }
         }
     }
 }

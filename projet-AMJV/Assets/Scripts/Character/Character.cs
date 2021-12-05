@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    protected Animator animator;
     protected int[] cooldowns;
+    protected int[] durations;
     protected bool[] OnCooldown;
     protected bool castingSpell = false;
     protected Vector3 worldMousePos;
 
     protected List<string> spells = new List<string>(){ "MainSpell", "SecondarySpell", "MovementSpell" };
+
+    protected virtual void OnAwake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     public void CastSpell(string spell)
     {
         int index = spells.IndexOf(spell);
@@ -25,11 +33,13 @@ public class Character : MonoBehaviour
         }
     }
 
-    protected IEnumerator StartSpellDuration(int duration)
+    protected IEnumerator StartSpellDuration(string spell)
     {
+        animator.SetBool("Casting" + spell, true);
         castingSpell = true;
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(durations[spells.IndexOf(spell)]);
         castingSpell = false;
+        animator.SetBool("Casting" + spell, false);
     }
 
     protected IEnumerator StartSpellCooldown(string spell)
