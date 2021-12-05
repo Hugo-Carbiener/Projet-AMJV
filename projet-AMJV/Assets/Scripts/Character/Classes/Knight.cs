@@ -19,6 +19,8 @@ public class Knight : Character
     private float temp;
     [Header("Jump variables")]
     private float temp2;
+
+
     private void Start()
     {
         cooldowns = new int[] {1, 5, 5};
