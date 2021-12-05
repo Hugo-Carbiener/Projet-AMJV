@@ -16,7 +16,8 @@ public class Knight : Character
     private float attackRange = 0.5f;
 
     [Header("Whirlwind variables")]
-    private float temp;
+    [SerializeField]
+    private float whirlwindRadius = 1f;
     [Header("Jump variables")]
     private float temp2;
 
@@ -36,14 +37,15 @@ public class Knight : Character
         Debug.Log("Main spell");
        
 
-        SwordStrike(swordStrikeRadius, attackRange);
+        SwordStrike();
         yield return null;
     }
 
     public IEnumerator SecondarySpell()
     {
-        //StartCoroutine(StartSpellCooldown("SecondarySpell"));
+        StartCoroutine(StartSpellCooldown("SecondarySpell"));
         StartCoroutine(StartSpellDuration("SecondarySpell"));
+        InvokeRepeating("Whirlwind", 0, 0.5f);
         Debug.Log("Sec spell");
         yield return null;
     }
@@ -56,23 +58,37 @@ public class Knight : Character
         yield return null;
     }
 
-    private void SwordStrike(float radius, float range)
+    private void SwordStrike()
     {
         GetMousePosition();
         Vector3 center = worldMousePos;
         center.y = transform.position.y;
-        center = (center - transform.position).normalized * range;
+        center = (center - transform.position).normalized * attackRange;
         center = transform.position + center;
         Debug.Log(center);
         //Instantiate(testSphere, center, Quaternion.Euler(0, 0, 0));
 
-        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        Collider[] hitColliders = Physics.OverlapSphere(center, swordStrikeRadius);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.gameObject.tag != "Player")
             {
                 // hitCollider.GetComponent<Ennemy>().dealDamage(5);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - center) * knockbackIntensity);
+                Debug.Log("Hit " + hitCollider.gameObject.name);
+            }
+        }
+    }
+
+    private void Whirlwind()
+    {   
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, whirlwindRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.tag != "Player")
+            {
+                // hitCollider.GetComponent<Ennemy>().dealDamage(1);
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackIntensity);
                 Debug.Log("Hit " + hitCollider.gameObject.name);
             }
         }

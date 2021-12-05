@@ -40,6 +40,13 @@ public class Character : MonoBehaviour
         yield return new WaitForSeconds(durations[spells.IndexOf(spell)]);
         castingSpell = false;
         animator.SetBool("Casting" + spell, false);
+        
+        // Need to cancel an invoke for the whirlwind
+        if (GetComponent<PlayerManager>().getClass() == Classes.Knight)
+        {
+            CancelInvoke();
+        }
+        
     }
 
     protected IEnumerator StartSpellCooldown(string spell)
