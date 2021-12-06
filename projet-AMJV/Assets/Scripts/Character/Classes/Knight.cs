@@ -19,7 +19,10 @@ public class Knight : Character
     [SerializeField]
     private float whirlwindRadius = 1f;
     [Header("Jump variables")]
-    private float temp2;
+    [SerializeField]
+    private float verticalForce;
+    [SerializeField]
+    private float horizontalForce;
 
 
     private void Awake()
