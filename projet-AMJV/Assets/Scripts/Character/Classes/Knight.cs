@@ -93,4 +93,9 @@ public class Knight : Character
             }
         }
     }
+
+    private void Jump()
+    {
+
+    }
 }

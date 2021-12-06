@@ -21,7 +21,6 @@ public class MovementAnimatorMouse : MonoBehaviour
         switch (playerClass)
         {
             case Classes.Knight:
-                Debug.Log("Found knight");
                 animator.runtimeAnimatorController = KnightController;
                 break;
             case Classes.Mage:
@@ -40,12 +39,8 @@ public class MovementAnimatorMouse : MonoBehaviour
         int Xpos = 0;
         int Ypos = 0;
 
-        //Convert the player to Screen coordinates
-        Vector3 startingPos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-        Vector3 offset = Input.mousePosition - startingPos;
-        float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
-        if (angle < 0.0f) angle += 360.0f;
-        //Debug.Log(angle);
+        float angle = GetComponentInParent<MouseAngle>().getMouseAngle();
+        Debug.Log(angle);
         
         if ((angle >= 337.5 && angle <= 360) || (angle < 22.5 && angle >= 0))
         {
