@@ -14,13 +14,14 @@ public class MovementAnimatorMouse : MonoBehaviour
     [SerializeField]
     private RuntimeAnimatorController NinjaController;
 
-    private void Start()
+    private void Awake()
     {
         // Set class animator
-        Classes playerClass = GetComponent<PlayerManager>().getClass();
+        Classes playerClass = GetComponentInParent<PlayerManager>().getClass();
         switch (playerClass)
         {
             case Classes.Knight:
+                Debug.Log("Found knight");
                 animator.runtimeAnimatorController = KnightController;
                 break;
             case Classes.Mage:

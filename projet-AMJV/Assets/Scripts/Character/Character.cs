@@ -15,7 +15,7 @@ public class Character : MonoBehaviour
 
     protected virtual void OnAwake()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     public void CastSpell(string spell)

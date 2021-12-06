@@ -8,7 +8,6 @@ public class MovementManager : MonoBehaviour
     private float walkingSpeed;
     [SerializeField]
     private float runningSpeed;
-    [SerializeField]
     private Animator anim;
     private float speed;
     
@@ -16,6 +15,7 @@ public class MovementManager : MonoBehaviour
 
     private void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         rb = gameObject.GetComponent<Rigidbody>();
         SetDefaultAnimation();
     }
