@@ -5,6 +5,9 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     protected Animator animator;
+    protected MouseAngle MouseAngle;
+    protected Rigidbody rb;
+    
     protected int[] cooldowns;
     protected int[] durations;
     protected bool[] OnCooldown;
@@ -16,6 +19,8 @@ public class Character : MonoBehaviour
     protected virtual void OnAwake()
     {
         animator = GetComponentInChildren<Animator>();
+        MouseAngle = GetComponentInParent<MouseAngle>();
+        rb = GetComponent<Rigidbody>();
     }
 
     public void CastSpell(string spell)

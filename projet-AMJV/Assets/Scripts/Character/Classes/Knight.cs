@@ -5,7 +5,6 @@ using UnityEngine;
 public class Knight : Character
 {
     private Classes characterClass = Classes.Knight;
-    private Rigidbody rb;
     private int health = 50  ;
 
     [Header("Sword Strike variables")]
@@ -21,16 +20,17 @@ public class Knight : Character
     private float whirlwindRadius = 1f;
     [Header("Jump variables")]
     [SerializeField]
-    private float verticalForce;
+    private float verticalForce = 3;
     [SerializeField]
-    private float horizontalForce;
+    private float horizontalForce = 6;
+
+    
 
 
     private void Awake()
     {
         base.OnAwake();
-        rb = GetComponent<Rigidbody>();
-        cooldowns = new int[] {1, 5, 5};
+        cooldowns = new int[] {1, 5, 0};
         durations = new int[] { 0, 3, 0 };
         OnCooldown = new bool[] { false, false, false };
     }
@@ -60,6 +60,8 @@ public class Knight : Character
         StartCoroutine(StartSpellCooldown("MovementSpell"));
         StartCoroutine(StartSpellDuration("MovementSpell"));
         Debug.Log("Movement spell");
+
+        Jump();
         yield return null;
     }
 
@@ -70,8 +72,6 @@ public class Knight : Character
         center.y = transform.position.y;
         center = (center - transform.position).normalized * attackRange;
         center = transform.position + center;
-        Debug.Log(center);
-        //Instantiate(testSphere, center, Quaternion.Euler(0, 0, 0));
 
         Collider[] hitColliders = Physics.OverlapSphere(center, swordStrikeRadius);
         foreach (var hitCollider in hitColliders)
@@ -102,6 +102,8 @@ public class Knight : Character
     private void Jump()
     {
         rb.AddForce(verticalForce * Vector3.up, ForceMode.Impulse);
-        rb.AddForce(verticalForce * Vector3.up, ForceMode.Impulse);
+        float mouseAngle = MouseAngle.getMouseAngle() * Mathf.Deg2Rad;
+        Vector3 mousePos = new Vector3(Mathf.Cos(mouseAngle), 1, Mathf.Sin(mouseAngle));
+        rb.AddForce(horizontalForce * mousePos, ForceMode.Impulse);
     }
 }

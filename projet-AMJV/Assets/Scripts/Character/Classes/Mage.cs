@@ -5,7 +5,6 @@ using UnityEngine;
 public class Mage : Character
 {
     private Classes characterClass = Classes.Mage;
-    private Rigidbody rb;
     private int health = 0;
 
     [Header("Fireball variables")]
@@ -18,15 +17,14 @@ public class Mage : Character
     private void Awake()
     {
         base.OnAwake();
-        rb = GetComponent<Rigidbody>();
-        cooldowns = new int[] { 2, 1, 1 };
+        cooldowns = new int[] { 2, 10, 5 };
         durations = new int[] { 0, 0, 0 };
         OnCooldown = new bool[] { false, false, false };
     }
 
     public IEnumerator MainSpell()
     {
-        //StartCoroutine(StartSpellCooldown("MainSpell"));
+        StartCoroutine(StartSpellCooldown("MainSpell"));
         StartCoroutine(StartSpellDuration("MainSpell"));
         Debug.Log("Main spell");
 

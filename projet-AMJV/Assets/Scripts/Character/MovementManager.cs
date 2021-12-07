@@ -17,6 +17,7 @@ public class MovementManager : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = gameObject.GetComponent<Rigidbody>();
+        speed = walkingSpeed;
         SetDefaultAnimation();
     }
 
@@ -65,7 +66,7 @@ public class MovementManager : MonoBehaviour
         {
             SetDefaultAnimation();
         }
-
+        vector.y = rb.velocity.y / speed;
         rb.velocity = vector * speed;
     }
 
