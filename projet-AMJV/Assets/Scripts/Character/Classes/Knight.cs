@@ -5,6 +5,7 @@ using UnityEngine;
 public class Knight : Character
 {
     private Classes characterClass = Classes.Knight;
+    private Rigidbody rb;
     private int health = 50  ;
 
     [Header("Sword Strike variables")]
@@ -28,6 +29,7 @@ public class Knight : Character
     private void Awake()
     {
         base.OnAwake();
+        rb = GetComponent<Rigidbody>();
         cooldowns = new int[] {1, 5, 5};
         durations = new int[] { 0, 3, 0 };
         OnCooldown = new bool[] { false, false, false };
@@ -99,6 +101,7 @@ public class Knight : Character
 
     private void Jump()
     {
-
+        rb.AddForce(verticalForce * Vector3.up, ForceMode.Impulse);
+        rb.AddForce(verticalForce * Vector3.up, ForceMode.Impulse);
     }
 }

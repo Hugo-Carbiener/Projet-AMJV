@@ -14,6 +14,8 @@ public class MovementAnimatorMouse : MonoBehaviour
     [SerializeField]
     private RuntimeAnimatorController NinjaController;
 
+    private MouseAngle mouseAngle;
+
     private void Awake()
     {
         // Set class animator
@@ -30,6 +32,8 @@ public class MovementAnimatorMouse : MonoBehaviour
                 animator.runtimeAnimatorController = NinjaController;
                 break;
         }
+
+        mouseAngle = GetComponentInParent<MouseAngle>();
         animator.SetFloat("MoveX", 0);
         animator.SetFloat("MoveY", -1);
     }
@@ -39,8 +43,7 @@ public class MovementAnimatorMouse : MonoBehaviour
         int Xpos = 0;
         int Ypos = 0;
 
-        float angle = GetComponentInParent<MouseAngle>().getMouseAngle();
-        Debug.Log(angle);
+        float angle = mouseAngle.getMouseAngle();
         
         if ((angle >= 337.5 && angle <= 360) || (angle < 22.5 && angle >= 0))
         {

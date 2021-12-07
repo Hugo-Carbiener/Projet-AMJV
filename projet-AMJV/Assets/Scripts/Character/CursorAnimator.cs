@@ -12,7 +12,7 @@ public class CursorAnimator : MonoBehaviour
     private void Update()
     {
         float mouseAngle = GetComponentInParent<MouseAngle>().getMouseAngle() * Mathf.Deg2Rad;
-        cursorPos = new Vector3(radius * Mathf.Cos(mouseAngle),transform.position.y, radius * Mathf.Sin(mouseAngle));
+        cursorPos = transform.parent.transform.position + new Vector3(radius * Mathf.Cos(mouseAngle), 1, radius * Mathf.Sin(mouseAngle));
         transform.position = cursorPos;
     }
 }
