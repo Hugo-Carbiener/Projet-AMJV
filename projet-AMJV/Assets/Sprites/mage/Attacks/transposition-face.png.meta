@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 25fefc772b2fdd3458db18075927d17c
+guid: 7eda89813cdc9e648a298e870fbe81e7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6248500141186897543
-    second: fireball-right_0
+      213: 8971210373924430878
+    second: transposition-face_0
   - first:
-      213: 6434419713803555382
-    second: fireball-right_1
+      213: 3164662640008122005
+    second: transposition-face_1
   - first:
-      213: 618829720189714309
-    second: fireball-right_2
+      213: -5835010365467235917
+    second: transposition-face_2
   - first:
-      213: -3104455721849076177
-    second: fireball-right_3
+      213: -6198926771173452268
+    second: transposition-face_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -103,7 +103,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fireball-right_0
+      name: transposition-face_0
       rect:
         serializedVersion: 2
         x: 0
@@ -117,14 +117,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 979a3914a3ed849a0800000000000000
-      internalID: -6248500141186897543
+      spriteID: e14a017bd44208c70800000000000000
+      internalID: 8971210373924430878
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireball-right_1
+      name: transposition-face_1
       rect:
         serializedVersion: 2
         x: 32
@@ -138,14 +138,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 632180183a6ab4950800000000000000
-      internalID: 6434419713803555382
+      spriteID: 59e42ab67e32beb20800000000000000
+      internalID: 3164662640008122005
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireball-right_2
+      name: transposition-face_2
       rect:
         serializedVersion: 2
         x: 64
@@ -159,14 +159,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58fbc501a56869800800000000000000
-      internalID: 618829720189714309
+      spriteID: 3b96a91ecf0e50fa0800000000000000
+      internalID: -5835010365467235917
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireball-right_3
+      name: transposition-face_3
       rect:
         serializedVersion: 2
         x: 96
@@ -180,8 +180,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f26c14618f1cae4d0800000000000000
-      internalID: -3104455721849076177
+      spriteID: 4161c87e1fcf8f9a0800000000000000
+      internalID: -6198926771173452268
       vertices: []
       indices: 
       edges: []

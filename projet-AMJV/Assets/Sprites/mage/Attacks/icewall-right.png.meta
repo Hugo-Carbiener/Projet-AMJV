@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 25fefc772b2fdd3458db18075927d17c
+guid: 023198ade3d351440bc88e5909d6f9b9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6248500141186897543
-    second: fireball-right_0
+      213: -6388364983802321291
+    second: icewall-right_0
   - first:
-      213: 6434419713803555382
-    second: fireball-right_1
+      213: 2792823795971915222
+    second: icewall-right_1
   - first:
-      213: 618829720189714309
-    second: fireball-right_2
+      213: -896326060929667556
+    second: icewall-right_2
   - first:
-      213: -3104455721849076177
-    second: fireball-right_3
+      213: -5005430056641870197
+    second: icewall-right_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -103,7 +103,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fireball-right_0
+      name: icewall-right_0
       rect:
         serializedVersion: 2
         x: 0
@@ -117,14 +117,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 979a3914a3ed849a0800000000000000
-      internalID: -6248500141186897543
+      spriteID: 5762bece4e7f757a0800000000000000
+      internalID: -6388364983802321291
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireball-right_1
+      name: icewall-right_1
       rect:
         serializedVersion: 2
         x: 32
@@ -138,14 +138,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 632180183a6ab4950800000000000000
-      internalID: 6434419713803555382
+      spriteID: 6ddf927027a12c620800000000000000
+      internalID: 2792823795971915222
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireball-right_2
+      name: icewall-right_2
       rect:
         serializedVersion: 2
         x: 64
@@ -159,14 +159,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58fbc501a56869800800000000000000
-      internalID: 618829720189714309
+      spriteID: c1eac5f423c9f83f0800000000000000
+      internalID: -896326060929667556
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireball-right_3
+      name: icewall-right_3
       rect:
         serializedVersion: 2
         x: 96
@@ -180,8 +180,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f26c14618f1cae4d0800000000000000
-      internalID: -3104455721849076177
+      spriteID: b864cc522e3298ab0800000000000000
+      internalID: -5005430056641870197
       vertices: []
       indices: 
       edges: []
