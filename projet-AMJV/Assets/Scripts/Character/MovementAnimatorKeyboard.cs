@@ -40,14 +40,7 @@ public class MovementAnimatorKeyboard : MonoBehaviour
     }
 
     public void SetOrientation()
-    {
-        //Convert the player to Screen coordinates
-        Vector3 startingPos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-        Vector3 offset = Input.mousePosition - startingPos;
-        float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
-        if (angle < 0.0f) angle += 360.0f;
-        Debug.Log(angle);
-        
+    {   
         if (Input.GetKey(KeyCode.Z) && Input.GetKey(KeyCode.D))
         {
             Xpos = 1;

@@ -4,51 +4,106 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Knight : Character
 {
-    [SerializeField] GameObject SwordStrike;
-
     private Classes characterClass = Classes.Knight;
-    private int[] cooldowns = { 1, 5, 5 };
-    private int[] damages = { 5, 2, 3 };
-    private bool[] OnCooldown = { false, false, false };
-
-
     private int health = 50  ;
 
+    [Header("Sword Strike variables")]
+    [SerializeField]
+    private float knockbackIntensity = 100;
+    [SerializeField]
+    private float swordStrikeRadius = 0.5f;
+    [SerializeField]
+    private float attackRange = 0.5f;
+
+    [Header("Whirlwind variables")]
+    [SerializeField]
+    private float whirlwindRadius = 1f;
+    [Header("Jump variables")]
+    [SerializeField]
+    private float verticalForce = 3;
+    [SerializeField]
+    private float horizontalForce = 6;
+
     
+
+
+    private void Awake()
+    {
+        base.OnAwake();
+        cooldowns = new int[] {1, 5, 0};
+        durations = new int[] { 0, 3, 0 };
+        OnCooldown = new bool[] { false, false, false };
+    }
+
     public IEnumerator MainSpell()
     {
-        base.castingSpell = true;
-        
+        //StartCoroutine(StartSpellCooldown("MainSpell"));
+        StartCoroutine(StartSpellDuration("MainSpell"));
         Debug.Log("Main spell");
-        castingSpell = false;
-        OnCooldown[0] = true;
-        yield return new WaitForSeconds(cooldowns[0]);
-        OnCooldown[0] = false;
+       
+
+        SwordStrike();
+        yield return null;
     }
 
     public IEnumerator SecondarySpell()
     {
-        castingSpell = true;
-
+        StartCoroutine(StartSpellCooldown("SecondarySpell"));
+        StartCoroutine(StartSpellDuration("SecondarySpell"));
+        InvokeRepeating("Whirlwind", 0, 0.5f);
         Debug.Log("Sec spell");
-        castingSpell = false;
-        OnCooldown[1] = true;
-        yield return new WaitForSeconds(cooldowns[1]);
-        OnCooldown[1] = false;
+        yield return null;
     }
 
     public IEnumerator MovementSpell()
     {
-        castingSpell = true;
-
+        StartCoroutine(StartSpellCooldown("MovementSpell"));
+        StartCoroutine(StartSpellDuration("MovementSpell"));
         Debug.Log("Movement spell");
-        castingSpell = false;
-        OnCooldown[2] = true;
-        yield return new WaitForSeconds(cooldowns[2]);
-        OnCooldown[2] = false;
+
+        Jump();
+        yield return null;
+    }
+
+    private void SwordStrike()
+    {
+        GetMousePosition();
+        Vector3 center = worldMousePos;
+        center.y = transform.position.y;
+        center = (center - transform.position).normalized * attackRange;
+        center = transform.position + center;
+
+        Collider[] hitColliders = Physics.OverlapSphere(center, swordStrikeRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.tag != "Player")
+            {
+                // hitCollider.GetComponent<Ennemy>().dealDamage(5);
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - center) * knockbackIntensity);
+                Debug.Log("Hit " + hitCollider.gameObject.name);
+            }
+        }
+    }
+
+    private void Whirlwind()
+    {   
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, whirlwindRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.tag != "Player")
+            {
+                // hitCollider.GetComponent<Ennemy>().dealDamage(1);
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackIntensity);
+                Debug.Log("Hit " + hitCollider.gameObject.name);
+            }
+        }
+    }
+
+    private void Jump()
+    {
+        rb.AddForce(verticalForce * Vector3.up, ForceMode.Impulse);
+        float mouseAngle = MouseAngle.getMouseAngle() * Mathf.Deg2Rad;
+        Vector3 mousePos = new Vector3(Mathf.Cos(mouseAngle), 1, Mathf.Sin(mouseAngle));
+        rb.AddForce(horizontalForce * mousePos, ForceMode.Impulse);
     }
 }
-
-
-/*Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Instantiate(SwordStrike, );*/

@@ -26,5 +26,4 @@ public class PlayerManager : MonoBehaviour
             character = (Ninja) gameObject.AddComponent(typeof(Ninja));
         }
     }
-
 }

@@ -14,10 +14,12 @@ public class MovementAnimatorMouse : MonoBehaviour
     [SerializeField]
     private RuntimeAnimatorController NinjaController;
 
-    private void Start()
+    private MouseAngle mouseAngle;
+
+    private void Awake()
     {
         // Set class animator
-        Classes playerClass = GetComponent<PlayerManager>().getClass();
+        Classes playerClass = GetComponentInParent<PlayerManager>().getClass();
         switch (playerClass)
         {
             case Classes.Knight:
@@ -30,6 +32,8 @@ public class MovementAnimatorMouse : MonoBehaviour
                 animator.runtimeAnimatorController = NinjaController;
                 break;
         }
+
+        mouseAngle = GetComponentInParent<MouseAngle>();
         animator.SetFloat("MoveX", 0);
         animator.SetFloat("MoveY", -1);
     }
@@ -39,12 +43,7 @@ public class MovementAnimatorMouse : MonoBehaviour
         int Xpos = 0;
         int Ypos = 0;
 
-        //Convert the player to Screen coordinates
-        Vector3 startingPos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-        Vector3 offset = Input.mousePosition - startingPos;
-        float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
-        if (angle < 0.0f) angle += 360.0f;
-        Debug.Log(angle);
+        float angle = mouseAngle.getMouseAngle();
         
         if ((angle >= 337.5 && angle <= 360) || (angle < 22.5 && angle >= 0))
         {

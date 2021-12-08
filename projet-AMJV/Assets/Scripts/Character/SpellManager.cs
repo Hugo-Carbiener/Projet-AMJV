@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpellManager : MonoBehaviour
 {
     private Character character;
+    private Vector3 worldMousePos;
 
     private void Start()
     {
@@ -14,15 +15,15 @@ public class SpellManager : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            character.CastSpell("MainSpell", 0);
+            character.CastSpell("MainSpell");
         }
         if (Input.GetMouseButtonDown(1))
         {
-            character.CastSpell("SecondarySpell", 1);
+            character.CastSpell("SecondarySpell");
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            character.CastSpell("MovementSpell", 2);
+            character.CastSpell("MovementSpell");
         }
     }
 }
