@@ -7,7 +7,8 @@ public class Character : MonoBehaviour
     protected Animator animator;
     protected MouseAngle MouseAngle;
     protected Rigidbody rb;
-    
+
+    protected int initialHealth;
     protected int[] cooldowns;
     protected int[] durations;
     protected bool[] OnCooldown;
@@ -23,6 +24,8 @@ public class Character : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    public int getIntialHealth() { return initialHealth; }
+    
     public void CastSpell(string spell)
     {
         int index = spells.IndexOf(spell);

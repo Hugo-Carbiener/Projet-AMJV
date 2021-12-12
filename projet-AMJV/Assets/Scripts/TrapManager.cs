@@ -24,7 +24,7 @@ public class TrapManager : MonoBehaviour
         {
             if (trap == trapType.dammage)
             {
-                collision.gameObject.GetComponent<PlayerManager>().health = collision.gameObject.GetComponent<PlayerManager>().health - dammages;
+                //collision.gameObject.GetComponent<PlayerManager>().health = collision.gameObject.GetComponent<PlayerManager>().health - dammages;
             }
 
             if (trap == trapType.immobilisation)
@@ -49,7 +49,7 @@ public class TrapManager : MonoBehaviour
         {
             if (trap == trapType.dammage)
             {
-                collision.gameObject.GetComponent<MonsterManager>().health = collision.gameObject.GetComponent<MonsterManager>().health - dammages;
+                //collision.gameObject.GetComponent<MonsterManager>().health = collision.gameObject.GetComponent<MonsterManager>().health - dammages;
             }
 
             if (trap == trapType.immobilisation)

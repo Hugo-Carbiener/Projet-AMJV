@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Mage : Character
 {
-    private Classes characterClass = Classes.Mage;
-    private int health = 0;
-
     [Header("Fireball variables")]
     private float temp1;
     [Header("Icewall variables")]
@@ -17,6 +14,7 @@ public class Mage : Character
     private void Awake()
     {
         base.OnAwake();
+        initialHealth = 40;
         cooldowns = new int[] { 2, 10, 5 };
         durations = new int[] { 0, 0, 0 };
         OnCooldown = new bool[] { false, false, false };

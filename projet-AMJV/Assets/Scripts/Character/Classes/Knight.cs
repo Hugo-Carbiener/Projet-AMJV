@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Knight : Character
 {
-    private Classes characterClass = Classes.Knight;
-    private int health = 50  ;
-
     [Header("Sword Strike variables")]
     [SerializeField]
     private float knockbackIntensity = 100;
@@ -30,6 +27,7 @@ public class Knight : Character
     private void Awake()
     {
         base.OnAwake();
+        initialHealth = 50;
         cooldowns = new int[] {1, 5, 0};
         durations = new int[] { 0, 3, 0 };
         OnCooldown = new bool[] { false, false, false };
