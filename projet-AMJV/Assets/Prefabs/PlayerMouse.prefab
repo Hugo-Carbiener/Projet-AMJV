@@ -119,7 +119,7 @@ MonoBehaviour:
   animator: {fileID: 3787731094353973360}
   KnightController: {fileID: 9100000, guid: f95bac5317d28d548bb4e0b39ed6051d, type: 2}
   MageController: {fileID: 9100000, guid: 69002d17a555c5b43b7fbaa2d05b195c, type: 2}
-  NinjaController: {fileID: 0}
+  AssassinController: {fileID: 9100000, guid: f95bac5317d28d548bb4e0b39ed6051d, type: 2}
 --- !u!114 &5863526188842785008
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class MovementAnimatorKeyboard : MonoBehaviour
     [SerializeField]
     private RuntimeAnimatorController MageController;
     [SerializeField]
-    private RuntimeAnimatorController NinjaController;
+    private RuntimeAnimatorController AssassinController;
 
     private int Xpos;
     private int Ypos;
@@ -29,8 +29,8 @@ public class MovementAnimatorKeyboard : MonoBehaviour
             case Classes.Mage:
                 animator.runtimeAnimatorController = MageController;
                 break;
-            case Classes.Ninja:
-                animator.runtimeAnimatorController = NinjaController;
+            case Classes.Assassin:
+                animator.runtimeAnimatorController = AssassinController;
                 break;
         }
 

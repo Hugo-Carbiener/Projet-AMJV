@@ -6,5 +6,5 @@ public enum Classes
 {
     Knight,
     Mage, 
-    Ninja
+    Assassin
 }

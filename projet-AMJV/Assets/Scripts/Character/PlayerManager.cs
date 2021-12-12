@@ -21,9 +21,9 @@ public class PlayerManager : MonoBehaviour
         } else if (characterClass == Classes.Mage)
         {
             character = (Mage) gameObject.AddComponent(typeof(Mage));
-        } else if (characterClass == Classes.Ninja)
+        } else if (characterClass == Classes.Assassin)
         {
-            character = (Ninja) gameObject.AddComponent(typeof(Ninja));
+            character = (Assassin) gameObject.AddComponent(typeof(Assassin));
         }
     }
 }

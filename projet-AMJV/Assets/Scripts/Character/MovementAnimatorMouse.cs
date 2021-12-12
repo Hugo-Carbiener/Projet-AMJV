@@ -12,7 +12,7 @@ public class MovementAnimatorMouse : MonoBehaviour
     [SerializeField]
     private RuntimeAnimatorController MageController;
     [SerializeField]
-    private RuntimeAnimatorController NinjaController;
+    private RuntimeAnimatorController AssassinController;
 
     private MouseAngle mouseAngle;
 
@@ -28,8 +28,8 @@ public class MovementAnimatorMouse : MonoBehaviour
             case Classes.Mage:
                 animator.runtimeAnimatorController = MageController;
                 break;
-            case Classes.Ninja:
-                animator.runtimeAnimatorController = NinjaController;
+            case Classes.Assassin:
+                animator.runtimeAnimatorController = AssassinController;
                 break;
         }
 
