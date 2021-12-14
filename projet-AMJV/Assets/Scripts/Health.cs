@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
     private float hitIndicatorDuration = 0.2f;
 
     public event Action OnDeath;
+    public event Action OnHealthChange;
     public int getMaxHealth() { return maxHealth; }
 
     public int getHealth() { return health; }
@@ -22,8 +23,6 @@ public class Health : MonoBehaviour
     {
         if (!isInvulnerable)
         {
-            StartCoroutine("HitIndicator");
-
             if (health - dmg <= 0)
             {
                 health = 0;
@@ -33,6 +32,8 @@ public class Health : MonoBehaviour
             {
                 health -= dmg;
             }
+            StartCoroutine("HitIndicator");
+            OnHealthChange?.Invoke();
         }
     }
 

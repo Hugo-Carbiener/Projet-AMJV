@@ -31,8 +31,8 @@ public class SlimeBehavior : MonoBehaviour
     private int level = 4;
     public void setLevel(int lvl) { this.level = lvl; }
     public void setInitialHealth(int health) { this.initialHealth = health; }
-    
-    private void Start()
+
+    private void Awake()
     {
         if (!player) player = GameObject.FindWithTag("Player");
         if (!animator) animator = GetComponentInChildren<Animator>();
@@ -44,7 +44,10 @@ public class SlimeBehavior : MonoBehaviour
         healthManager.OnDeath += Death;
         healthManager.setHealth(initialHealth);
         healthManager.setMaxHealth(initialHealth);
+    }
 
+    private void Start()
+    {
         InvokeRepeating("Jump", 0, jumpCooldown);
     }
 
