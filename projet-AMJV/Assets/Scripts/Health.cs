@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
 {
     private int maxHealth;
     private int health;
+    private bool isInvulnerable = false;
     private float hitIndicatorDuration = 0.2f;
 
     public event Action OnDeath;
@@ -15,18 +16,23 @@ public class Health : MonoBehaviour
     public int getHealth() { return health; }
     public void setMaxHealth(int amount) { maxHealth = amount; }
     public void setHealth(int amount) { health = amount; }
+    public void SetInvulnerability(bool vuln) { isInvulnerable = vuln; }
+
     public void Damage(int dmg)
     {
-        StartCoroutine("HitIndicator");
+        if (!isInvulnerable)
+        {
+            StartCoroutine("HitIndicator");
 
-        if (health - dmg <= 0)
-        {
-            health = 0;
-            Death();
-        } 
-        else
-        {
-            health -= dmg;
+            if (health - dmg <= 0)
+            {
+                health = 0;
+                Death();
+            }
+            else
+            {
+                health -= dmg;
+            }
         }
     }
 

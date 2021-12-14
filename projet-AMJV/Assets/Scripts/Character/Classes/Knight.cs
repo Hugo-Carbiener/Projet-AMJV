@@ -6,15 +6,15 @@ public class Knight : Character
 {
     [Header("Sword Strike variables")]
     [SerializeField]
-    private float knockbackIntensity = 100;
+    private float knockbackIntensity = 500;
     [SerializeField]
-    private float swordStrikeRadius = 0.5f;
+    private float swordStrikeRadius = 1f;
     [SerializeField]
-    private float attackRange = 0.5f;
+    private float attackRange = 0.75f;
 
     [Header("Whirlwind variables")]
     [SerializeField]
-    private float whirlwindRadius = 1f;
+    private float whirlwindRadius = 2f;
     [Header("Jump variables")]
     [SerializeField]
     private float verticalForce = 3;
@@ -37,8 +37,6 @@ public class Knight : Character
     {
         StartCoroutine(StartSpellCooldown("MainSpell"));
         StartCoroutine(StartSpellDuration("MainSpell"));
-        Debug.Log("Main spell");
-       
 
         SwordStrike();
         yield return null;
@@ -48,8 +46,11 @@ public class Knight : Character
     {
         StartCoroutine(StartSpellCooldown("SecondarySpell"));
         StartCoroutine(StartSpellDuration("SecondarySpell"));
+
+        SpeedBoost(durations[spells.IndexOf("SecondarySpell")]);
+        Invulnerability(durations[spells.IndexOf("SecondarySpell")]);
         InvokeRepeating("Whirlwind", 0, 0.5f);
-        Debug.Log("Sec spell");
+
         yield return null;
     }
 
@@ -57,7 +58,6 @@ public class Knight : Character
     {
         StartCoroutine(StartSpellCooldown("MovementSpell"));
         StartCoroutine(StartSpellDuration("MovementSpell"));
-        Debug.Log("Movement spell");
 
         Jump();
         yield return null;
@@ -89,9 +89,9 @@ public class Knight : Character
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, whirlwindRadius);
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject.tag != "Player")
+            if (hitCollider.gameObject.tag == "Monster")
             {
-                // hitCollider.GetComponent<Ennemy>().dealDamage(1);
+                hitCollider.GetComponent<Health>().Damage(1);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackIntensity);
                 Debug.Log("Hit " + hitCollider.gameObject.name);
             }

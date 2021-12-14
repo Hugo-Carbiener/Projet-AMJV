@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour
     public Character getCharacter() { return this.character; }
     public Classes getClass() { return this.characterClass; }
 
-    private void Start()
+    private void Awake()
     {
         if (!healthManager) healthManager = GetComponent<Health>();
 

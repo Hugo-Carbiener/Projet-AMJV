@@ -8,6 +8,7 @@ public class MovementManager : MonoBehaviour
     private float walkingSpeed;
     [SerializeField]
     private float runningSpeed;
+    private Character character;
     private Animator anim;
     private float speed;
     
@@ -17,6 +18,7 @@ public class MovementManager : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = gameObject.GetComponent<Rigidbody>();
+        character = GetComponent<Character>();
         speed = walkingSpeed;
         SetDefaultAnimation();
     }
@@ -65,6 +67,11 @@ public class MovementManager : MonoBehaviour
         else 
         {
             SetDefaultAnimation();
+        }
+
+        if (character.IsSpeedBoosted())
+        {
+            speed *= 1.5f;
         }
         vector.y = rb.velocity.y / speed;
         rb.velocity = vector * speed;

@@ -7,11 +7,13 @@ public class Character : MonoBehaviour
     protected Animator animator;
     protected MouseAngle MouseAngle;
     protected Rigidbody rb;
+    protected Health healthManager;
 
     protected int initialHealth;
     protected int[] cooldowns;
     protected int[] durations;
     protected bool[] OnCooldown;
+    protected bool isSpeedBoosted;
     protected bool castingSpell = false;
     protected Vector3 worldMousePos;
 
@@ -25,6 +27,7 @@ public class Character : MonoBehaviour
     }
 
     public int getIntialHealth() { return initialHealth; }
+    public bool IsSpeedBoosted() { return isSpeedBoosted; }
     
     public void CastSpell(string spell)
     {
@@ -73,5 +76,19 @@ public class Character : MonoBehaviour
         {
             worldMousePos = hitData.point;
         }
+    }
+
+    protected IEnumerator SpeedBoost(float duration)
+    {
+        isSpeedBoosted = true;
+        yield return new WaitForSeconds(duration);
+        isSpeedBoosted = false;
+    }
+
+    protected IEnumerator Invulnerability(float duration)
+    {
+        healthManager.SetInvulnerability(true);
+        yield return new WaitForSeconds(duration);
+        healthManager.SetInvulnerability(false);
     }
 }
