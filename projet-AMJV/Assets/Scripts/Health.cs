@@ -7,16 +7,12 @@ public class Health : MonoBehaviour
 {
     private int maxHealth;
     private int health;
+    private float hitIndicatorDuration = 0.2f;
 
-    [SerializeField]
-    private float hitIndicatorDuration = 1;
-
-    private void Update()
-    {
-        Debug.Log(health);
-    }
-
+    public event Action OnDeath;
     public int getMaxHealth() { return maxHealth; }
+
+    public int getHealth() { return health; }
     public void setMaxHealth(int amount) { maxHealth = amount; }
     public void setHealth(int amount) { health = amount; }
     public void Damage(int dmg)
@@ -32,16 +28,13 @@ public class Health : MonoBehaviour
         {
             health -= dmg;
         }
-    
     }
 
     private IEnumerator HitIndicator()
     {
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
         Color baseColor = sr.color;
-        Color newColor = baseColor;
-        newColor.g = 0;
-        newColor.b = 0;
+        Color newColor = Color.red;
 
         sr.color = newColor;
         yield return new WaitForSeconds(hitIndicatorDuration);
@@ -50,6 +43,7 @@ public class Health : MonoBehaviour
 
     private void Death()
     {
+        OnDeath?.Invoke();
         Debug.Log("You are dead.");
     }
 }

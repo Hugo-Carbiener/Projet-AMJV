@@ -32,7 +32,6 @@ public class Character : MonoBehaviour
 
         if (OnCooldown[index] || castingSpell)
         {
-            Debug.Log("On cooldown of" + cooldowns[index]);
             return;
         }
         else
@@ -60,9 +59,7 @@ public class Character : MonoBehaviour
     protected IEnumerator StartSpellCooldown(string spell)
     {
         int spellIndex = spells.IndexOf(spell);
-        Debug.Log("Start cooldown for spell " + spellIndex);
         OnCooldown[spellIndex] = true;
-        Debug.Log("cooldown duration " + cooldowns[spellIndex]);
         yield return new WaitForSeconds(cooldowns[spellIndex]);
         OnCooldown[spellIndex] = false;
     }

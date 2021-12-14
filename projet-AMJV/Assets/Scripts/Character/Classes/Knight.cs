@@ -35,7 +35,7 @@ public class Knight : Character
 
     public IEnumerator MainSpell()
     {
-        //StartCoroutine(StartSpellCooldown("MainSpell"));
+        StartCoroutine(StartSpellCooldown("MainSpell"));
         StartCoroutine(StartSpellDuration("MainSpell"));
         Debug.Log("Main spell");
        
@@ -67,16 +67,17 @@ public class Knight : Character
     {
         GetMousePosition();
         Vector3 center = worldMousePos;
-        center.y = transform.position.y;
         center = (center - transform.position).normalized * attackRange;
         center = transform.position + center;
+        center.y = 1;
 
         Collider[] hitColliders = Physics.OverlapSphere(center, swordStrikeRadius);
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject.tag != "Player")
+            if (hitCollider.gameObject.tag == "Monster")
             {
-                // hitCollider.GetComponent<Ennemy>().dealDamage(5);
+                Debug.Log(hitCollider.name);
+                hitCollider.GetComponent<Health>().Damage(5);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - center) * knockbackIntensity);
                 Debug.Log("Hit " + hitCollider.gameObject.name);
             }
