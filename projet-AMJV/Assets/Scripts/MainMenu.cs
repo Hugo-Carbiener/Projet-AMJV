@@ -17,9 +17,11 @@ public class MainMenu : MonoBehaviour
     [SerializeField] TMPro.TMP_Dropdown resolutionDropdown;
     [SerializeField] TMPro.TMP_Dropdown qualityDropdown;
     [SerializeField] AudioMixer mixer;
-    string masterVolume = "MasterVolume";
-    string musicVolume = "MusicVolume";
-    string soundEffectsVolume = "SoundEffectsVolume";
+    private string masterVolume = "MasterVolume";
+    private string musicVolume = "MusicVolume";
+    private string soundEffectsVolume = "SoundEffectsVolume";
+    private string[] arenas = { "Arena", "Arena2", "Arena3" };
+    private int indexArena;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,19 +58,22 @@ public class MainMenu : MonoBehaviour
     public void ChooseAssassin()
     {
         PlayerPrefs.SetString("Character","Assassin");
-        SceneManager.LoadScene("Arena");
+        indexArena = Random.Range(0, 2);
+        SceneManager.LoadScene(arenas[indexArena]);
     }
 
     public void ChooseKnight()
     {
         PlayerPrefs.SetString("Character", "Knight");
-        SceneManager.LoadScene("Arena");
+        indexArena = Random.Range(0, 2);
+        SceneManager.LoadScene(arenas[indexArena]);
     }
 
     public void ChooseMage()
     {
         PlayerPrefs.SetString("Character", "Mage");
-        SceneManager.LoadScene("Arena");
+        indexArena = Random.Range(0, 2);
+        SceneManager.LoadScene(arenas[indexArena]);
     }
 
     public void GoToParameters()
