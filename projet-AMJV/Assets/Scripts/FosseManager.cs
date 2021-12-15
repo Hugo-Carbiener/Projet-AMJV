@@ -15,7 +15,7 @@ public class FosseManager : MonoBehaviour
 
         if (tag == "Player")
         {
-            /*if(collision.gameObject.GetComponent<PlayerManager>().isPushed == true)
+            if(collision.gameObject.GetComponent<PlayerManager>().isPushed == true)
             {
                 collision.gameObject.GetComponent<PlayerManager>().isPushed = false;
 
@@ -24,13 +24,13 @@ public class FosseManager : MonoBehaviour
                 StopCoroutine(timer(deathTime));
 
                 Destroy(collision.gameObject);
-            }*/
+            }
 
         }
 
         if (tag == "Monster")
         {
-            /*if (collision.gameObject.GetComponent<MonsterManager>().isPushed == true)
+            if (collision.gameObject.GetComponent<MonsterManager>().isPushed == true)
             {
                 collision.gameObject.GetComponent<MonsterManager>().isPushed = false;
 
@@ -38,7 +38,7 @@ public class FosseManager : MonoBehaviour
                 StopCoroutine(timer(deathTime));
 
                 Destroy(collision.gameObject);
-            }*/
+            }
         }
 
     }
