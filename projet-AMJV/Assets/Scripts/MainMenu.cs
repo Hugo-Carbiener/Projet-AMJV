@@ -53,6 +53,24 @@ public class MainMenu : MonoBehaviour
         mainMenu.SetActive(false);
     }
 
+    public void ChooseAssassin()
+    {
+        PlayerPrefs.SetString("Character","Assassin");
+        SceneManager.LoadScene("Arena");
+    }
+
+    public void ChooseKnight()
+    {
+        PlayerPrefs.SetString("Character", "Knight");
+        SceneManager.LoadScene("Arena");
+    }
+
+    public void ChooseMage()
+    {
+        PlayerPrefs.SetString("Character", "Mage");
+        SceneManager.LoadScene("Arena");
+    }
+
     public void GoToParameters()
     {
         parametersMenu.SetActive(true);

@@ -22,10 +22,10 @@ public class TrapManager : MonoBehaviour
 
         if (tag == "Player")
         {
-            if (trap == trapType.dammage)
+            /*if (trap == trapType.dammage)
             {
                 collision.gameObject.GetComponent<PlayerManager>().health = collision.gameObject.GetComponent<PlayerManager>().health - dammages;
-            }
+            }*/
 
             if (trap == trapType.immobilisation)
             //the player is immobilized for 2sec
@@ -47,10 +47,10 @@ public class TrapManager : MonoBehaviour
 
         if (tag == "Monster")
         {
-            if (trap == trapType.dammage)
+            /*if (trap == trapType.dammage)
             {
                 collision.gameObject.GetComponent<MonsterManager>().health = collision.gameObject.GetComponent<MonsterManager>().health - dammages;
-            }
+            }*/
 
             if (trap == trapType.immobilisation)
             //the player is immobilized for 2sec

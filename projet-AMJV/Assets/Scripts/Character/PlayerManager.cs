@@ -9,9 +9,26 @@ public class PlayerManager : MonoBehaviour
     private Character character;
     private int maxHealth;
     private int health;
+    private string character_choice;
 
     public Character getCharacter() { return this.character; }
-    public Classes getClass() { return this.characterClass; }
+
+    public Classes getClass()
+    {
+        character_choice = PlayerPrefs.GetString("Character");
+        if (character_choice == "assassin")
+        {
+            characterClass = Classes.Assassin;
+        } else if (character_choice == "knight")
+        {
+            characterClass = Classes.Knight;
+        } else if (character_choice == "mage")
+        {
+            characterClass = Classes.Mage;
+        }
+        return this.characterClass;
+
+    }
 
     private void Start()
     {

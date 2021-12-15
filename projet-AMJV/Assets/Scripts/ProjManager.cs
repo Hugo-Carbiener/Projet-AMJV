@@ -49,14 +49,14 @@ public class ProjManager : MonoBehaviour
             }
 
             //dammage
-            if (proj == projType.dammage)
+            /*if (proj == projType.dammage)
             {
                 collision.gameObject.GetComponent<PlayerManager>().health = collision.gameObject.GetComponent<PlayerManager>().health - dammages;
-            }
+            }*/
             
         }
 
-        if (tag == "Monster")
+        /*if (tag == "Monster")
         {
             // Testing if the rigidbody exist
             Rigidbody monsterRigidbody = collision.gameObject.GetComponent<Rigidbody>();
@@ -76,7 +76,7 @@ public class ProjManager : MonoBehaviour
             {
                 collision.gameObject.GetComponent<MonsterManager>().health = collision.gameObject.GetComponent<MonsterManager>().health - dammages;
             }
-        }
+        }*/
 
         Destroy(gameObject);
     }
