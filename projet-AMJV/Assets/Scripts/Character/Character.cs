@@ -7,10 +7,13 @@ public class Character : MonoBehaviour
     protected Animator animator;
     protected MouseAngle MouseAngle;
     protected Rigidbody rb;
-    
+    protected Health healthManager;
+
+    protected int initialHealth;
     protected int[] cooldowns;
     protected int[] durations;
     protected bool[] OnCooldown;
+    protected bool isSpeedBoosted;
     protected bool castingSpell = false;
     protected Vector3 worldMousePos;
 
@@ -23,13 +26,15 @@ public class Character : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    public int getIntialHealth() { return initialHealth; }
+    public bool IsSpeedBoosted() { return isSpeedBoosted; }
+    
     public void CastSpell(string spell)
     {
         int index = spells.IndexOf(spell);
 
         if (OnCooldown[index] || castingSpell)
         {
-            Debug.Log("On cooldown of" + cooldowns[index]);
             return;
         }
         else
@@ -57,9 +62,7 @@ public class Character : MonoBehaviour
     protected IEnumerator StartSpellCooldown(string spell)
     {
         int spellIndex = spells.IndexOf(spell);
-        Debug.Log("Start cooldown for spell " + spellIndex);
         OnCooldown[spellIndex] = true;
-        Debug.Log("cooldown duration " + cooldowns[spellIndex]);
         yield return new WaitForSeconds(cooldowns[spellIndex]);
         OnCooldown[spellIndex] = false;
     }
@@ -73,5 +76,19 @@ public class Character : MonoBehaviour
         {
             worldMousePos = hitData.point;
         }
+    }
+
+    protected IEnumerator SpeedBoost(float duration)
+    {
+        isSpeedBoosted = true;
+        yield return new WaitForSeconds(duration);
+        isSpeedBoosted = false;
+    }
+
+    protected IEnumerator Invulnerability(float duration)
+    {
+        healthManager.SetInvulnerability(true);
+        yield return new WaitForSeconds(duration);
+        healthManager.SetInvulnerability(false);
     }
 }

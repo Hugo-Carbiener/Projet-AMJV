@@ -6,6 +6,8 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField]
     private Classes characterClass;
+    [SerializeField]
+    private Health healthManager;
     private Character character;
     private int maxHealth;
     private int health;
@@ -13,25 +15,10 @@ public class PlayerManager : MonoBehaviour
 
     public Character getCharacter() { return this.character; }
 
-    public Classes getClass()
+    private void Awake()
     {
-        character_choice = PlayerPrefs.GetString("Character");
-        if (character_choice == "assassin")
-        {
-            characterClass = Classes.Assassin;
-        } else if (character_choice == "knight")
-        {
-            characterClass = Classes.Knight;
-        } else if (character_choice == "mage")
-        {
-            characterClass = Classes.Mage;
-        }
-        return this.characterClass;
+        if (!healthManager) healthManager = GetComponent<Health>();
 
-    }
-
-    private void Start()
-    {
         if (characterClass == Classes.Knight)
         {
             character = (Knight) gameObject.AddComponent(typeof(Knight));
@@ -42,5 +29,8 @@ public class PlayerManager : MonoBehaviour
         {
             character = (Assassin) gameObject.AddComponent(typeof(Assassin));
         }
+
+        healthManager.setMaxHealth(character.getIntialHealth());
+        healthManager.setHealth(character.getIntialHealth());
     }
 }

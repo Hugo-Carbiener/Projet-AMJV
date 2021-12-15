@@ -4,20 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Knight : Character
 {
-    private Classes characterClass = Classes.Knight;
-    private int health = 50  ;
-
     [Header("Sword Strike variables")]
     [SerializeField]
-    private float knockbackIntensity = 100;
+    private float knockbackIntensity = 500;
     [SerializeField]
-    private float swordStrikeRadius = 0.5f;
+    private float swordStrikeRadius = 1f;
     [SerializeField]
-    private float attackRange = 0.5f;
+    private float attackRange = 0.75f;
 
     [Header("Whirlwind variables")]
     [SerializeField]
-    private float whirlwindRadius = 1f;
+    private float whirlwindRadius = 2f;
     [Header("Jump variables")]
     [SerializeField]
     private float verticalForce = 3;
@@ -30,6 +27,7 @@ public class Knight : Character
     private void Awake()
     {
         base.OnAwake();
+        initialHealth = 50;
         cooldowns = new int[] {1, 5, 0};
         durations = new int[] { 0, 3, 0 };
         OnCooldown = new bool[] { false, false, false };
@@ -37,10 +35,8 @@ public class Knight : Character
 
     public IEnumerator MainSpell()
     {
-        //StartCoroutine(StartSpellCooldown("MainSpell"));
+        StartCoroutine(StartSpellCooldown("MainSpell"));
         StartCoroutine(StartSpellDuration("MainSpell"));
-        Debug.Log("Main spell");
-       
 
         SwordStrike();
         yield return null;
@@ -50,8 +46,11 @@ public class Knight : Character
     {
         StartCoroutine(StartSpellCooldown("SecondarySpell"));
         StartCoroutine(StartSpellDuration("SecondarySpell"));
+
+        SpeedBoost(durations[spells.IndexOf("SecondarySpell")]);
+        Invulnerability(durations[spells.IndexOf("SecondarySpell")]);
         InvokeRepeating("Whirlwind", 0, 0.5f);
-        Debug.Log("Sec spell");
+
         yield return null;
     }
 
@@ -59,7 +58,6 @@ public class Knight : Character
     {
         StartCoroutine(StartSpellCooldown("MovementSpell"));
         StartCoroutine(StartSpellDuration("MovementSpell"));
-        Debug.Log("Movement spell");
 
         Jump();
         yield return null;
@@ -69,16 +67,17 @@ public class Knight : Character
     {
         GetMousePosition();
         Vector3 center = worldMousePos;
-        center.y = transform.position.y;
         center = (center - transform.position).normalized * attackRange;
         center = transform.position + center;
+        center.y = 1;
 
         Collider[] hitColliders = Physics.OverlapSphere(center, swordStrikeRadius);
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject.tag != "Player")
+            if (hitCollider.gameObject.tag == "Monster")
             {
-                // hitCollider.GetComponent<Ennemy>().dealDamage(5);
+                Debug.Log(hitCollider.name);
+                hitCollider.GetComponent<Health>().Damage(5);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - center) * knockbackIntensity);
                 Debug.Log("Hit " + hitCollider.gameObject.name);
             }
@@ -90,9 +89,9 @@ public class Knight : Character
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, whirlwindRadius);
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject.tag != "Player")
+            if (hitCollider.gameObject.tag == "Monster")
             {
-                // hitCollider.GetComponent<Ennemy>().dealDamage(1);
+                hitCollider.GetComponent<Health>().Damage(1);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackIntensity);
                 Debug.Log("Hit " + hitCollider.gameObject.name);
             }

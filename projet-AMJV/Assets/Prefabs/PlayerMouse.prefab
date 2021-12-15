@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3787731094353973360}
-  KnightController: {fileID: 9100000, guid: f95bac5317d28d548bb4e0b39ed6051d, type: 2}
+  KnightController: {fileID: 9100000, guid: db1de171317e07147ad48a64b314a925, type: 2}
   MageController: {fileID: 9100000, guid: 69002d17a555c5b43b7fbaa2d05b195c, type: 2}
   AssassinController: {fileID: 9100000, guid: f95bac5317d28d548bb4e0b39ed6051d, type: 2}
 --- !u!114 &5863526188842785008
@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 529151627198882192}
   - component: {fileID: 529151627198882199}
   - component: {fileID: 3577586942196931639}
+  - component: {fileID: 9004031530369929438}
   - component: {fileID: 4253131633063415393}
   m_Layer: 0
   m_Name: PlayerMouse
@@ -211,6 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterClass: 0
+  healthManager: {fileID: 9004031530369929438}
 --- !u!114 &529151627198882199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +239,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75f673784dd6628468f5d4cf5354e970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9004031530369929438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529151627198882203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234778b965094fb4e8da3a0495ff85fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitIndicatorDuration: 1
 --- !u!136 &4253131633063415393
 CapsuleCollider:
   m_ObjectHideFlags: 0
