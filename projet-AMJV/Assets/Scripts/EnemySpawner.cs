@@ -9,13 +9,16 @@ public class EnemySpawner : MonoBehaviour
     private int previousNumberOfEnnemy = 1;
     private int numberOfWave;
     private int countNumberOfWave = 0;
+    private GameObject player;
+    private Vector3 start_position;
     [SerializeField] GameObject enemyPrefab;
-    private List<GameObject> ennemies = new List<GameObject>();
+    private int count;
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        start_position = player.transform.position;
         numberOfWave = Random.Range(4, 8);
-        Debug.Log(ennemies);
         StartCoroutine(WaitThree());
         NewWave();
     }
@@ -24,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
         int indexOfSpawner = Random.Range(0, spawners.Length);
         for (int i=0; i<numberOfEnnemy; i++)
         {
-            ennemies.Add(Instantiate(enemyPrefab, spawners[indexOfSpawner].transform.position, Quaternion.identity) as GameObject);
+            Instantiate(enemyPrefab, spawners[indexOfSpawner].transform.position, Quaternion.identity);
             StartCoroutine(WaitOne());
         }
         int temp = numberOfEnnemy;
@@ -45,13 +48,20 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (ennemies.Count == 0 && countNumberOfWave<numberOfWave)
+        count = GameObject.FindGameObjectsWithTag("Monster").Length;
+        if ( count == 0 && countNumberOfWave<numberOfWave && countNumberOfWave>0)
         {
+            player.transform.position = start_position;
+            Health playerHealth = player.GetComponent<Health>();
+            playerHealth.setHealth(playerHealth.getMaxHealth());
+            Debug.Log("nouvelle vague");
             NewWave();
         }
         if (countNumberOfWave == numberOfWave)
         {
             // pop-up de victoire
+            player.transform.position = start_position;
+            Debug.Log("Victoire !");
         }
     }
 
