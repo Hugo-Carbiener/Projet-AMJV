@@ -9,7 +9,7 @@ public class FosseManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //on part du principe que les heros et les monstres ont une variable "isPushed"
+        /*
 
         tag = collision.gameObject.tag;
 

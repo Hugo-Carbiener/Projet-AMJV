@@ -7,7 +7,8 @@ public class ProjManager : MonoBehaviour
     private enum projType
     {
         dammage,
-        knockback
+        knockback,
+        fireball
     }
 
     private Vector3 direction;
