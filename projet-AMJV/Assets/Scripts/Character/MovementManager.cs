@@ -25,56 +25,60 @@ public class MovementManager : MonoBehaviour
 
     private void Update()
     {
-        Vector3 vector = Vector3.zero;
+        if (!character.IsImmobilised())
+        {
+            Vector3 vector = Vector3.zero;
 
-        // sprint
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            speed = runningSpeed;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            speed = walkingSpeed;
-        }
+            // sprint
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                speed = runningSpeed;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                speed = walkingSpeed;
+            }
 
-        // movement
-        if (Input.GetKey(KeyCode.Z))
-        {
-            vector += Vector3.forward;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            vector += Vector3.back;
-        }
-        if (Input.GetKey(KeyCode.Q))
-        {
-            vector += Vector3.left;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            vector += Vector3.right;
-        }
+            // movement
+            if (Input.GetKey(KeyCode.Z))
+            {
+                vector += Vector3.forward;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                vector += Vector3.back;
+            }
+            if (Input.GetKey(KeyCode.Q))
+            {
+                vector += Vector3.left;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                vector += Vector3.right;
+            }
 
-        if (rb.velocity != Vector3.zero && speed == runningSpeed)
-        {
-            anim.SetBool("IsRunning", true);
-            anim.SetBool("IsWalking", false);
-        } else if (rb.velocity != Vector3.zero && speed == walkingSpeed)
-        {
-            anim.SetBool("IsRunning", false);
-            anim.SetBool("IsWalking", true);
-        }
-        else 
-        {
-            SetDefaultAnimation();
-        }
+            if (rb.velocity != Vector3.zero && speed == runningSpeed)
+            {
+                anim.SetBool("IsRunning", true);
+                anim.SetBool("IsWalking", false);
+            }
+            else if (rb.velocity != Vector3.zero && speed == walkingSpeed)
+            {
+                anim.SetBool("IsRunning", false);
+                anim.SetBool("IsWalking", true);
+            }
+            else
+            {
+                SetDefaultAnimation();
+            }
 
-        if (character.IsSpeedBoosted())
-        {
-            speed *= 1.5f;
+            if (character.IsSpeedBoosted())
+            {
+                speed *= 1.5f;
+            }
+            vector.y = rb.velocity.y / speed;
+            rb.velocity = vector * speed;
         }
-        vector.y = rb.velocity.y / speed;
-        rb.velocity = vector * speed;
     }
 
     public void SetDefaultAnimation()
