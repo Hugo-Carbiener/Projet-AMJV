@@ -44,6 +44,7 @@ public class SlimeBehavior : MonoBehaviour
         healthManager.OnDeath += Death;
         healthManager.setHealth(initialHealth);
         healthManager.setMaxHealth(initialHealth);
+
     }
 
     private void Start()
@@ -69,8 +70,8 @@ public class SlimeBehavior : MonoBehaviour
         if ( level > 1 ) {
             slimeSpawner.SpawnSlime(level - 1, gameObject);
             slimeSpawner.SpawnSlime(level - 1, gameObject);
+            Debug.Log("slime se divise et count augmente de deux");
         }
-        
         Destroy(gameObject);
     }
 
