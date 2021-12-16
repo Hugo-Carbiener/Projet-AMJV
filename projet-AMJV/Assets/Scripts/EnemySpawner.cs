@@ -11,7 +11,9 @@ public class EnemySpawner : MonoBehaviour
     private int countNumberOfWave = 0;
     private GameObject player;
     private Vector3 start_position;
+    private int indexOfSpawner;
     [SerializeField] GameObject enemyPrefab;
+    [SerializeField] GameObject bossPrefab;
     private int count;
 
     private void Start()
@@ -19,12 +21,11 @@ public class EnemySpawner : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         start_position = player.transform.position;
         numberOfWave = Random.Range(4, 8);
-        StartCoroutine(WaitThree());
         NewWave();
     }
     private void NewWave()
     {
-        int indexOfSpawner = Random.Range(0, spawners.Length);
+        indexOfSpawner = Random.Range(0, spawners.Length);
         for (int i=0; i<numberOfEnnemy; i++)
         {
             Instantiate(enemyPrefab, spawners[indexOfSpawner].transform.position, Quaternion.identity);
@@ -41,21 +42,25 @@ public class EnemySpawner : MonoBehaviour
         yield return new WaitForSeconds(1);
     }
 
-    IEnumerator WaitThree()
-    {
-        yield return new WaitForSeconds(3);
-    }
-
     private void Update()
     {
         count = GameObject.FindGameObjectsWithTag("Monster").Length;
-        if ( count == 0 && countNumberOfWave<numberOfWave && countNumberOfWave>0)
+        if ( count == 0 && countNumberOfWave<numberOfWave-1 && countNumberOfWave>0)
         {
             player.transform.position = start_position;
             Health playerHealth = player.GetComponent<Health>();
             playerHealth.setHealth(playerHealth.getMaxHealth());
             Debug.Log("nouvelle vague");
             NewWave();
+        }
+        if (countNumberOfWave == numberOfWave-1)
+        {
+            indexOfSpawner = Random.Range(0, spawners.Length);
+            Instantiate(bossPrefab, spawners[indexOfSpawner].transform.position, Quaternion.identity);
+            if (count == 0)
+            {
+                countNumberOfWave++;
+            }
         }
         if (countNumberOfWave == numberOfWave)
         {

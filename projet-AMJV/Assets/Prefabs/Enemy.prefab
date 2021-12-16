@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4557475969272664096}
   - component: {fileID: 7987379689540361910}
   - component: {fileID: 4987391919766438810}
+  - component: {fileID: 5857833908012319644}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -136,3 +137,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5857833908012319644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8547181809410835332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542d328ece4c47848b0d8932511b9a87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  animator: {fileID: 0}
+  rb: {fileID: 0}
+  healthManager: {fileID: 0}
+  slimePrefab: {fileID: 6808233465219161550, guid: a9a0e0a12a4edd24cb46dd55fc3f1a6c, type: 3}
+  initialHealth: 10
+  bossHealth: 0
+  bossMaxHealth: 0
+  damage: 5
+  reloadTimer: 2
+  bulletPrefab: {fileID: 0}
+  firstShootCooldown: 2
+  secondShootCooldown: 1
+  maxDistance: 10
+  damageCharge: 10
+  knockbackCharge: 5
+  radiusCharge: 3
+  firstChargeCooldown: 5
+  secondChargeCooldown: 2
+  immoTime: 0
+  staticCooldown: 0

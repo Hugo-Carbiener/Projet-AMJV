@@ -17,15 +17,15 @@ public class PlayerManager : MonoBehaviour
     public Classes getClass()
     {
         character_choice = PlayerPrefs.GetString("Character");
-        if (character_choice == "assassin")
+        if (character_choice == "Assassin")
         {
             characterClass = Classes.Assassin;
         }
-        else if (character_choice == "knight")
+        else if (character_choice == "Knight")
         {
             characterClass = Classes.Knight;
         }
-        else if (character_choice == "mage")
+        else if (character_choice == "Mage")
         {
             characterClass = Classes.Mage;
         }
