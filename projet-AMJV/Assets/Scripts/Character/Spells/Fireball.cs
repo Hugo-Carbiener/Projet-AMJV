@@ -5,18 +5,40 @@ using UnityEngine;
 public class Fireball : MonoBehaviour
 {
     [SerializeField]
-    private float speed;
-    private Vector3 direction;
+    private float speed = 1;
+    [SerializeField]
+    private float explosionRadius = 1;
+    [SerializeField]
+    private float knockbackIntensity = 200;
 
-    public void SetDirection(Vector3 newDirection) => direction = newDirection;
+    private void Start()
+    {
+        GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
+        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+    }
 
     private void Update()
     {
-        transform.Translate(direction * Time.deltaTime * speed);
+        transform.Translate(- Vector3.forward * Time.deltaTime * speed);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        Explosion();
         Destroy(gameObject);
+    }
+
+    private void Explosion()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.tag == "Monster")
+            {
+                hitCollider.GetComponent<Health>().Damage(5);
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackIntensity);
+                Debug.Log("Hit " + hitCollider.gameObject.name);
+            }
+        }
     }
 }

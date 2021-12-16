@@ -30,7 +30,6 @@ public class PlayerManager : MonoBehaviour
             characterClass = Classes.Mage;
         }
         return this.characterClass;
-
     }
 
     private void Awake()
