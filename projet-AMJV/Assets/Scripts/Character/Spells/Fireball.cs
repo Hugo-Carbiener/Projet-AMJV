@@ -7,12 +7,15 @@ public class Fireball : MonoBehaviour
     [SerializeField]
     private float speed = 1;
     [SerializeField]
-    private float explosionRadius = 1;
+    private float explosionRadius = 5;
     [SerializeField]
     private float knockbackIntensity = 200;
+    [SerializeField]
+    private GameObject explosionPrefab;
 
     private void Start()
     {
+        if (!explosionPrefab) explosionPrefab = Resources.Load("Explosion") as GameObject;
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
         transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
     }
@@ -24,8 +27,7 @@ public class Fireball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Explosion();
-        Destroy(gameObject);
+        StartCoroutine(collisionExecution());
     }
 
     private void Explosion()
@@ -40,5 +42,15 @@ public class Fireball : MonoBehaviour
                 Debug.Log("Hit " + hitCollider.gameObject.name);
             }
         }
+    }
+
+    private IEnumerator collisionExecution()
+    {
+        Explosion();
+        GameObject explosion = Instantiate(explosionPrefab, transform);
+        explosion.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        Destroy(gameObject);
+        yield return new WaitForSeconds(1.5f);
+        //Destroy(explosion);
     }
 }
