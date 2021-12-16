@@ -1,9 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossBehavior : MonoBehaviour
 {
+    [Header("Prefab variables")]
     [SerializeField]
     private GameObject player;
     [SerializeField]
@@ -15,17 +15,15 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private GameObject slimePrefab;
 
-    [SerializeField]
-    private int initialHealth = 10;
+    [Header("Boss variables")]
     [SerializeField]
     private int bossHealth;
     [SerializeField]
     private int bossMaxHealth;
     [SerializeField]
-    private int damage = 5;
-    [SerializeField]
     private float reloadTimer = 2;
 
+    [Header("Sword Strike variables")]
     [SerializeField]
     private ProjManager bulletPrefab;
     [SerializeField]
@@ -33,6 +31,7 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private float secondShootCooldown = 1;
 
+    [Header("Charge variables")]
     [SerializeField]
     private float maxDistance = 10;
     [SerializeField]
@@ -46,6 +45,7 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private float secondChargeCooldown = 2;
 
+    [Header("Immobilisaiton variables")]
     [SerializeField]
     private float immoTime;
     [SerializeField]
