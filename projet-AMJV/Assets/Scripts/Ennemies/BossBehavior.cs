@@ -29,7 +29,9 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private ProjManager bulletPrefab;
     [SerializeField]
-    private float shootCooldown = 2;
+    private float firstShootCooldown = 2;
+    [SerializeField]
+    private float secondShootCooldown = 1;
 
     [SerializeField]
     private float maxDistance = 10;
@@ -41,7 +43,13 @@ public class BossBehavior : MonoBehaviour
     private float radiusCharge = 3;
     [SerializeField]
     private float firstChargeCooldown = 5;
+    [SerializeField]
+    private float secondChargeCooldown = 2;
 
+    [SerializeField]
+    private float immoTime;
+    [SerializeField]
+    private float staticCooldown;
 
     private float timer;
     private int previousPhase;
@@ -59,7 +67,7 @@ public class BossBehavior : MonoBehaviour
     {
         previousPhase = 1;
         actualPhase = 1;
-        InvokeRepeating("Shoot", 0, shootCooldown);
+        InvokeRepeating("Shoot", 0, firstShootCooldown);
         Instantiate(slimePrefab);
         healthManager.OnHealthChange += phaseManager;
     }
@@ -85,14 +93,15 @@ public class BossBehavior : MonoBehaviour
             if (actualPhase == 2)
             {
                 CancelInvoke();
-                InvokeRepeating("Shoot", 0, shootCooldown);
+                InvokeRepeating("Shoot", 0, secondShootCooldown);
                 InvokeRepeating("Charge", 0, firstChargeCooldown);
                 previousPhase = 2;
             }
             else
             {
                 CancelInvoke();
-                InvokeRepeating("ThirdSpell", 0, cooldownBis);
+                InvokeRepeating("Charge", 0, secondChargeCooldown);
+                InvokeRepeating("Immobilize", 0, staticCooldown);
                 previousPhase = 3;
             }
         }
@@ -135,11 +144,53 @@ public class BossBehavior : MonoBehaviour
         {
             if (hitCollider.gameObject.tag == "Player")
             {
-                hitCollider.GetComponent<Health>().Damage(1);
+                hitCollider.GetComponent<Health>().Damage(damageCharge);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackCharge);
                 Debug.Log("Hit " + hitCollider.gameObject.name);
             }
         }
-
     }
+
+    //-------------------------------------------------------------------------------------------------------
+    // Last third of life
+
+    private void Immobilize()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit) && hit.collider.tag == "Player") 
+        {
+            hit.rigidbody.velocity = Vector3.zero;
+            StartCoroutine(immobilization(immoTime));
+        }
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit) && hit.collider.tag == "Player")
+        {
+            hit.rigidbody.velocity = Vector3.zero;
+            StartCoroutine(immobilization(immoTime));
+        }
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hit) && hit.collider.tag == "Player")
+        {
+            hit.rigidbody.velocity = Vector3.zero;
+            StartCoroutine(immobilization(immoTime));
+        }
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out hit) && hit.collider.tag == "Player")
+        {
+            hit.rigidbody.velocity = Vector3.zero;
+            StartCoroutine(immobilization(immoTime));
+        }
+
+
+        IEnumerator immobilization(float time)
+        {
+            yield return new WaitForSeconds(time);
+        }
+    }
+
+
+
+
+
+
 }
