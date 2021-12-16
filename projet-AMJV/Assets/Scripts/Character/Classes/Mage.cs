@@ -39,14 +39,17 @@ public class Mage : Character
         StartCoroutine(StartSpellCooldown("SecondarySpell"));
         StartCoroutine(StartSpellDuration("SecondarySpell"));
         Debug.Log("Sec spell");
+
+        Icewall();
         yield return null;
     }
 
     public IEnumerator MovementSpell()
     {
-        StartCoroutine(StartSpellCooldown("MovementSpell"));
         StartCoroutine(StartSpellDuration("MovementSpell"));
         Debug.Log("Movement spell");
+
+        Transposition();
         yield return null;
     }
 
@@ -54,8 +57,30 @@ public class Mage : Character
     {
         GameObject fireball = Instantiate(fireballPrefab);
         float mouseAngle = MouseAngle.getMouseAngle();
-        Debug.Log(mouseAngle);
-        fireball.transform.position = new Vector3(gameObject.transform.position.x + fireballRange * Mathf.Cos(mouseAngle * Mathf.Deg2Rad), gameObject.transform.position.y + 0.5f, gameObject.transform.position.z + fireballRange * Mathf.Sin(mouseAngle * Mathf.Deg2Rad));
-        //fireball.GetComponent<Fireball>().SetAngle(mouseAngle);
+        fireball.transform.position = new Vector3(gameObject.transform.position.x + fireballRange * Mathf.Cos(mouseAngle * Mathf.Deg2Rad), gameObject.transform.position.y + 1f, gameObject.transform.position.z + fireballRange * Mathf.Sin(mouseAngle * Mathf.Deg2Rad));
     }
+
+    private void Icewall()
+    {
+
+    }
+
+    private void Transposition()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            Debug.DrawRay(ray.origin, ray.direction);
+            Debug.Log(hit.collider.gameObject.name);
+            if(hit.collider.gameObject.tag == "Monster")
+            {
+                StartCoroutine(StartSpellCooldown("MovementSpell"));
+                Vector3 temp = hit.collider.gameObject.transform.position;
+                hit.collider.gameObject.transform.position = transform.position;
+                transform.position = temp;
+            }
+        }
+    }
+
 }
