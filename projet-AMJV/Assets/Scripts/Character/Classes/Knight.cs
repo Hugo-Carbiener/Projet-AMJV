@@ -6,29 +6,28 @@ public class Knight : Character
 {
     [Header("Sword Strike variables")]
     [SerializeField]
-    private float knockbackIntensity = 500;
+    private float knockbackIntensity = 200;
     [SerializeField]
     private float swordStrikeRadius = 1f;
     [SerializeField]
-    private float attackRange = 0.75f;
+    private float attackRange = 1f;
 
     [Header("Whirlwind variables")]
     [SerializeField]
     private float whirlwindRadius = 2f;
     [Header("Jump variables")]
     [SerializeField]
-    private float verticalForce = 3;
+    private float jumpDuration = 0.5f;
     [SerializeField]
-    private float horizontalForce = 6;
-
-    
-
+    private float jumpHeight = 4;
+    [SerializeField]
+    private float jumpLandingRadius = 2;
 
     private void Awake()
     {
         base.OnAwake();
         initialHealth = 50;
-        cooldowns = new int[] {1, 5, 0};
+        cooldowns = new int[] { 1, 5, 5 };
         durations = new int[] { 0, 3, 0 };
         OnCooldown = new bool[] { false, false, false };
     }
@@ -59,7 +58,7 @@ public class Knight : Character
         StartCoroutine(StartSpellCooldown("MovementSpell"));
         StartCoroutine(StartSpellDuration("MovementSpell"));
 
-        Jump();
+        StartCoroutine(Jump());
         yield return null;
     }
 
@@ -85,7 +84,7 @@ public class Knight : Character
     }
 
     private void Whirlwind()
-    {   
+    {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, whirlwindRadius);
         foreach (var hitCollider in hitColliders)
         {
@@ -98,11 +97,46 @@ public class Knight : Character
         }
     }
 
-    private void Jump()
+    private IEnumerator Jump()
     {
-        rb.AddForce(verticalForce * Vector3.up, ForceMode.Impulse);
-        float mouseAngle = MouseAngle.getMouseAngle() * Mathf.Deg2Rad;
-        Vector3 mousePos = new Vector3(Mathf.Cos(mouseAngle), 1, Mathf.Sin(mouseAngle));
-        rb.AddForce(horizontalForce * mousePos, ForceMode.Impulse);
+        rb.isKinematic = true;
+        isImmobilised = true;
+        healthManager.SetInvulnerability(true);
+
+        // update marker
+        groundMarker.SetActive(true);
+
+        // jump
+        Vector3 start = transform.position;
+        Ray end = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(end, out hit, Mathf.Infinity))
+        {
+            groundMarker.transform.position = hit.point;
+            for (float time = 0; time < jumpDuration; time += Time.deltaTime)
+            {
+                Vector3 pos = Vector3.Lerp(start, hit.point, time / jumpDuration);
+                pos.y = Mathf.Log(1 + Mathf.PingPong((2 * jumpHeight / jumpDuration) * time, jumpHeight));
+                transform.position = pos;
+                yield return null;
+            }
+        }
+
+        groundMarker.SetActive(false);
+        // landing
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, jumpLandingRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.tag == "Monster")
+            {
+                hitCollider.GetComponent<Health>().Damage(2);
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackIntensity);
+                Debug.Log("Hit " + hitCollider.gameObject.name);
+            }
+        }
+
+        isImmobilised = false;
+        rb.isKinematic = false;
+        healthManager.SetInvulnerability(false);
     }
 }

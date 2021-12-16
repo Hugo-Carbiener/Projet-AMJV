@@ -8,14 +8,17 @@ public class Character : MonoBehaviour
     protected MouseAngle MouseAngle;
     protected Rigidbody rb;
     protected Health healthManager;
+    protected GroundDetector gdDetector;
 
     protected int initialHealth;
     protected int[] cooldowns;
     protected int[] durations;
     protected bool[] OnCooldown;
     protected bool isSpeedBoosted;
+    protected bool isImmobilised;
     protected bool castingSpell = false;
     protected Vector3 worldMousePos;
+    protected GameObject groundMarker;
 
     protected List<string> spells = new List<string>(){ "MainSpell", "SecondarySpell", "MovementSpell" };
 
@@ -24,10 +27,17 @@ public class Character : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         MouseAngle = GetComponentInParent<MouseAngle>();
         rb = GetComponent<Rigidbody>();
+        gdDetector = GetComponentInChildren<GroundDetector>();
+        groundMarker = GameObject.Find("GroundMarker");
+        healthManager = GetComponent<Health>();
+        groundMarker.SetActive(false);
+
     }
 
     public int getIntialHealth() { return initialHealth; }
     public bool IsSpeedBoosted() { return isSpeedBoosted; }
+
+    public bool IsImmobilised() { return isImmobilised; }
     
     public void CastSpell(string spell)
     {
