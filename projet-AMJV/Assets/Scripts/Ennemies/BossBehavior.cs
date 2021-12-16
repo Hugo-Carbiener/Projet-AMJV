@@ -25,10 +25,22 @@ public class BossBehavior : MonoBehaviour
     private int damage = 5;
     [SerializeField]
     private float reloadTimer = 2;
+
     [SerializeField]
     private ProjManager bulletPrefab;
     [SerializeField]
     private float shootCooldown = 2;
+
+    [SerializeField]
+    private float maxDistance = 10;
+    [SerializeField]
+    private int damageCharge = 10;
+    [SerializeField]
+    private float knockbackCharge = 5;
+    [SerializeField]
+    private float radiusCharge = 3;
+    [SerializeField]
+    private float firstChargeCooldown = 5;
 
 
     private float timer;
@@ -63,7 +75,7 @@ public class BossBehavior : MonoBehaviour
             actualPhase = 2;
         }
 
-        if (bossHealth < bossMaxHealth * (1/3))
+        if (bossHealth <= bossMaxHealth * (1/3))
         {
             actualPhase = 3;
         }
@@ -73,7 +85,8 @@ public class BossBehavior : MonoBehaviour
             if (actualPhase == 2)
             {
                 CancelInvoke();
-                InvokeRepeating("SecondSpell", 0, cooldown);
+                InvokeRepeating("Shoot", 0, shootCooldown);
+                InvokeRepeating("Charge", 0, firstChargeCooldown);
                 previousPhase = 2;
             }
             else
@@ -110,4 +123,23 @@ public class BossBehavior : MonoBehaviour
         return Vector3.left;
     }
 
+
+    //--------------------------------------------------------------------------------------------------
+    // Second third of life : charging
+
+    private void Charge()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, maxDistance);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radiusCharge);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.tag == "Player")
+            {
+                hitCollider.GetComponent<Health>().Damage(1);
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackCharge);
+                Debug.Log("Hit " + hitCollider.gameObject.name);
+            }
+        }
+
+    }
 }
