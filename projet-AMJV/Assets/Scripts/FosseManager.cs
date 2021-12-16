@@ -13,7 +13,7 @@ public class FosseManager : MonoBehaviour
 
         tag = collision.gameObject.tag;
 
-        if (tag == "Player")
+        /*if (tag == "Player")
         {
             if(collision.gameObject.GetComponent<PlayerManager>().isPushed == true)
             {
@@ -39,7 +39,7 @@ public class FosseManager : MonoBehaviour
 
                 Destroy(collision.gameObject);
             }
-        }
+        }*/
 
     }
 

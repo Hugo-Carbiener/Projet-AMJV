@@ -58,21 +58,21 @@ public class MainMenu : MonoBehaviour
     public void ChooseAssassin()
     {
         PlayerPrefs.SetString("Character","Assassin");
-        indexArena = Random.Range(0, 2);
+        indexArena = Random.Range(0, 3);
         SceneManager.LoadScene(arenas[indexArena]);
     }
 
     public void ChooseKnight()
     {
         PlayerPrefs.SetString("Character", "Knight");
-        indexArena = Random.Range(0, 2);
+        indexArena = Random.Range(0, 3);
         SceneManager.LoadScene(arenas[indexArena]);
     }
 
     public void ChooseMage()
     {
         PlayerPrefs.SetString("Character", "Mage");
-        indexArena = Random.Range(0, 2);
+        indexArena = Random.Range(0, 3);
         SceneManager.LoadScene(arenas[indexArena]);
     }
 
