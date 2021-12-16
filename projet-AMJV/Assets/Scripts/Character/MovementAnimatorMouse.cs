@@ -19,7 +19,7 @@ public class MovementAnimatorMouse : MonoBehaviour
     private void Awake()
     {
         // Set class animator
-        /*Classes playerClass = GetComponentInParent<PlayerManager>().getClass();
+        Classes playerClass = GetComponentInParent<PlayerManager>().getClass();
         switch (playerClass)
         {
             case Classes.Knight:
@@ -31,7 +31,7 @@ public class MovementAnimatorMouse : MonoBehaviour
             case Classes.Assassin:
                 animator.runtimeAnimatorController = AssassinController;
                 break;
-        }*/
+        }
 
         mouseAngle = GetComponentInParent<MouseAngle>();
         animator.SetFloat("MoveX", 0);
