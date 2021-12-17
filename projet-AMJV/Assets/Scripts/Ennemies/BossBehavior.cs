@@ -21,9 +21,9 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private float reloadTimer = 2;
 
-    [Header("Sword Strike variables")]
+    [Header("Shoot variables")]
     [SerializeField]
-    private ProjManager bulletPrefab;
+    private GameObject bulletPrefab;
     [SerializeField]
     private float firstShootCooldown = 2;
     [SerializeField]
@@ -58,15 +58,22 @@ public class BossBehavior : MonoBehaviour
         if (!player) player = GameObject.FindWithTag("Player");
         if (!rb) rb = GetComponent<Rigidbody>();
         if (!healthManager) healthManager = GetComponent<Health>();
+        if (!bulletPrefab) bulletPrefab = Resources.Load("Bullet") as GameObject;
     }
 
     private void Start()
     {
+        Debug.Log("is in Start()");
         previousPhase = 1;
         actualPhase = 1;
         InvokeRepeating("Shoot", 0, firstShootCooldown);
         Instantiate(slimePrefab);
-        healthManager.OnHealthChange += phaseManager;
+        //healthManager.OnHealthChange += phaseManager;
+    }
+
+    private void Update()
+    {
+        //Debug.Log("update");
     }
 
 
@@ -109,12 +116,14 @@ public class BossBehavior : MonoBehaviour
 
     private void Shoot()
     {
+        Debug.Log("is in Shoot");
         if (!player) return;
         timer += Time.deltaTime;
         if (timer >= reloadTimer)
         {
-            ProjManager bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            bullet.SetDirection(GetShootDirection());
+            Debug.Log("in timer");
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            bullet.GetComponent<ProjManager>().SetDirection(GetShootDirection());
             timer = 0f;
         }
 
