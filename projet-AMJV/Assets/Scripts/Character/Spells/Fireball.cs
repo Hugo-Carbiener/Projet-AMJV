@@ -16,17 +16,23 @@ public class Fireball : MonoBehaviour
     private float maxRange = 10;
     private Vector3 startingPos;
 
+    private bool isImmobile;
+
     private void Start()
     {
+        StartCoroutine(WaitOnStartUp());
         startingPos = transform.position;
         if (!explosionPrefab) explosionPrefab = Resources.Load("Explosion") as GameObject;
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
-        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+            transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
     }
 
     private void FixedUpdate()
     {
-        transform.Translate(-Vector3.forward * Time.deltaTime * speed);
+        if (!isImmobile)
+        {
+            transform.Translate(-Vector3.forward * Time.deltaTime * speed);
+        }
         if (Vector3.Distance(startingPos, transform.position) >= maxRange)
         {
             Debug.Log("Went too far");
@@ -34,12 +40,11 @@ public class Fireball : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag != "Ground" && collision.gameObject.tag != "Player")
+        if (other.gameObject.tag != "Ground" && other.gameObject.tag != "Player")
         {
             Destroy(gameObject);
-                Debug.Log("Boom");
         }
     }
 
@@ -51,12 +56,19 @@ public class Fireball : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject.tag == "Monster")
+            if (hitCollider.gameObject.tag == "Monster" || hitCollider.gameObject.tag == "Player")
             {
                 hitCollider.GetComponent<Health>().Damage(5);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackIntensity);
                 Debug.Log("Hit " + hitCollider.gameObject.name);
             }
         }
+    }
+
+    private IEnumerator WaitOnStartUp()
+    {
+        isImmobile = true;
+        yield return new WaitForSeconds(0.5f);
+        isImmobile = false;
     }
 }

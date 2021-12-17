@@ -8,20 +8,20 @@ public class Mage : Character
     private float fireballRange = 1;
     [Header("Icewall variables")]
     private float temp2;
-    [Header("Transposition variables")]
-    private float temp3;
 
     private GameObject fireballPrefab;
+    private GameObject icewallPrefab;
 
     private void Awake()
     {
         base.OnAwake();
         initialHealth = 40;
-        cooldowns = new int[] { 0, 10, 5 };
+        cooldowns = new int[] { 1, 10, 5 };
         durations = new int[] { 0, 0, 0 };
         OnCooldown = new bool[] { false, false, false };
 
         fireballPrefab = Resources.Load("Fireball") as GameObject;
+        icewallPrefab = Resources.Load("Icewall") as GameObject;
     }
 
     public IEnumerator MainSpell()
@@ -62,7 +62,12 @@ public class Mage : Character
 
     private void Icewall()
     {
-
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            Instantiate(icewallPrefab, hit.point, Quaternion.Euler(0, 0, 0));
+        }
     }
 
     private void Transposition()
