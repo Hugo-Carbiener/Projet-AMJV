@@ -7,8 +7,6 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private GameObject player;
     [SerializeField]
-    private Animator animator;
-    [SerializeField]
     private Rigidbody rb;
     [SerializeField]
     private Health healthManager;
@@ -58,7 +56,6 @@ public class BossBehavior : MonoBehaviour
     private void Awake()
     {
         if (!player) player = GameObject.FindWithTag("Player");
-        if (!animator) animator = GetComponentInChildren<Animator>();
         if (!rb) rb = GetComponent<Rigidbody>();
         if (!healthManager) healthManager = GetComponent<Health>();
     }
