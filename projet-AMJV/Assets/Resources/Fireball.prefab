@@ -4918,7 +4918,8 @@ GameObject:
   - component: {fileID: 6407814579413307211}
   - component: {fileID: 1737788801230448832}
   - component: {fileID: 4164426255749655865}
-  - component: {fileID: 7614656020192945011}
+  - component: {fileID: 5625570251144408144}
+  - component: {fileID: 130770304727111538}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
@@ -5007,20 +5008,37 @@ MonoBehaviour:
   speed: 10
   explosionRadius: 1
   knockbackIntensity: 200
---- !u!136 &7614656020192945011
-CapsuleCollider:
+  explosionPrefab: {fileID: 0}
+  maxRange: 10
+--- !u!135 &5625570251144408144
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1134106911386486641}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1
-  m_Height: 5
-  m_Direction: 1
+  serializedVersion: 2
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &130770304727111538
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134106911386486641}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5635688295309686618
 GameObject:
   m_ObjectHideFlags: 0
@@ -9872,3 +9890,5 @@ MonoBehaviour:
   speed: 10
   explosionRadius: 1
   knockbackIntensity: 200
+  explosionPrefab: {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
+  maxRange: 10

@@ -8,20 +8,20 @@ public class Mage : Character
     private float fireballRange = 1;
     [Header("Icewall variables")]
     private float temp2;
-    [Header("Transposition variables")]
-    private float temp3;
 
     private GameObject fireballPrefab;
+    private GameObject icewallPrefab;
 
     private void Awake()
     {
         base.OnAwake();
         initialHealth = 40;
-        cooldowns = new int[] { 0, 10, 5 };
+        cooldowns = new int[] { 1, 10, 5 };
         durations = new int[] { 0, 0, 0 };
         OnCooldown = new bool[] { false, false, false };
 
         fireballPrefab = Resources.Load("Fireball") as GameObject;
+        icewallPrefab = Resources.Load("Icewall") as GameObject;
     }
 
     public IEnumerator MainSpell()
@@ -39,14 +39,17 @@ public class Mage : Character
         StartCoroutine(StartSpellCooldown("SecondarySpell"));
         StartCoroutine(StartSpellDuration("SecondarySpell"));
         Debug.Log("Sec spell");
+
+        Icewall();
         yield return null;
     }
 
     public IEnumerator MovementSpell()
     {
-        StartCoroutine(StartSpellCooldown("MovementSpell"));
         StartCoroutine(StartSpellDuration("MovementSpell"));
         Debug.Log("Movement spell");
+
+        Transposition();
         yield return null;
     }
 
@@ -54,8 +57,35 @@ public class Mage : Character
     {
         GameObject fireball = Instantiate(fireballPrefab);
         float mouseAngle = MouseAngle.getMouseAngle();
-        Debug.Log(mouseAngle);
-        fireball.transform.position = new Vector3(gameObject.transform.position.x + fireballRange * Mathf.Cos(mouseAngle * Mathf.Deg2Rad), gameObject.transform.position.y + 0.5f, gameObject.transform.position.z + fireballRange * Mathf.Sin(mouseAngle * Mathf.Deg2Rad));
-        //fireball.GetComponent<Fireball>().SetAngle(mouseAngle);
+        fireball.transform.position = new Vector3(gameObject.transform.position.x + fireballRange * Mathf.Cos(mouseAngle * Mathf.Deg2Rad), gameObject.transform.position.y + 1f, gameObject.transform.position.z + fireballRange * Mathf.Sin(mouseAngle * Mathf.Deg2Rad));
     }
+
+    private void Icewall()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            Instantiate(icewallPrefab, hit.point, Quaternion.Euler(0, 0, 0));
+        }
+    }
+
+    private void Transposition()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            Debug.DrawRay(ray.origin, ray.direction);
+            Debug.Log(hit.collider.gameObject.name);
+            if(hit.collider.gameObject.tag == "Monster")
+            {
+                StartCoroutine(StartSpellCooldown("MovementSpell"));
+                Vector3 temp = hit.collider.gameObject.transform.position;
+                hit.collider.gameObject.transform.position = transform.position;
+                transform.position = temp;
+            }
+        }
+    }
+
 }
