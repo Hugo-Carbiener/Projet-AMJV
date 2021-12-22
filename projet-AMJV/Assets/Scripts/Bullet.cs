@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    [SerializeField] private float speed = 8;
     [SerializeField] private float knockbackForce = 2;
+    private Rigidbody rb;
     private Vector3 direction;
 
-    public void SetDirection(Vector3 newDirection) => direction = newDirection;
+    private void Start()
+    {
+        GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
+        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+    }
 
     private void Update()
     {
-        transform.Translate(direction * Time.deltaTime * speed);
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -28,6 +33,12 @@ public class Bullet : MonoBehaviour
             playerRigidbody.AddForce(direction * knockbackForce, ForceMode.Impulse);
         }
         Destroy(gameObject);
+    }
+
+    public void SetDirection(Vector3 newDirection)
+    {
+        direction = newDirection;
+        rb.AddForce(newDirection*1000);
     }
 
 }

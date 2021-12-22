@@ -125,15 +125,6 @@ public class BossBehavior : MonoBehaviour
 
     }
 
-    private Vector3 GetShootDirection()
-    {
-        if (player.transform.position.x > transform.position.x)
-        {
-            return Vector3.right;
-        }
-        return Vector3.left;
-    }
-
 
     //--------------------------------------------------------------------------------------------------
     // Second third of life : charging
