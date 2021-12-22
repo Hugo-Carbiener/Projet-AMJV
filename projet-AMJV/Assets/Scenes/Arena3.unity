@@ -33918,9 +33918,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5816057709732875078, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 35067012232972739, guid: 280f8eb65802e9845b6a1a296487f645, type: 3}
     - target: {fileID: 5816057709732875080, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
       propertyPath: m_Name
       value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816057709732875080, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
+      propertyPath: m_TagString
+      value: Monster
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}

@@ -71,11 +71,6 @@ public class BossBehavior : MonoBehaviour
         //healthManager.OnHealthChange += phaseManager;
     }
 
-    private void Update()
-    {
-        //Debug.Log("update");
-    }
-
 
     private void phaseManager()
     {
