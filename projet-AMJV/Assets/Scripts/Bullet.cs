@@ -6,9 +6,9 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float knockbackForce = 2;
-    private Vector2 direction;
+    private Vector3 direction;
 
-    public void SetDirection(Vector2 newDirection) => direction = newDirection;
+    public void SetDirection(Vector3 newDirection) => direction = newDirection;
 
     private void Update()
     {

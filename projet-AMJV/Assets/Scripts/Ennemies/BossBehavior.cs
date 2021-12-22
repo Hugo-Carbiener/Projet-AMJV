@@ -19,7 +19,7 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private int bossMaxHealth;
     [SerializeField]
-    private float reloadTimer = 2;
+    private float reloadTimer = 0.05f;
 
     [Header("Shoot variables")]
     [SerializeField]
@@ -67,7 +67,7 @@ public class BossBehavior : MonoBehaviour
         previousPhase = 1;
         actualPhase = 1;
         InvokeRepeating("Shoot", 0, firstShootCooldown);
-        Instantiate(slimePrefab);
+        //Instantiate(slimePrefab);
         //healthManager.OnHealthChange += phaseManager;
     }
 
@@ -114,11 +114,12 @@ public class BossBehavior : MonoBehaviour
         Debug.Log("is in Shoot");
         if (!player) return;
         timer += Time.deltaTime;
-        if (timer >= reloadTimer)
+        Debug.Log("timer: " + timer);
+        if (true)
         {
             Debug.Log("in timer");
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            bullet.GetComponent<ProjManager>().SetDirection(GetShootDirection());
+            bullet.GetComponent<Bullet>().SetDirection(player.transform.position);
             timer = 0f;
         }
 
