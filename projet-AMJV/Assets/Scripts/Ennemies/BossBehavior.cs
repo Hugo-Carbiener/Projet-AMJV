@@ -119,7 +119,6 @@ public class BossBehavior : MonoBehaviour
         {
             Debug.Log("in timer");
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            bullet.GetComponent<Bullet>().SetDirection(player.transform.position);
             timer = 0f;
         }
 
