@@ -131,8 +131,8 @@ public class BossBehavior : MonoBehaviour
 
     private void Charge()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, maxDistance);
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, radiusCharge);
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, maxDistance);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.gameObject.tag == "Player")
@@ -142,6 +142,7 @@ public class BossBehavior : MonoBehaviour
                 Debug.Log("Hit " + hitCollider.gameObject.name);
             }
         }
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
     //-------------------------------------------------------------------------------------------------------
