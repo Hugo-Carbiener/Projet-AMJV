@@ -1,13 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossBehavior : MonoBehaviour
 {
+    [Header("Prefab variables")]
     [SerializeField]
     private GameObject player;
-    [SerializeField]
-    private Animator animator;
     [SerializeField]
     private Rigidbody rb;
     [SerializeField]
@@ -15,24 +13,23 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private GameObject slimePrefab;
 
-    [SerializeField]
-    private int initialHealth = 10;
+    [Header("Boss variables")]
     [SerializeField]
     private int bossHealth;
     [SerializeField]
     private int bossMaxHealth;
     [SerializeField]
-    private int damage = 5;
-    [SerializeField]
-    private float reloadTimer = 2;
+    private float reloadTimer = 0.05f;
 
+    [Header("Shoot variables")]
     [SerializeField]
-    private ProjManager bulletPrefab;
+    private GameObject bulletPrefab;
     [SerializeField]
     private float firstShootCooldown = 2;
     [SerializeField]
     private float secondShootCooldown = 1;
 
+    [Header("Charge variables")]
     [SerializeField]
     private float maxDistance = 10;
     [SerializeField]
@@ -46,6 +43,7 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private float secondChargeCooldown = 2;
 
+    [Header("Immobilisaiton variables")]
     [SerializeField]
     private float immoTime;
     [SerializeField]
@@ -58,18 +56,19 @@ public class BossBehavior : MonoBehaviour
     private void Awake()
     {
         if (!player) player = GameObject.FindWithTag("Player");
-        if (!animator) animator = GetComponentInChildren<Animator>();
         if (!rb) rb = GetComponent<Rigidbody>();
         if (!healthManager) healthManager = GetComponent<Health>();
+        if (!bulletPrefab) bulletPrefab = Resources.Load("Bullet") as GameObject;
     }
 
     private void Start()
     {
+        Debug.Log("is in Start()");
         previousPhase = 1;
         actualPhase = 1;
         InvokeRepeating("Shoot", 0, firstShootCooldown);
-        Instantiate(slimePrefab);
-        healthManager.OnHealthChange += phaseManager;
+        //Instantiate(slimePrefab);
+        //healthManager.OnHealthChange += phaseManager;
     }
 
 
@@ -112,24 +111,17 @@ public class BossBehavior : MonoBehaviour
 
     private void Shoot()
     {
+        Debug.Log("is in Shoot");
         if (!player) return;
         timer += Time.deltaTime;
-        if (timer >= reloadTimer)
+        Debug.Log("timer: " + timer);
+        if (true)
         {
-            ProjManager bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            bullet.SetDirection(GetShootDirection());
+            Debug.Log("in timer");
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             timer = 0f;
         }
 
-    }
-
-    private Vector3 GetShootDirection()
-    {
-        if (player.transform.position.x > transform.position.x)
-        {
-            return Vector3.right;
-        }
-        return Vector3.left;
     }
 
 
