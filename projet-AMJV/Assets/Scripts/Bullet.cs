@@ -19,8 +19,9 @@ public class Bullet : MonoBehaviour
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("in OnCollisionEnter");
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 30);
         foreach (var hitCollider in hitColliders)
         {
@@ -32,6 +33,22 @@ public class Bullet : MonoBehaviour
             }
         }
         Destroy(gameObject);
+    }*/
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("in onTriggerEnter");
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.tag == "Player")
+            {
+                hitCollider.GetComponent<Health>().Damage(dammages);
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackForce);
+                Debug.Log("Hit " + hitCollider.gameObject.name);
+                Destroy(gameObject);
+            }
+        }
     }
 
 }
