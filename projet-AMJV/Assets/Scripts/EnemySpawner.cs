@@ -15,9 +15,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] GameObject bossPrefab;
     private int count;
+    private GameObject victoryPopUp;
 
     private void Start()
     {
+        victoryPopUp = GameObject.Find("VictoryPopUpCanvas");
+        //victoryPopUp.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
         start_position = player.transform.position;
         numberOfWave = Random.Range(4, 8);
@@ -64,9 +67,8 @@ public class EnemySpawner : MonoBehaviour
         }
         if (countNumberOfWave == numberOfWave)
         {
-            // pop-up de victoire
             player.transform.position = start_position;
-            Debug.Log("Victoire !");
+            victoryPopUp.SetActive(true);
         }
     }
 
