@@ -19,6 +19,7 @@ public class Character : MonoBehaviour
     protected bool castingSpell = false;
     protected Vector3 worldMousePos;
     protected GameObject groundMarker;
+    protected LineRenderer lineRdr;
 
     protected List<string> spells = new List<string>(){ "MainSpell", "SecondarySpell", "MovementSpell" };
 
@@ -31,6 +32,10 @@ public class Character : MonoBehaviour
         groundMarker = GameObject.Find("GroundMarker");
         healthManager = GetComponent<Health>();
         groundMarker.SetActive(false);
+
+        lineRdr = GetComponent<LineRenderer>();
+        lineRdr.positionCount = 2;
+        lineRdr.enabled = false;
 
     }
 
