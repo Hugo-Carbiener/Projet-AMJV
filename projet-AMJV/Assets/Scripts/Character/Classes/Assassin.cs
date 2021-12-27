@@ -10,7 +10,9 @@ public class Assassin : Character
     private float temps;
     [Header("PoisonFlask variables")]
     [SerializeField]
-    private float temp2;
+    private float throwHeight = 5;
+    [SerializeField]
+    private float throwDuration = 1;
     [Header("Dash variables")]
     [SerializeField]
     private float duration = 0.1f;
@@ -21,12 +23,16 @@ public class Assassin : Character
     private float knockbackIntensity = 200;
     private SpriteRenderer spriteRdr;
     private GameObject smokePuff;
+    private GameObject poisonFlaskPrefab;
+    private GameObject poisonFloorPrefab;
 
     private void Awake()
     {
         base.OnAwake();
         spriteRdr = GetComponentInChildren<SpriteRenderer>();
         smokePuff = Resources.Load("Smoke puff") as GameObject;
+        poisonFlaskPrefab = Resources.Load("PoisonFlask") as GameObject;
+        poisonFloorPrefab = Resources.Load("PoisonFloor") as GameObject;
         initialHealth = 45;
         cooldowns = new int[] { 1, 5, 10 };
         durations = new int[] { 0, 0, 0 };
@@ -38,7 +44,6 @@ public class Assassin : Character
         StartCoroutine(StartSpellCooldown("MainSpell"));
         StartCoroutine(StartSpellDuration("MainSpell"));
 
-        //StartCoroutine(HideSprite());
         StartCoroutine(Dash());
         yield return null;
     }
@@ -68,7 +73,33 @@ public class Assassin : Character
 
     private void PoisonFlask()
     {
+        Ray end = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Vector3 target = Vector3.zero;
+        if (Physics.Raycast(end, out hit, Mathf.Infinity))
+        {
+            target = hit.point;
+            target.y = transform.position.y;
+            StartCoroutine(FlaskMovement(target));
+        }
+    }
 
+    private IEnumerator FlaskMovement(Vector3 target)
+    {
+        GameObject poisonFlask = Instantiate(poisonFlaskPrefab, new Vector3(transform.position.x, transform.position.y + lineHeight, transform.position.z), Quaternion.Euler(0, 0, 0));
+
+        Vector3 start = transform.position;
+        Vector3 pos = Vector3.zero;
+        for (float time = 0; time < throwDuration; time += Time.deltaTime)
+        {
+            pos = Vector3.Lerp(start, target, time / throwDuration);
+            pos.y = Mathf.Log(1 + Mathf.PingPong((2 * throwHeight / throwDuration) * time, throwHeight));
+            poisonFlask.transform.position = pos;
+            yield return null;
+        }
+        Destroy(poisonFlask);
+        pos.y = 0.51f;
+        Instantiate(poisonFloorPrefab, pos, Quaternion.Euler(90, 0, 0));
     }
 
     private IEnumerator Dash()
@@ -122,12 +153,5 @@ public class Assassin : Character
             collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * knockbackIntensity);
             Debug.Log("Hit " + collision.gameObject.name);
         }
-    }
-
-    private IEnumerator HideSprite()
-    {
-        spriteRdr.enabled = false;
-        yield return new WaitForSeconds(duration);
-        spriteRdr.enabled = true;
     }
 }
