@@ -21,7 +21,6 @@ public class Assassin : Character
     private bool isDashing = false;
 
     private float knockbackIntensity = 200;
-    private SpriteRenderer spriteRdr;
     private GameObject smokePuff;
     private GameObject poisonFlaskPrefab;
     private GameObject poisonFloorPrefab;
@@ -29,7 +28,6 @@ public class Assassin : Character
     private void Awake()
     {
         base.OnAwake();
-        spriteRdr = GetComponentInChildren<SpriteRenderer>();
         smokePuff = Resources.Load("Smoke puff") as GameObject;
         poisonFlaskPrefab = Resources.Load("PoisonFlask") as GameObject;
         poisonFloorPrefab = Resources.Load("PoisonFloor") as GameObject;
@@ -68,7 +66,7 @@ public class Assassin : Character
 
     private void Sprint()
     {
-        SpeedBoost(2);
+        StartCoroutine(SpeedBoost(2));
     }
 
     private void PoisonFlask()

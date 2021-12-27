@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6075934706057153654}
   - component: {fileID: 6075934706057153653}
   - component: {fileID: 6075934706057153658}
-  - component: {fileID: 8136661334956598039}
   m_Layer: 0
   m_Name: PoisonFlask
   m_TagString: Untagged
@@ -130,16 +129,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb7376fa8d87f14db56721e102b9af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8136661334956598039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6075934706057153652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4734858a56a90624fb74fadc689b8a70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poisonFloorPrefab: {fileID: 8197276078548287638, guid: d99427f336d07b643ae2283da3ddbfae, type: 3}

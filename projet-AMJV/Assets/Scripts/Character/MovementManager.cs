@@ -29,16 +29,6 @@ public class MovementManager : MonoBehaviour
         {
             Vector3 vector = Vector3.zero;
 
-            // sprint
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                speed = runningSpeed;
-            }
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                speed = walkingSpeed;
-            }
-
             // movement
             if (Input.GetKey(KeyCode.Z))
             {
@@ -72,12 +62,20 @@ public class MovementManager : MonoBehaviour
                 SetDefaultAnimation();
             }
 
-            if (character.IsSpeedBoosted())
-            {
-                speed *= 1.5f;
-            }
             vector.y = rb.velocity.y / speed;
             rb.velocity = vector * speed;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (character.IsSpeedBoosted())
+        {
+            speed = runningSpeed;
+        } 
+        else
+        {
+            speed = walkingSpeed;
         }
     }
 
