@@ -28,7 +28,6 @@ public class Mage : Character
     {
         StartCoroutine(StartSpellCooldown("MainSpell"));
         StartCoroutine(StartSpellDuration("MainSpell"));
-        Debug.Log("Main spell");
 
         Fireball();
         yield return null;
@@ -38,7 +37,6 @@ public class Mage : Character
     {
         StartCoroutine(StartSpellCooldown("SecondarySpell"));
         StartCoroutine(StartSpellDuration("SecondarySpell"));
-        Debug.Log("Sec spell");
 
         Icewall();
         yield return null;
@@ -47,7 +45,6 @@ public class Mage : Character
     public IEnumerator MovementSpell()
     {
         StartCoroutine(StartSpellDuration("MovementSpell"));
-        Debug.Log("Movement spell");
 
         Transposition();
         yield return null;

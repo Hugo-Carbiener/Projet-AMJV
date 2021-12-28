@@ -19,6 +19,8 @@ public class Character : MonoBehaviour
     protected bool castingSpell = false;
     protected Vector3 worldMousePos;
     protected GameObject groundMarker;
+    protected LineRenderer lineRdr;
+    protected SpriteRenderer spriteRdr;
 
     protected List<string> spells = new List<string>(){ "MainSpell", "SecondarySpell", "MovementSpell" };
 
@@ -32,6 +34,10 @@ public class Character : MonoBehaviour
         healthManager = GetComponent<Health>();
         groundMarker.SetActive(false);
 
+        lineRdr = GetComponent<LineRenderer>();
+        lineRdr.positionCount = 2;
+        lineRdr.enabled = false;
+        spriteRdr = GetComponentInChildren<SpriteRenderer>();
     }
 
     public int getIntialHealth() { return initialHealth; }
@@ -90,9 +96,14 @@ public class Character : MonoBehaviour
 
     protected IEnumerator SpeedBoost(float duration)
     {
+        Color baseColor = spriteRdr.color;
+        spriteRdr.color = Color.cyan;
+
         isSpeedBoosted = true;
         yield return new WaitForSeconds(duration);
         isSpeedBoosted = false;
+
+        spriteRdr.color = baseColor;
     }
 
     protected IEnumerator Invulnerability(float duration)
