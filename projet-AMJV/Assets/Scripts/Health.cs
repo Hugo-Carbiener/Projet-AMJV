@@ -12,6 +12,14 @@ public class Health : MonoBehaviour
 
     public event Action OnDeath;
     public event Action OnHealthChange;
+
+    private GameObject defeatPopUp;
+
+    private void Start()
+    {
+        defeatPopUp = GameObject.Find("DefeatPopUpCanvas");
+        defeatPopUp.SetActive(false);
+    }
     public int getMaxHealth() { return maxHealth; }
 
     public int getHealth() { return health; }
@@ -51,6 +59,7 @@ public class Health : MonoBehaviour
     private void Death()
     {
         OnDeath?.Invoke();
-        Debug.Log("You are dead.");
+        defeatPopUp.SetActive(true);
+        Time.timeScale = 0;
     }
 }
