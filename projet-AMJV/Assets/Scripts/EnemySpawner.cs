@@ -16,11 +16,22 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] GameObject bossPrefab;
     private int count;
     private GameObject victoryPopUp;
+    private GameObject defeatPopUp;
+    private float timer;
+    private float min;
+    private float sec;
+    [SerializeField] private TMPro.TextMeshProUGUI textCurrentWave;
+    [SerializeField] private TMPro.TextMeshProUGUI textTimer;
+    [SerializeField] private TMPro.TextMeshProUGUI timeVictory;
+    [SerializeField] private TMPro.TextMeshProUGUI timeDefeat;
+    [SerializeField] private TMPro.TextMeshProUGUI waveDefeat;
 
     private void Start()
     {
+        Time.timeScale = 1;
         victoryPopUp = GameObject.Find("VictoryPopUpCanvas");
-        //victoryPopUp.SetActive(false);
+        victoryPopUp.SetActive(false);
+        defeatPopUp = GameObject.Find("DefeatPopUpCanvas");
         player = GameObject.FindGameObjectWithTag("Player");
         start_position = player.transform.position;
         numberOfWave = Random.Range(4, 8);
@@ -47,6 +58,10 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        timer = Time.timeSinceLevelLoad;
+        min = Mathf.Floor(timer / 60);
+        sec = Mathf.RoundToInt(timer % 60);
+        textTimer.text = string.Format("{0:00}:{1:00}", min, sec);
         count = GameObject.FindGameObjectsWithTag("Monster").Length;
         if ( count == 0 && countNumberOfWave<numberOfWave-1 && countNumberOfWave>0)
         {
@@ -55,6 +70,8 @@ public class EnemySpawner : MonoBehaviour
             playerHealth.setHealth(playerHealth.getMaxHealth());
             Debug.Log("nouvelle vague");
             NewWave();
+            textCurrentWave.text = countNumberOfWave.ToString();
+
         }
         if (countNumberOfWave == numberOfWave-1)
         {
@@ -68,7 +85,15 @@ public class EnemySpawner : MonoBehaviour
         if (countNumberOfWave == numberOfWave)
         {
             player.transform.position = start_position;
+            timeVictory.text = string.Format("{0:00}:{1:00}", min, sec);
+            Time.timeScale = 0;
             victoryPopUp.SetActive(true);
+        }
+
+        if (Time.timeScale == 0 && countNumberOfWave != numberOfWave)
+        {
+            timeDefeat.text = string.Format("{0:00}:{1:00}", min, sec);
+            waveDefeat.text = countNumberOfWave.ToString();
         }
     }
 
