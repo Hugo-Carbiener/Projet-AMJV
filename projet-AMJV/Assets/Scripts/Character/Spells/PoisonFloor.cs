@@ -13,7 +13,7 @@ public class PoisonFloor : MonoBehaviour
     private void PoisonDamage()
     {
         Debug.Log("Hitting");
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
         foreach(Collider collider in colliders)
         {
             if(collider.gameObject.tag == "Monster" || collider.gameObject.tag == "Player")

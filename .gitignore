@@ -9,6 +9,7 @@
 /projet-AMJV/[Bb]uilds/
 /projet-AMJV/[Ll]ogs/
 /projet-AMJV/[Mm]emoryCaptures/
+/projet-AMJV/UserSettings/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
