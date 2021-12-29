@@ -5,9 +5,8 @@ using UnityEngine;
 public class Mage : Character
 {
     [Header("Fireball variables")]
-    private float fireballRange = 1;
-    [Header("Icewall variables")]
-    private float temp2;
+    [SerializeField]
+    private float fireballRange = 3;
 
     private GameObject fireballPrefab;
     private GameObject icewallPrefab;
@@ -54,7 +53,7 @@ public class Mage : Character
     {
         GameObject fireball = Instantiate(fireballPrefab);
         float mouseAngle = MouseAngle.getMouseAngle();
-        fireball.transform.position = new Vector3(gameObject.transform.position.x + fireballRange * Mathf.Cos(mouseAngle * Mathf.Deg2Rad), gameObject.transform.position.y + 1f, gameObject.transform.position.z + fireballRange * Mathf.Sin(mouseAngle * Mathf.Deg2Rad));
+        fireball.transform.position = new Vector3(gameObject.transform.position.x + fireballRange * Mathf.Cos(mouseAngle * Mathf.Deg2Rad), gameObject.transform.position.y + 4f, gameObject.transform.position.z + fireballRange * Mathf.Sin(mouseAngle * Mathf.Deg2Rad));
     }
 
     private void Icewall()
@@ -80,6 +79,7 @@ public class Mage : Character
                 StartCoroutine(StartSpellCooldown("MovementSpell"));
                 Vector3 temp = hit.collider.gameObject.transform.position;
                 hit.collider.gameObject.transform.position = transform.position;
+                hit.collider.gameObject.transform.Translate(Vector3.up * 5);
                 transform.position = temp;
             }
         }

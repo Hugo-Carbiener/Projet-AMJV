@@ -8,20 +8,20 @@ public class Knight : Character
     [SerializeField]
     private float knockbackIntensity = 200;
     [SerializeField]
-    private float swordStrikeRadius = 1f;
+    private float swordStrikeRadius = 5;
     [SerializeField]
-    private float attackRange = 1f;
+    private float attackRange = 5;
 
     [Header("Whirlwind variables")]
     [SerializeField]
-    private float whirlwindRadius = 2f;
+    private float whirlwindRadius = 10;
     [Header("Jump variables")]
     [SerializeField]
     private float jumpDuration = 0.5f;
     [SerializeField]
-    private float jumpHeight = 4;
+    private float jumpHeight = 20;
     [SerializeField]
-    private float jumpLandingRadius = 2;
+    private float jumpLandingRadius = 10;
 
     private void Awake()
     {

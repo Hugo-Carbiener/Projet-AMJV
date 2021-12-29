@@ -10,16 +10,25 @@ public class Health : MonoBehaviour
     private bool isInvulnerable = false;
     private float hitIndicatorDuration = 0.2f;
 
+    SpriteRenderer sr;
+
     public event Action OnDeath;
     public event Action OnHealthChange;
 
     private GameObject defeatPopUp;
+    
+    private void Awake()
+    {
+        sr = GetComponentInChildren<SpriteRenderer>();
+    }
 
     private void Start()
     {
         defeatPopUp = GameObject.Find("DefeatPopUpCanvas");
         defeatPopUp.SetActive(false);
     }
+
+
     public int getMaxHealth() { return maxHealth; }
 
     public int getHealth() { return health; }
@@ -29,6 +38,18 @@ public class Health : MonoBehaviour
 
     public void Damage(int dmg)
     {
+        float rd = UnityEngine.Random.value;
+        bool isCriticalHit;
+
+        if (rd < 0.1)
+        {
+            dmg *= 2;
+            isCriticalHit = true;
+        } else
+        {
+            isCriticalHit = false;
+        }
+
         if (!isInvulnerable)
         {
             if (health - dmg <= 0)
@@ -40,14 +61,15 @@ public class Health : MonoBehaviour
             {
                 health -= dmg;
             }
+
             StartCoroutine("HitIndicator");
+            DamagePopUp.Create(transform.position, dmg, isCriticalHit);
             OnHealthChange?.Invoke();
         }
     }
 
     private IEnumerator HitIndicator()
     {
-        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
         Color baseColor = sr.color;
         Color newColor = Color.red;
 
