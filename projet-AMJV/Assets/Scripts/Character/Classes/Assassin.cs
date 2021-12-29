@@ -10,14 +10,14 @@ public class Assassin : Character
     private float temps;
     [Header("PoisonFlask variables")]
     [SerializeField]
-    private float throwHeight = 5;
+    private float throwHeight = 25;
     [SerializeField]
     private float throwDuration = 1;
     [Header("Dash variables")]
     [SerializeField]
     private float duration = 0.1f;
     [SerializeField]
-    private float lineHeight = 2;
+    private float lineHeight = 10;
     private bool isDashing = false;
 
     private float knockbackIntensity = 200;

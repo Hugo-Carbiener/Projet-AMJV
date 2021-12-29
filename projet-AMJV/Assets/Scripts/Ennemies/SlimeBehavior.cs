@@ -21,9 +21,9 @@ public class SlimeBehavior : MonoBehaviour
     [SerializeField]
     private int damage = 5;
     [SerializeField]
-    private float jumpCooldown = 1.5f;
+    private float jumpCooldown = 1f;
     [SerializeField]
-    private float horizontalForce = 2;
+    private float horizontalForce = 15;
     [SerializeField]
     private float verticalForce = 3;
 

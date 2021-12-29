@@ -5,9 +5,9 @@ using UnityEngine;
 public class MovementManager : MonoBehaviour
 {
     [SerializeField]
-    private float walkingSpeed;
+    private float walkingSpeed = 25;
     [SerializeField]
-    private float runningSpeed;
+    private float runningSpeed = 50;
     private Character character;
     private Animator anim;
     private float speed;

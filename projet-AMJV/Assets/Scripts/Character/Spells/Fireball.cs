@@ -7,13 +7,13 @@ public class Fireball : MonoBehaviour
     [SerializeField]
     private float speed = 1;
     [SerializeField]
-    private float explosionRadius = 10;
+    private float explosionRadius = 5;
     [SerializeField]
     private float knockbackIntensity = 200;
     [SerializeField]
     private GameObject explosionPrefab;
     [SerializeField]
-    private float maxRange = 10;
+    private float maxRange = 50;
     private Vector3 startingPos;
 
     private bool isImmobile;
