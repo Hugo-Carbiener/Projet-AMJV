@@ -5,9 +5,8 @@ using UnityEngine;
 public class Mage : Character
 {
     [Header("Fireball variables")]
-    private float fireballRange = 1;
-    [Header("Icewall variables")]
-    private float temp2;
+    [SerializeField]
+    private float fireballRange = 2;
 
     private GameObject fireballPrefab;
     private GameObject icewallPrefab;
