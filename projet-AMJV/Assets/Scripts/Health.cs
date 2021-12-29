@@ -10,8 +10,15 @@ public class Health : MonoBehaviour
     private bool isInvulnerable = false;
     private float hitIndicatorDuration = 0.2f;
 
+    SpriteRenderer sr;
+
     public event Action OnDeath;
     public event Action OnHealthChange;
+
+    private void Awake()
+    {
+        sr = GetComponentInChildren<SpriteRenderer>();
+    }
 
     public int getMaxHealth() { return maxHealth; }
 
@@ -54,7 +61,6 @@ public class Health : MonoBehaviour
 
     private IEnumerator HitIndicator()
     {
-        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
         Color baseColor = sr.color;
         Color newColor = Color.red;
 

@@ -7,7 +7,7 @@ public class PoisonFloor : MonoBehaviour
     private void Awake()
     {
         Debug.Log("Awakening");
-        InvokeRepeating("PoisonDamage", 0, 0.5f);
+        InvokeRepeating("PoisonDamage", 0, 0.2f);
     }
 
     private void PoisonDamage()
@@ -18,7 +18,7 @@ public class PoisonFloor : MonoBehaviour
         {
             if(collider.gameObject.tag == "Monster" || collider.gameObject.tag == "Player")
             {
-                collider.gameObject.GetComponent<Health>().Damage(2);
+                collider.gameObject.GetComponent<Health>().Damage(1);
             }
         }
     }
