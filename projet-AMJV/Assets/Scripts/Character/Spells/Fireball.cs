@@ -81,7 +81,7 @@ public class Fireball : MonoBehaviour
     {
         ball.SetActive(false);
         fire.Stop();
-        smoke.Stop();
+        smoke.Stop();   
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }

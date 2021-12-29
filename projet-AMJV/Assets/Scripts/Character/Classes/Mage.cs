@@ -53,7 +53,7 @@ public class Mage : Character
     {
         GameObject fireball = Instantiate(fireballPrefab);
         float mouseAngle = MouseAngle.getMouseAngle();
-        fireball.transform.position = new Vector3(gameObject.transform.position.x + fireballRange * Mathf.Cos(mouseAngle * Mathf.Deg2Rad), gameObject.transform.position.y + 5f, gameObject.transform.position.z + fireballRange * Mathf.Sin(mouseAngle * Mathf.Deg2Rad));
+        fireball.transform.position = new Vector3(gameObject.transform.position.x + fireballRange * Mathf.Cos(mouseAngle * Mathf.Deg2Rad), gameObject.transform.position.y + 4f, gameObject.transform.position.z + fireballRange * Mathf.Sin(mouseAngle * Mathf.Deg2Rad));
     }
 
     private void Icewall()

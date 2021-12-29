@@ -257,9 +257,9 @@ MonoBehaviour:
   healthManager: {fileID: 5962852551977278911}
   initialHealth: 20
   damage: 5
-  jumpCooldown: 1.5
-  horizontalForce: 4
-  verticalForce: 2
+  jumpCooldown: 1
+  horizontalForce: 15
+  verticalForce: 3
 --- !u!1001 &1669151561462377971
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -448,7 +448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1767889567615315447, guid: 803e2f3f843af6444a0ae3a80bfd6210, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.47
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1767889567615315447, guid: 803e2f3f843af6444a0ae3a80bfd6210, type: 3}
       propertyPath: m_LocalPosition.z
