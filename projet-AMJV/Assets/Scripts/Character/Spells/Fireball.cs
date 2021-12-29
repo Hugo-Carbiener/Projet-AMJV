@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 1;
-    [SerializeField]
+    private float speed = 50;
     private float explosionRadius = 5;
-    [SerializeField]
     private float knockbackIntensity = 200;
-    [SerializeField]
     private GameObject explosionPrefab;
-    [SerializeField]
     private float maxRange = 50;
     private Vector3 startingPos;
 
+    [SerializeField]
+    private GameObject ball;
+    [SerializeField]
+    private ParticleSystem fire;
+    [SerializeField]
+    private ParticleSystem smoke;
+
     private bool isImmobile;
-    private bool hasExplosed;
+    private bool hasExploded;
 
     private void Start()
     {
         StartCoroutine(WaitOnStartUp());
-        hasExplosed = false;
+        hasExploded = false;
         startingPos = transform.position;
         if (!explosionPrefab) explosionPrefab = Resources.Load("Explosion") as GameObject;
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
@@ -31,13 +33,13 @@ public class Fireball : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isImmobile)
+        if (!isImmobile && !hasExploded)
         {
             transform.Translate(-Vector3.forward * Time.deltaTime * speed);
         }
         if (Vector3.Distance(startingPos, transform.position) >= maxRange)
         {
-            if (!hasExplosed)
+            if (!hasExploded)
             {
                 Debug.Log("Went too far");
                 Explosion();
@@ -49,7 +51,7 @@ public class Fireball : MonoBehaviour
     {
         if (other.gameObject.tag != "Ground" && other.gameObject.tag != "Player" && other.gameObject.name != "GroundDetector")
         {
-            if (!hasExplosed)
+            if (!hasExploded)
             {
                 Debug.Log("Hit " + other.gameObject.name);
                 Explosion();
@@ -59,7 +61,7 @@ public class Fireball : MonoBehaviour
 
     private void Explosion()
     {
-        hasExplosed = true;
+        hasExploded = true;
         GameObject explosion = Instantiate(explosionPrefab);
         explosion.transform.position = transform.position;
 
@@ -72,6 +74,15 @@ public class Fireball : MonoBehaviour
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackIntensity);
             }
         }
+        StartCoroutine(EndOfLife());
+    }
+
+    private IEnumerator EndOfLife()
+    {
+        ball.SetActive(false);
+        fire.Stop();
+        smoke.Stop();
+        yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }
 

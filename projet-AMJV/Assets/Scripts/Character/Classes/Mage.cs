@@ -6,7 +6,7 @@ public class Mage : Character
 {
     [Header("Fireball variables")]
     [SerializeField]
-    private float fireballRange = 10;
+    private float fireballRange = 3;
 
     private GameObject fireballPrefab;
     private GameObject icewallPrefab;
