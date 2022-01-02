@@ -12,7 +12,6 @@ public class PoisonFloor : MonoBehaviour
 
     private void PoisonDamage()
     {
-        Debug.Log("Hitting");
         Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
         foreach(Collider collider in colliders)
         {

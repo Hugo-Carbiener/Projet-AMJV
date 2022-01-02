@@ -18,17 +18,21 @@ public class ArcherBehavior : MonoBehaviour
     private Health healthManager;
 
     [Header("Variables")]
-    [SerializeField]
-    private float fleeRange;
-    [SerializeField]
-    private float attackRange;
+    private float fleeRange = 20;
+    private float attackRange = 50;
     [SerializeField]
     private float movementSpeed;
     [SerializeField]
     private float shootDuration;
-
-    private int cooldown = 5;
-    private float counter;
+    private bool isOnCooldown;
+    private States state;
+    private enum States
+    {
+        following,
+        fleeing,
+        shooting
+    }
+    //private float counter;
 
     private void Awake()
     {
@@ -41,38 +45,60 @@ public class ArcherBehavior : MonoBehaviour
         healthManager.setHealth(10);
         healthManager.setMaxHealth(10);
 
+        isOnCooldown = false;
     }
 
     private void Update()
     {
-        counter -= Time.deltaTime;
-        if(counter < 0)
+        Debug.Log(healthManager.getHealth());
+        ReconsiderLifeChoices();
+    }
+
+    private void FixedUpdate()
+    {
+        switch(state)
         {
-            ReconsiderLifeChoices();
+            case States.shooting:
+                agent.ResetPath();
+                break;
+            case States.fleeing:
+                agent.ResetPath();
+                Vector3 dir = transform.position - player.position;
+                dir.y = 0;
+                transform.Translate(dir.normalized * movementSpeed * Time.deltaTime);
+                break;
+            case States.following:
+                agent.SetDestination(player.position);
+                break;
         }
     }
 
     private void ReconsiderLifeChoices()
     {
         float playerMonsterDistance = Vector3.Distance(player.position, transform.position);
+
         if (playerMonsterDistance > fleeRange && playerMonsterDistance < attackRange)
         {
-            StartCoroutine(ShootArrows());
+            state = States.shooting;
+            if (!isOnCooldown)
+            {
+                StartCoroutine(ShootArrows());
+            }
         }
         else if (playerMonsterDistance < fleeRange)
         {
-            transform.Translate((transform.position - player.position) * movementSpeed);
+            state = States.fleeing;
         }
         else
         {
-
+            state = States.following;
         }
-
-        counter = cooldown;
     }
 
     private IEnumerator ShootArrows()
     {
+        isOnCooldown = true;
+
         RaycastHit hit;
         if (Physics.SphereCast(transform.position, 0.5f, (player.position - transform.position), out hit, attackRange))
         {
@@ -81,22 +107,20 @@ public class ArcherBehavior : MonoBehaviour
                 int arrowNumber = Random.Range(0, 6);
                 for (int i = 1; i <= arrowNumber; i++)
                 {
-                    Instantiate(arrowPrefab);
+                    Instantiate(arrowPrefab, transform.position, Quaternion.identity);
                     yield return new WaitForSeconds(shootDuration / arrowNumber);
                 }
             }
         }
+        yield return new WaitForSeconds(5);
+        isOnCooldown = false;
     }
 
-    private bool SetDestination(Vector3 targetDestination)
+    private IEnumerator WaitAtStart()
     {
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(targetDestination, out hit, 1f, NavMesh.AllAreas))
-        {
-            agent.SetDestination(hit.position);
-            return true;
-        }
-        return false;
+        isOnCooldown = true;
+        yield return new WaitForSeconds(10);
+        isOnCooldown = false;
     }
 
     private void Death()
