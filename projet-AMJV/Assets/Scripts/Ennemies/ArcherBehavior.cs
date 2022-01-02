@@ -50,7 +50,6 @@ public class ArcherBehavior : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(healthManager.getHealth());
         ReconsiderLifeChoices();
     }
 
@@ -72,7 +71,7 @@ public class ArcherBehavior : MonoBehaviour
                 break;
         }
     }
-
+    
     private void ReconsiderLifeChoices()
     {
         float playerMonsterDistance = Vector3.Distance(player.position, transform.position);
@@ -94,7 +93,7 @@ public class ArcherBehavior : MonoBehaviour
             state = States.following;
         }
     }
-
+    
     private IEnumerator ShootArrows()
     {
         isOnCooldown = true;

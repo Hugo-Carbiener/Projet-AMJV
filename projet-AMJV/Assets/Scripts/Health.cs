@@ -82,6 +82,6 @@ public class Health : MonoBehaviour
     {
         OnDeath?.Invoke();
         //defeatPopUp.SetActive(true);
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
     }
 }

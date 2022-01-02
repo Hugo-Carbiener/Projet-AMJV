@@ -5,7 +5,7 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     private Transform player;
-    private float speed = 10;
+    private float speed = 10f;
 
     private float lifetime = 10;
     private float counter;
@@ -15,6 +15,7 @@ public class Arrow : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         transform.LookAt(player);
+        transform.position = new Vector3(transform.position.x, 1, transform.position.z);
         counter = lifetime;
     }
 
@@ -32,7 +33,7 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag != "Player")
+        if(other.gameObject.tag == "Player")
         {
             player.GetComponent<Health>().Damage(5);
             player.GetComponent<Rigidbody>().AddForce((player.position - transform.position) * 100);
