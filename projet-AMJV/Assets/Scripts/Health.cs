@@ -25,7 +25,7 @@ public class Health : MonoBehaviour
     private void Start()
     {
         defeatPopUp = GameObject.Find("DefeatPopUpCanvas");
-        defeatPopUp.SetActive(false);
+        //defeatPopUp.SetActive(false);
     }
 
 
@@ -81,7 +81,7 @@ public class Health : MonoBehaviour
     private void Death()
     {
         OnDeath?.Invoke();
-        defeatPopUp.SetActive(true);
-        Time.timeScale = 0;
+        //defeatPopUp.SetActive(true);
+        //Time.timeScale = 0;
     }
 }
