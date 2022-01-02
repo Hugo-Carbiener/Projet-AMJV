@@ -18,7 +18,7 @@ public class GolemBehavior : MonoBehaviour
     private Health healthManager;
 
     [Header("Variables")]
-    private float attackArea = 5;
+    private float attackArea = 15;
     private float aggroArea = 50;
     [SerializeField]
     private float movementSpeed;
@@ -84,9 +84,9 @@ public class GolemBehavior : MonoBehaviour
     {
         float playerMonsterDistance = Vector3.Distance(player.position, transform.position);
 
-        if (playerMonsterDistance < aggroArea)
+        if (playerMonsterDistance > aggroArea)
         {
-            state = States.attacking;
+            state = States.idle;
         }
         else if (playerMonsterDistance > attackArea && playerMonsterDistance < aggroArea)
         {
@@ -94,21 +94,24 @@ public class GolemBehavior : MonoBehaviour
         }
         else
         {
-            state = States.idle;
+            state = States.attacking;
         }
     }
 
     private IEnumerator Attack()
     {
         StartCoroutine(Cooldown());
+
         // process attack angle
         Vector3 offset = player.transform.position - transform.position;
-        float angle = Mathf.Atan2(offset.z, offset.x);
-        Vector3 attackPos = new Vector3(attackRange * Mathf.Cos(angle), 1, attackRange * Mathf.Sin(angle));
+        float angle = Mathf.Atan2(offset.z, offset.x) * Mathf.Rad2Deg;
+        if (angle < 0.0f) angle += 360.0f;
+        angle *= Mathf.Deg2Rad;
+        Vector3 attackPos = transform.position + new Vector3(attackRange * Mathf.Cos(angle), 1 - transform.position.y, attackRange * Mathf.Sin(angle));
 
         // build up
         Debug.Log("buildIp");
-        Instantiate(buildUpPrefab, attackPos, Quaternion.identity);
+        //Instantiate(buildUpPrefab, attackPos, Quaternion.identity);
         yield return new WaitForSeconds(0.5f);
 
         // smash
@@ -116,7 +119,7 @@ public class GolemBehavior : MonoBehaviour
         Smash(attackPos);
         
         yield return new WaitForSeconds(0.5f);
-        Instantiate(rockFallPrefab, attackPos, Quaternion.identity);
+        //Instantiate(rockFallPrefab, attackPos, Quaternion.identity);
     }
 
     private void Smash(Vector3 attackPos)
@@ -130,14 +133,15 @@ public class GolemBehavior : MonoBehaviour
                 Debug.Log(attackDamage(playerAttackDistance, attackRadius));
                 //player.GetComponent<Health>().Damage(attackDamage(playerAttackDistance, attackRadius));
                 //player.GetComponent<Rigidbody>().AddForce((player.position - transform.position) * 200);
-
             }
         }
     }
 
     private int attackDamage(float distance, float attackRadius)
     {
-        return (int) (-100/attackRadius * distance + 100);
+        int value = (int)(-100 / attackRadius * distance + 100);
+        if (value < 0) return 0;
+        else return (int) (-100/attackRadius * distance + 100);
     }
 
     private IEnumerator Cooldown()
