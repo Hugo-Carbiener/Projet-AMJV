@@ -32,6 +32,7 @@ public class EnemySpawner : MonoBehaviour
         victoryPopUp = GameObject.Find("VictoryPopUpCanvas");
         victoryPopUp.SetActive(false);
         defeatPopUp = GameObject.Find("DefeatPopUpCanvas");
+        defeatPopUp.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
         start_position = player.transform.position;
         numberOfWave = Random.Range(4, 8);

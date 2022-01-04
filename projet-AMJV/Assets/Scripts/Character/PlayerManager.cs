@@ -13,6 +13,8 @@ public class PlayerManager : MonoBehaviour
     private int health;
     private string character_choice;
 
+    [SerializeField] private GameObject defeatPopUp;
+
     public Character getCharacter() { return this.character; }
     public Classes getClass()
     {
@@ -51,5 +53,6 @@ public class PlayerManager : MonoBehaviour
 
         healthManager.setMaxHealth(character.getIntialHealth());
         healthManager.setHealth(character.getIntialHealth());
+        character.setDefeatPopUp(defeatPopUp);
     }
 }

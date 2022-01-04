@@ -7223,6 +7223,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bc6780fd7eaf764b83cd5a38f3887cb, type: 3}
+--- !u!1 &1402787492 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1449279245441842393, guid: 1bc6780fd7eaf764b83cd5a38f3887cb, type: 3}
+  m_PrefabInstance: {fileID: 1402787491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1419945307
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8987,6 +8992,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 529151627198882192, guid: 59306a5910f01084e86d858238767d3c, type: 3}
+      propertyPath: defeatPopUp
+      value: 
+      objectReference: {fileID: 1402787492}
     - target: {fileID: 529151627198882196, guid: 59306a5910f01084e86d858238767d3c, type: 3}
       propertyPath: m_RootOrder
       value: 6

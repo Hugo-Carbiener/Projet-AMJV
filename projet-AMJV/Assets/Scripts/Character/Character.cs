@@ -22,10 +22,13 @@ public class Character : MonoBehaviour
     protected LineRenderer lineRdr;
     protected SpriteRenderer spriteRdr;
 
+    private GameObject defeatPopUp;
+
     protected List<string> spells = new List<string>(){ "MainSpell", "SecondarySpell", "MovementSpell" };
 
     protected virtual void OnAwake()
     {
+        Time.timeScale = 1;
         animator = GetComponentInChildren<Animator>();
         MouseAngle = GetComponentInParent<MouseAngle>();
         rb = GetComponent<Rigidbody>();
@@ -38,6 +41,7 @@ public class Character : MonoBehaviour
         lineRdr.positionCount = 2;
         lineRdr.enabled = false;
         spriteRdr = GetComponentInChildren<SpriteRenderer>();
+        healthManager.OnDeath += Death;
     }
 
     public int getIntialHealth() { return initialHealth; }
@@ -111,5 +115,16 @@ public class Character : MonoBehaviour
         healthManager.SetInvulnerability(true);
         yield return new WaitForSeconds(duration);
         healthManager.SetInvulnerability(false);
+    }
+
+    private void Death()
+    {
+        defeatPopUp.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void setDefeatPopUp(GameObject defeatPopUp)
+    {
+        this.defeatPopUp = defeatPopUp;
     }
 }
