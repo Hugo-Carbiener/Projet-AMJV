@@ -135,6 +135,7 @@ public class BossBehavior : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, maxDistance);
         foreach (var hitCollider in hitColliders)
         {
+            Debug.Log("in foreach : " + hitCollider.gameObject.name);
             if (hitCollider.gameObject.tag == "Player")
             {
                 hitCollider.GetComponent<Health>().Damage(damageCharge);
