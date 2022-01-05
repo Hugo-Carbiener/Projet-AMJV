@@ -52,6 +52,9 @@ public class BossBehavior : MonoBehaviour
     private float immoTime;
     [SerializeField]
     private float staticCooldown;
+    [SerializeField]
+    private float immoRayRadius = 0.5f;
+
 
     private float timer;
     private int previousPhase;
@@ -75,7 +78,8 @@ public class BossBehavior : MonoBehaviour
         previousPhase = 1;
         actualPhase = 1;
         //InvokeRepeating("Shoot", 0, firstShootCooldown);
-        InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
+        //InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
+        InvokeRepeating("Immobilize", 0, staticCooldown);
         //Instantiate(slimePrefab);
         //healthManager.OnHealthChange += phaseManager;
     }
@@ -193,27 +197,30 @@ public class BossBehavior : MonoBehaviour
 
     private void Immobilize()
     {
+        Debug.Log("is in immonilize");
+
         animator.SetBool("IsSummoning", true);
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit) && hit.collider.tag == "Player") 
+        if(Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.forward), out hit))
+        {
+            Debug.DrawLine(transform.position, hit.point, Color.cyan, 80);
+            hit.rigidbody.velocity = Vector3.zero;
+            StartCoroutine(immobilization(immoTime));
+        }
+
+        if (Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.back), out hit) && hit.collider.tag == "Player")
         {
             hit.rigidbody.velocity = Vector3.zero;
             StartCoroutine(immobilization(immoTime));
         }
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit) && hit.collider.tag == "Player")
+        if (Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.right), out hit) && hit.collider.tag == "Player")
         {
             hit.rigidbody.velocity = Vector3.zero;
             StartCoroutine(immobilization(immoTime));
         }
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hit) && hit.collider.tag == "Player")
-        {
-            hit.rigidbody.velocity = Vector3.zero;
-            StartCoroutine(immobilization(immoTime));
-        }
-
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out hit) && hit.collider.tag == "Player")
+        if (Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.left), out hit) && hit.collider.tag == "Player")
         {
             hit.rigidbody.velocity = Vector3.zero;
             StartCoroutine(immobilization(immoTime));
@@ -224,6 +231,7 @@ public class BossBehavior : MonoBehaviour
 
         IEnumerator immobilization(float time)
         {
+            Debug.Log("in immo coroutine");
             yield return new WaitForSeconds(time);
         }
     }

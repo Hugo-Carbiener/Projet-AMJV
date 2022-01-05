@@ -324,6 +324,14 @@ PrefabInstance:
       propertyPath: health
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5816057709732875073, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
+      propertyPath: m_Drag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816057709732875073, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
+      propertyPath: m_Mass
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5816057709732875076, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -346,7 +354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5816057709732875076, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5816057709732875076, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -399,6 +407,10 @@ PrefabInstance:
     - target: {fileID: 5816057709732875078, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
       propertyPath: searchRadius
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816057709732875078, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
+      propertyPath: immoRayRadius
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5816057709732875078, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
       propertyPath: buildingCharge
