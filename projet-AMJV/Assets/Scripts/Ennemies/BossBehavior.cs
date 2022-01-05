@@ -66,7 +66,8 @@ public class BossBehavior : MonoBehaviour
         Debug.Log("is in Start()");
         previousPhase = 1;
         actualPhase = 1;
-        InvokeRepeating("Shoot", 0, firstShootCooldown);
+        //InvokeRepeating("Shoot", 0, firstShootCooldown);
+        InvokeRepeating("Charge", 0, firstChargeCooldown);
         //Instantiate(slimePrefab);
         //healthManager.OnHealthChange += phaseManager;
     }
@@ -130,8 +131,8 @@ public class BossBehavior : MonoBehaviour
 
     private void Charge()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, maxDistance);
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, radiusCharge);
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, maxDistance);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.gameObject.tag == "Player")
@@ -141,6 +142,7 @@ public class BossBehavior : MonoBehaviour
                 Debug.Log("Hit " + hitCollider.gameObject.name);
             }
         }
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
     //-------------------------------------------------------------------------------------------------------

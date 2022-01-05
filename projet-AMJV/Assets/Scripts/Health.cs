@@ -14,18 +14,10 @@ public class Health : MonoBehaviour
 
     public event Action OnDeath;
     public event Action OnHealthChange;
-
-    private GameObject defeatPopUp;
     
     private void Awake()
     {
         sr = GetComponentInChildren<SpriteRenderer>();
-    }
-
-    private void Start()
-    {
-        defeatPopUp = GameObject.Find("DefeatPopUpCanvas");
-        //defeatPopUp.SetActive(false);
     }
 
 
