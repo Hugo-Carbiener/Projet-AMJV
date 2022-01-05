@@ -381,6 +381,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5816057709732875078, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
+      propertyPath: duration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816057709732875078, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
       propertyPath: maxDistance
       value: 15
       objectReference: {fileID: 0}
@@ -391,6 +395,14 @@ PrefabInstance:
     - target: {fileID: 5816057709732875078, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
       propertyPath: radiusCharge
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816057709732875078, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
+      propertyPath: searchRadius
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816057709732875078, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
+      propertyPath: buildingCharge
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5816057709732875080, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
       propertyPath: m_Name
