@@ -340,6 +340,10 @@ PrefabInstance:
       propertyPath: characterClass
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 529151627198882193, guid: 59306a5910f01084e86d858238767d3c, type: 3}
+      propertyPath: knightMainSpell
+      value: 
+      objectReference: {fileID: 1115884677}
     - target: {fileID: 529151627198882196, guid: 59306a5910f01084e86d858238767d3c, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -387,6 +391,10 @@ PrefabInstance:
     - target: {fileID: 529151627198882203, guid: 59306a5910f01084e86d858238767d3c, type: 3}
       propertyPath: m_Name
       value: PlayerMouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 4553943063734325184, guid: 59306a5910f01084e86d858238767d3c, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59306a5910f01084e86d858238767d3c, type: 3}
@@ -2677,6 +2685,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50c1d12c03b8c40b1ad42357d92ba216, type: 3}
+--- !u!82 &1115884677 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4553943063734325184, guid: 59306a5910f01084e86d858238767d3c, type: 3}
+  m_PrefabInstance: {fileID: 60921666}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1140887584
 PrefabInstance:
   m_ObjectHideFlags: 0

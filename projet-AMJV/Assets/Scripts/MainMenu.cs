@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] TMPro.TMP_Dropdown resolutionDropdown;
     [SerializeField] TMPro.TMP_Dropdown qualityDropdown;
     [SerializeField] AudioMixer mixer;
+    [SerializeField] AudioSource click_fx;
     private string masterVolume = "MasterVolume";
     private string musicVolume = "MusicVolume";
     private string soundEffectsVolume = "SoundEffectsVolume";
@@ -53,6 +54,7 @@ public class MainMenu : MonoBehaviour
     {
         characterSelect.SetActive(true);
         mainMenu.SetActive(false);
+        click_fx.Play();
     }
 
     public void ChooseAssassin()
@@ -60,6 +62,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetString("Character","Assassin");
         indexArena = Random.Range(0, 3);
         SceneManager.LoadScene(arenas[indexArena]);
+        click_fx.Play();
     }
 
     public void ChooseKnight()
@@ -67,6 +70,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetString("Character", "Knight");
         indexArena = Random.Range(0, 3);
         SceneManager.LoadScene(arenas[indexArena]);
+        click_fx.Play();
     }
 
     public void ChooseMage()
@@ -74,6 +78,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetString("Character", "Mage");
         indexArena = Random.Range(0, 3);
         SceneManager.LoadScene(arenas[indexArena]);
+        click_fx.Play();
     }
 
     public void GoToParameters()
@@ -89,6 +94,7 @@ public class MainMenu : MonoBehaviour
         float effectsVolume;
         mixer.GetFloat(soundEffectsVolume, out effectsVolume);
         effectsVolumeSlider.value = effectsVolume;
+        click_fx.Play();
 
     }
 
@@ -96,18 +102,20 @@ public class MainMenu : MonoBehaviour
     {
         mainMenu.SetActive(true);
         characterSelect.SetActive(false);
+        click_fx.Play();
     }
 
     public void BackToMainMenuFromParameters()
     {
         mainMenu.SetActive(true);
         parametersMenu.SetActive(false);
+        click_fx.Play();
     }
 
     public void QuitGame()
     {
         Application.Quit();
-        Debug.Log("Game is exiting");
+        click_fx.Play();
     }
 
     public void SelectGeneralVolume()
@@ -182,10 +190,5 @@ public class MainMenu : MonoBehaviour
             int qualityLevel = QualitySettings.GetQualityLevel();
             Debug.Log(qualityLevel);
         }
-    }
-
-    public void StartOnClick()
-    {
-        SceneManager.LoadScene("test");
     }
 }
