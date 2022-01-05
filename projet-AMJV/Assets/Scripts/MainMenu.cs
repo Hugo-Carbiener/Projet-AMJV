@@ -31,23 +31,6 @@ public class MainMenu : MonoBehaviour
         parametersMenu = GameObject.Find("ParametersContainer");
         characterSelect.SetActive(false);
         parametersMenu.SetActive(false);
-        if (mainVolumeSlider != null && PlayerPrefs.HasKey("volume"))
-        {
-            float wantedMainVolume = PlayerPrefs.GetFloat("mainVolume", 0);
-            float wantedMusicVolume = PlayerPrefs.GetFloat("musicVolume", 0);
-            float wantedEffectsVolume = PlayerPrefs.GetFloat("effectsVolume", 0);
-            mainVolumeSlider.value = wantedMainVolume;
-            musicVolumeSlider.value = wantedMusicVolume;
-            effectsVolumeSlider.value = wantedEffectsVolume;
-            AudioListener.volume = wantedMainVolume;
-            mixer.SetFloat(masterVolume, wantedMainVolume);
-            mixer.SetFloat(musicVolume, wantedMusicVolume);
-            mixer.SetFloat(soundEffectsVolume, wantedEffectsVolume);
-            mainVolumeSlider.onValueChanged.AddListener(delegate { SelectGeneralVolume(); });
-            mainVolumeSlider.onValueChanged.AddListener(delegate { SelectMusicVolume(); });
-            mainVolumeSlider.onValueChanged.AddListener(delegate { SelectSoundEffectsVolume(); });
-
-        }
     }
 
     public void GoToCharacterSelect()
