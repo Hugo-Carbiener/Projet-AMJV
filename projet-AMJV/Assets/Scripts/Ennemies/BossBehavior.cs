@@ -31,13 +31,17 @@ public class BossBehavior : MonoBehaviour
 
     [Header("Charge variables")]
     [SerializeField]
-    private float maxDistance = 10;
+    private Animator animator;
+    [SerializeField]
+    private float searchRadius = 10;
+    [SerializeField]
+    private int buildingCharge = 5;
+    [SerializeField]
+    private float duration = 0.1f;
     [SerializeField]
     private int damageCharge = 10;
     [SerializeField]
     private float knockbackCharge = 5;
-    [SerializeField]
-    private float radiusCharge = 3;
     [SerializeField]
     private float firstChargeCooldown = 5;
     [SerializeField]
@@ -52,6 +56,8 @@ public class BossBehavior : MonoBehaviour
     private float timer;
     private int previousPhase;
     private int actualPhase;
+    private bool isDashing;
+    private bool isImmobilised;
 
     private void Awake()
     {
@@ -59,6 +65,8 @@ public class BossBehavior : MonoBehaviour
         if (!rb) rb = GetComponent<Rigidbody>();
         if (!healthManager) healthManager = GetComponent<Health>();
         if (!bulletPrefab) bulletPrefab = Resources.Load("Bullet") as GameObject;
+        if (!animator) animator = GetComponentInChildren<Animator>();
+
     }
 
     private void Start()
@@ -67,7 +75,7 @@ public class BossBehavior : MonoBehaviour
         previousPhase = 1;
         actualPhase = 1;
         //InvokeRepeating("Shoot", 0, firstShootCooldown);
-        InvokeRepeating("Charge", 0, firstChargeCooldown);
+        InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
         //Instantiate(slimePrefab);
         //healthManager.OnHealthChange += phaseManager;
     }
@@ -119,8 +127,10 @@ public class BossBehavior : MonoBehaviour
         if (true)
         {
             Debug.Log("in timer");
+            animator.SetBool("IsFiring", true);
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             timer = 0f;
+            animator.SetBool("IsFiring", false);
         }
 
     }
@@ -129,21 +139,53 @@ public class BossBehavior : MonoBehaviour
     //--------------------------------------------------------------------------------------------------
     // Second third of life : charging
 
-    private void Charge()
+    private void ChargeManager()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radiusCharge);
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, maxDistance);
+        Debug.Log("in charge manager");
+        StartCoroutine(Charge());
+    }
+
+
+    private IEnumerator Charge()
+    {
+        Vector3 target = new Vector3();
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, searchRadius);
         foreach (var hitCollider in hitColliders)
         {
-            Debug.Log("in foreach : " + hitCollider.gameObject.name);
             if (hitCollider.gameObject.tag == "Player")
             {
-                hitCollider.GetComponent<Health>().Damage(damageCharge);
-                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackCharge);
-                Debug.Log("Hit " + hitCollider.gameObject.name);
+                target = hitCollider.gameObject.transform.position;
             }
         }
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        Debug.Log("is in charge");
+        isDashing = true;
+        rb.isKinematic = true;
+
+        animator.SetBool("IsBuildingUpCharge", true);
+        yield return new WaitForSeconds(buildingCharge);
+        animator.SetBool("IsBuildingUpCharge", false);
+
+        animator.SetBool("IsCharging", true);
+        Vector3 start = transform.position;
+        for (float time = 0; time < duration; time += Time.deltaTime)
+        {
+            Vector3 pos = Vector3.Lerp(start, target, time / duration);
+            transform.position = pos;
+            yield return null;
+        }
+        animator.SetBool("IsCharging", false);
+        rb.isKinematic = false;
+        isDashing = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isDashing && collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<Health>().Damage(5);
+            collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * knockbackCharge);
+            Debug.Log("Hit " + collision.gameObject.name);
+        }
     }
 
     //-------------------------------------------------------------------------------------------------------
@@ -151,6 +193,7 @@ public class BossBehavior : MonoBehaviour
 
     private void Immobilize()
     {
+        animator.SetBool("IsSummoning", true);
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit) && hit.collider.tag == "Player") 
         {
@@ -175,6 +218,8 @@ public class BossBehavior : MonoBehaviour
             hit.rigidbody.velocity = Vector3.zero;
             StartCoroutine(immobilization(immoTime));
         }
+
+        animator.SetBool("IsSummoning", false);
 
 
         IEnumerator immobilization(float time)
