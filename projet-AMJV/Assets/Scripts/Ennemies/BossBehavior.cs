@@ -15,9 +15,9 @@ public class BossBehavior : MonoBehaviour
 
     [Header("Boss variables")]
     [SerializeField]
-    private int bossHealth;
+    private int bossHealth = 50;
     [SerializeField]
-    private int bossMaxHealth;
+    private int bossMaxHealth = 50;
     [SerializeField]
     private float reloadTimer = 0.05f;
 
@@ -69,6 +69,8 @@ public class BossBehavior : MonoBehaviour
         if (!player) player = GameObject.FindWithTag("Player");
         if (!rb) rb = GetComponent<Rigidbody>();
         if (!healthManager) healthManager = GetComponent<Health>();
+        healthManager.setHealth(bossHealth);
+        healthManager.setMaxHealth(bossMaxHealth);
         if (!bulletPrefab) bulletPrefab = Resources.Load("Bullet") as GameObject;
         if (!animator) animator = GetComponentInChildren<Animator>();
 
