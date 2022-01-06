@@ -41,7 +41,7 @@ public class Fireball : MonoBehaviour
         {
             if (!hasExploded)
             {
-                Debug.Log("Went too far");
+                //Debug.Log("Went too far");
                 Explosion();
             }
         }
@@ -53,7 +53,7 @@ public class Fireball : MonoBehaviour
         {
             if (!hasExploded)
             {
-                Debug.Log("Hit " + other.gameObject.name);
+                //Debug.Log("Hit " + other.gameObject.name);
                 Explosion();
             }
         }

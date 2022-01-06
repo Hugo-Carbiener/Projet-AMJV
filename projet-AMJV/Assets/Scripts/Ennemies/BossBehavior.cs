@@ -14,10 +14,8 @@ public class BossBehavior : MonoBehaviour
     private GameObject slimePrefab;
 
     [Header("Boss variables")]
-    [SerializeField]
-    private int bossHealth = 50;
-    [SerializeField]
-    private int bossMaxHealth = 50;
+    private int bossHealth = 100;
+    private int bossMaxHealth = 100;
     [SerializeField]
     private float reloadTimer = 0.05f;
 
@@ -55,7 +53,7 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private float staticCooldown;
     [SerializeField]
-    private float immoRayRadius = 2;
+    private float immoRayRadius = 10;
 
 
     private float timer;
@@ -91,32 +89,44 @@ public class BossBehavior : MonoBehaviour
 
     private void phaseManager()
     {
+        Debug.Log("in phaseManager");
+        Debug.Log("actual phase before change = " + actualPhase);
         bossHealth = healthManager.getHealth();
+        Debug.Log("boss health = " + bossHealth);
+        int oneThird = 33;
+        int twoThird = 66;
 
-        if (bossHealth < bossMaxHealth * (2/3) &&  bossHealth > bossMaxHealth *(1/3))
+        if (bossHealth <= twoThird)
         {
-            actualPhase = 2;
+            if(bossHealth > oneThird)
+            {
+                actualPhase = 2;
+            }
+
+            else
+            {
+                actualPhase = 3;
+            }
         }
 
-        if (bossHealth <= bossMaxHealth * (1/3))
-        {
-            actualPhase = 3;
-        }
+        Debug.Log("actual phase after changer = " + actualPhase);
+        Debug.Log("previous phase = " + previousPhase);
 
         if (actualPhase != previousPhase)
         {
             if (actualPhase == 2)
             {
+                //Debug.Log("in phase 2");
                 CancelInvoke();
-                InvokeRepeating("Shoot", 0, secondShootCooldown);
-                InvokeRepeating("Charge", 0, firstChargeCooldown);
+                InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
                 previousPhase = 2;
             }
             else
             {
+                //Debug.Log("in phase 3");
                 CancelInvoke();
+                Immobilize();
                 InvokeRepeating("Charge", 0, secondChargeCooldown);
-                InvokeRepeating("Immobilize", 0, staticCooldown);
                 previousPhase = 3;
             }
         }
@@ -127,13 +137,13 @@ public class BossBehavior : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("is in Shoot");
+        //Debug.Log("is in Shoot");
         if (!player) return;
-        Debug.Log("timer: " + timer);
+        //Debug.Log("timer: " + timer);
         animator.Play("Fire");
         while (timer <= timeShoot)
         {
-            Debug.Log("in timer");
+            //Debug.Log("in timer");
             timer += Time.deltaTime;
         }
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
@@ -202,9 +212,10 @@ public class BossBehavior : MonoBehaviour
     {
         Debug.Log("is in immonilize");
 
-        animator.SetBool("IsSummoning", true);
+        //animator.SetBool("IsSummoning", true);
+        animator.Play("Summon");
         RaycastHit hit;
-        if(Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.forward), out hit) && hit.collider.tag == "Player")
+        if(Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity) && hit.collider.tag == "Player")
         {
             Debug.DrawLine(transform.position, hit.point, Color.cyan, 80);
             hit.rigidbody.velocity = Vector3.zero;
