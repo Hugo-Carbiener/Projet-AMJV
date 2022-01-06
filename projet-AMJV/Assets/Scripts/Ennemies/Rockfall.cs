@@ -23,9 +23,9 @@ public class Rockfall : MonoBehaviour
     {
         GameObject rock = Instantiate(rockPrefab);
         float rdDegree = Random.Range(0, 360) * Mathf.Deg2Rad;
-        float rdRange = Random.Range(0, 5);
+        float rdRange = Random.Range(0, 10);
         int rdSprite = Random.Range(0, 3);
-        rock.transform.position = new Vector3(rdRange * Mathf.Cos(rdDegree), -5.4f, rdRange * Mathf.Sin(rdRange));
+        rock.transform.position = transform.position + new Vector3(rdRange * Mathf.Cos(rdDegree), -5.4f, rdRange * Mathf.Sin(rdRange));
         Sprite sprite = rock1;
         switch(rdSprite)
         {

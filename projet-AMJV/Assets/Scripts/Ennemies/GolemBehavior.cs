@@ -13,12 +13,11 @@ public class GolemBehavior : MonoBehaviour
     [SerializeField]
     private GameObject rockFallPrefab;
     [SerializeField]
-    private GameObject buildUpPrefab;
-    [SerializeField]
     private Health healthManager;
     [SerializeField]
     private Animator anim;
-
+    [SerializeField]
+    private GameObject buildUpObject;
     [Header("Variables")]
     private float attackArea = 15;
     private float aggroArea = 50;
@@ -28,6 +27,7 @@ public class GolemBehavior : MonoBehaviour
     private float attackRange;
     [SerializeField]
     private float attackRadius;
+    private int initialHealth = 50;
     private bool isOnCooldown;
     private States state;
 
@@ -38,21 +38,28 @@ public class GolemBehavior : MonoBehaviour
         following
     }
 
+    private void Awake()
+    {
+        if (!healthManager) healthManager = GetComponent<Health>();
+        healthManager.OnDeath += Death;
+        healthManager.setHealth(initialHealth);
+        healthManager.setMaxHealth(initialHealth);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         if (!player) player = GameObject.FindGameObjectWithTag("Player").transform;
         if (!agent) agent = GetComponent<NavMeshAgent>();
-        if (!buildUpPrefab) buildUpPrefab = Resources.Load("BuildUp") as GameObject;
         if (!rockFallPrefab) rockFallPrefab = Resources.Load("RockFall") as GameObject;
         if (!healthManager) healthManager = GetComponent<Health>();
         if (!anim) anim = GetComponentInChildren<Animator>();
+        if (!buildUpObject) buildUpObject = transform.Find("BuildUpMarker").gameObject;
+        buildUpObject.SetActive(true);
 
         agent.speed = movementSpeed;
 
-        healthManager.OnDeath += Death;
-        healthManager.setHealth(50);
-        healthManager.setMaxHealth(50);
+        
 
         isOnCooldown = false;
     }
@@ -69,11 +76,13 @@ public class GolemBehavior : MonoBehaviour
         switch (state)
         {
             case States.idle:
+                agent.isStopped = true;
                 agent.ResetPath();
                 anim.SetBool("IsAttacking", false);
                 anim.SetBool("IsWalking", false);
                 break;
             case States.attacking:
+                agent.isStopped = true;
                 agent.ResetPath();
                 if (!isOnCooldown)
                 {
@@ -82,6 +91,7 @@ public class GolemBehavior : MonoBehaviour
                 }
                 break;
             case States.following:
+                agent.isStopped = false;
                 agent.SetDestination(player.position);
                 anim.SetBool("IsAttacking", false);
                 anim.SetBool("IsWalking", true);
@@ -110,7 +120,6 @@ public class GolemBehavior : MonoBehaviour
     private IEnumerator Attack()
     {
         StartCoroutine(Cooldown());
-        anim.SetBool("IsAttacking", true);
 
         // process attack angle
         Vector3 offset = player.transform.position - transform.position;
@@ -121,16 +130,17 @@ public class GolemBehavior : MonoBehaviour
 
         // build up
         Debug.Log("buildIp");
-        //Instantiate(buildUpPrefab, attackPos, Quaternion.identity);
-        anim.SetBool("IsAttacking", false);
+        buildUpObject.SetActive(true);
+        anim.Play("Attack");
+        buildUpObject.transform.position = attackPos;
+        yield return new WaitForSeconds(0.25f);
         yield return new WaitForSeconds(0.5f);
+        buildUpObject.SetActive(false);
 
 
         // smash
         Debug.Log("Smahs");
         Smash(attackPos);
-        
-        yield return new WaitForSeconds(0.5f);
         Instantiate(rockFallPrefab, attackPos, Quaternion.identity);
 
         
@@ -161,7 +171,7 @@ public class GolemBehavior : MonoBehaviour
     private IEnumerator Cooldown()
     {
         isOnCooldown = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(7);
         isOnCooldown = false;
     }
 
