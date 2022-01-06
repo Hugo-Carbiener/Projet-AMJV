@@ -92,7 +92,6 @@ public class BossBehavior : MonoBehaviour
     private void phaseManager()
     {
         bossHealth = healthManager.getHealth();
-        bossMaxHealth = healthManager.getMaxHealth();
 
         if (bossHealth < bossMaxHealth * (2/3) &&  bossHealth > bossMaxHealth *(1/3))
         {
