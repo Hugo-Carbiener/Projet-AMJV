@@ -420,6 +420,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 5816057709732875080, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 5816057709732875083, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
       propertyPath: m_Size.x
       value: 2
@@ -878,6 +882,10 @@ PrefabInstance:
     - target: {fileID: 259214728304026568, guid: 59306a5910f01084e86d858238767d3c, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 529151627198882192, guid: 59306a5910f01084e86d858238767d3c, type: 3}
+      propertyPath: characterClass
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 529151627198882196, guid: 59306a5910f01084e86d858238767d3c, type: 3}
       propertyPath: m_RootOrder
