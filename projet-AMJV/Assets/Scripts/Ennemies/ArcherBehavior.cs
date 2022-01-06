@@ -26,6 +26,7 @@ public class ArcherBehavior : MonoBehaviour
     private float shootDuration;
     private bool isOnCooldown;
     private States state;
+
     private enum States
     {
         following,
@@ -40,6 +41,8 @@ public class ArcherBehavior : MonoBehaviour
         if (!agent) agent = GetComponent<NavMeshAgent>();
         if (!arrowPrefab) arrowPrefab = Resources.Load("Arrow") as GameObject;
         if (!healthManager) healthManager = GetComponent<Health>();
+
+        agent.speed = movementSpeed;
 
         healthManager.OnDeath += Death;
         healthManager.setHealth(10);
