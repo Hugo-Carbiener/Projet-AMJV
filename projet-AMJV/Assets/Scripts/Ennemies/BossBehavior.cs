@@ -25,6 +25,8 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private GameObject bulletPrefab;
     [SerializeField]
+    private float timeShoot = 0.48f;
+    [SerializeField]
     private float firstShootCooldown = 2;
     [SerializeField]
     private float secondShootCooldown = 1;
@@ -126,16 +128,16 @@ public class BossBehavior : MonoBehaviour
     {
         Debug.Log("is in Shoot");
         if (!player) return;
-        timer += Time.deltaTime;
         Debug.Log("timer: " + timer);
-        if (true)
+        animator.Play("Fire");
+        while (timer <= timeShoot)
         {
             Debug.Log("in timer");
-            animator.SetBool("IsFiring", true);
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            timer = 0f;
-            animator.SetBool("IsFiring", false);
+            timer += Time.deltaTime;
         }
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        timer = 0f;
+        animator.SetBool("IsFiring", false);
 
     }
 
