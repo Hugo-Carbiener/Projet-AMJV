@@ -114,7 +114,7 @@ public class ArcherBehavior : MonoBehaviour
                 int arrowNumber = Random.Range(0, 6);
                 for (int i = 1; i <= arrowNumber; i++)
                 {
-                    anim.Play("Shooting");
+                    anim.Play("Attack");
                     Instantiate(arrowPrefab, transform.position, Quaternion.identity);
                     yield return new WaitForSeconds(0.48f);
                 }
