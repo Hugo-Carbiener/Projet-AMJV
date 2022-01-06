@@ -16,6 +16,8 @@ public class GolemBehavior : MonoBehaviour
     private GameObject buildUpPrefab;
     [SerializeField]
     private Health healthManager;
+    [SerializeField]
+    private Animator anim;
 
     [Header("Variables")]
     private float attackArea = 15;
@@ -41,14 +43,16 @@ public class GolemBehavior : MonoBehaviour
     {
         if (!player) player = GameObject.FindGameObjectWithTag("Player").transform;
         if (!agent) agent = GetComponent<NavMeshAgent>();
-        //if (!rockFallPrefab) rockFallPrefab = Resources.Load("RockFall") as GameObject;
+        if (!buildUpPrefab) buildUpPrefab = Resources.Load("BuildUp") as GameObject;
+        if (!rockFallPrefab) rockFallPrefab = Resources.Load("RockFall") as GameObject;
         if (!healthManager) healthManager = GetComponent<Health>();
+        if (!anim) anim = GetComponentInChildren<Animator>();
 
         agent.speed = movementSpeed;
 
         healthManager.OnDeath += Death;
-        healthManager.setHealth(10);
-        healthManager.setMaxHealth(10);
+        healthManager.setHealth(50);
+        healthManager.setMaxHealth(50);
 
         isOnCooldown = false;
     }
@@ -66,16 +70,21 @@ public class GolemBehavior : MonoBehaviour
         {
             case States.idle:
                 agent.ResetPath();
+                anim.SetBool("IsAttacking", false);
+                anim.SetBool("IsWalking", false);
                 break;
             case States.attacking:
                 agent.ResetPath();
                 if (!isOnCooldown)
                 {
                     StartCoroutine(Attack());
+                    anim.SetBool("IsWalking", false);
                 }
                 break;
             case States.following:
                 agent.SetDestination(player.position);
+                anim.SetBool("IsAttacking", false);
+                anim.SetBool("IsWalking", true);
                 break;
         }
     }
@@ -101,6 +110,7 @@ public class GolemBehavior : MonoBehaviour
     private IEnumerator Attack()
     {
         StartCoroutine(Cooldown());
+        anim.SetBool("IsAttacking", true);
 
         // process attack angle
         Vector3 offset = player.transform.position - transform.position;
@@ -112,14 +122,18 @@ public class GolemBehavior : MonoBehaviour
         // build up
         Debug.Log("buildIp");
         //Instantiate(buildUpPrefab, attackPos, Quaternion.identity);
+        anim.SetBool("IsAttacking", false);
         yield return new WaitForSeconds(0.5f);
+
 
         // smash
         Debug.Log("Smahs");
         Smash(attackPos);
         
         yield return new WaitForSeconds(0.5f);
-        //Instantiate(rockFallPrefab, attackPos, Quaternion.identity);
+        Instantiate(rockFallPrefab, attackPos, Quaternion.identity);
+
+        
     }
 
     private void Smash(Vector3 attackPos)
@@ -131,8 +145,8 @@ public class GolemBehavior : MonoBehaviour
             {
                 float playerAttackDistance = Vector3.Distance(attackPos, player.position);
                 Debug.Log(attackDamage(playerAttackDistance, attackRadius));
-                //player.GetComponent<Health>().Damage(attackDamage(playerAttackDistance, attackRadius));
-                //player.GetComponent<Rigidbody>().AddForce((player.position - transform.position) * 200);
+                player.GetComponent<Health>().Damage(attackDamage(playerAttackDistance, attackRadius));
+                player.GetComponent<Rigidbody>().AddForce((player.position - transform.position) * 200);
             }
         }
     }
