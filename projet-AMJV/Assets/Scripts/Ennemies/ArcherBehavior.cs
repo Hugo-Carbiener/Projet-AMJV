@@ -16,14 +16,14 @@ public class ArcherBehavior : MonoBehaviour
     private GameObject arrowPrefab;
     [SerializeField]
     private Health healthManager;
+    [SerializeField]
+    private Animator anim;
 
     [Header("Variables")]
     private float fleeRange = 20;
     private float attackRange = 50;
     [SerializeField]
     private float movementSpeed;
-    [SerializeField]
-    private float shootDuration;
     private bool isOnCooldown;
     private States state;
 
@@ -41,6 +41,7 @@ public class ArcherBehavior : MonoBehaviour
         if (!agent) agent = GetComponent<NavMeshAgent>();
         if (!arrowPrefab) arrowPrefab = Resources.Load("Arrow") as GameObject;
         if (!healthManager) healthManager = GetComponent<Health>();
+        if (!anim) anim = GetComponentInChildren<Animator>();
 
         agent.speed = movementSpeed;
 
@@ -90,10 +91,14 @@ public class ArcherBehavior : MonoBehaviour
         else if (playerMonsterDistance < fleeRange)
         {
             state = States.fleeing;
+            anim.SetBool("IsWalking", true);
+            anim.SetBool("IsAttacking", false);
         }
         else
         {
             state = States.following;
+            anim.SetBool("IsWalking", true);
+            anim.SetBool("IsAttacking", false);
         }
     }
     
@@ -109,8 +114,9 @@ public class ArcherBehavior : MonoBehaviour
                 int arrowNumber = Random.Range(0, 6);
                 for (int i = 1; i <= arrowNumber; i++)
                 {
+                    anim.Play("Shooting");
                     Instantiate(arrowPrefab, transform.position, Quaternion.identity);
-                    yield return new WaitForSeconds(shootDuration / arrowNumber);
+                    yield return new WaitForSeconds(0.48f);
                 }
             }
         }
