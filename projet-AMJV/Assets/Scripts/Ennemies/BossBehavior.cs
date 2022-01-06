@@ -53,7 +53,7 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private float staticCooldown;
     [SerializeField]
-    private float immoRayRadius = 0.5f;
+    private float immoRayRadius = 2;
 
 
     private float timer;
@@ -77,9 +77,9 @@ public class BossBehavior : MonoBehaviour
         Debug.Log("is in Start()");
         previousPhase = 1;
         actualPhase = 1;
-        //InvokeRepeating("Shoot", 0, firstShootCooldown);
+        InvokeRepeating("Shoot", 0, firstShootCooldown);
         //InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
-        InvokeRepeating("Immobilize", 0, staticCooldown);
+        //InvokeRepeating("Immobilize", 0, staticCooldown);
         //Instantiate(slimePrefab);
         //healthManager.OnHealthChange += phaseManager;
     }
