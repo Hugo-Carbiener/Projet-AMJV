@@ -79,7 +79,7 @@ public class BossBehavior : MonoBehaviour
         Debug.Log("is in Start()");
         previousPhase = 1;
         actualPhase = 1;
-        InvokeRepeating("Shoot", 0, firstShootCooldown);
+        //InvokeRepeating("Shoot", 0, firstShootCooldown);
         //InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
         //InvokeRepeating("Immobilize", 0, staticCooldown);
         //Instantiate(slimePrefab);
@@ -203,7 +203,7 @@ public class BossBehavior : MonoBehaviour
 
         animator.SetBool("IsSummoning", true);
         RaycastHit hit;
-        if(Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.forward), out hit))
+        if(Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.forward), out hit) && hit.collider.tag == "Player")
         {
             Debug.DrawLine(transform.position, hit.point, Color.cyan, 80);
             hit.rigidbody.velocity = Vector3.zero;
