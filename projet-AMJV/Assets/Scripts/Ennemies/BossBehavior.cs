@@ -14,10 +14,8 @@ public class BossBehavior : MonoBehaviour
     private GameObject slimePrefab;
 
     [Header("Boss variables")]
-    [SerializeField]
-    private int bossHealth;
-    [SerializeField]
-    private int bossMaxHealth;
+    private int bossHealth = 100;
+    private int bossMaxHealth = 100;
     [SerializeField]
     private float reloadTimer = 0.05f;
 
@@ -25,19 +23,25 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private GameObject bulletPrefab;
     [SerializeField]
+    private float timeShoot = 0.48f;
+    [SerializeField]
     private float firstShootCooldown = 2;
     [SerializeField]
     private float secondShootCooldown = 1;
 
     [Header("Charge variables")]
     [SerializeField]
-    private float maxDistance = 10;
+    private Animator animator;
+    [SerializeField]
+    private float searchRadius = 10;
+    [SerializeField]
+    private int buildingCharge = 5;
+    [SerializeField]
+    private float duration = 0.1f;
     [SerializeField]
     private int damageCharge = 10;
     [SerializeField]
     private float knockbackCharge = 5;
-    [SerializeField]
-    private float radiusCharge = 3;
     [SerializeField]
     private float firstChargeCooldown = 5;
     [SerializeField]
@@ -48,17 +52,26 @@ public class BossBehavior : MonoBehaviour
     private float immoTime;
     [SerializeField]
     private float staticCooldown;
+    [SerializeField]
+    private float immoRayRadius = 10;
+
 
     private float timer;
     private int previousPhase;
     private int actualPhase;
+    private bool isDashing;
+    private bool isImmobilised;
 
     private void Awake()
     {
         if (!player) player = GameObject.FindWithTag("Player");
         if (!rb) rb = GetComponent<Rigidbody>();
         if (!healthManager) healthManager = GetComponent<Health>();
+        healthManager.setHealth(bossHealth);
+        healthManager.setMaxHealth(bossMaxHealth);
         if (!bulletPrefab) bulletPrefab = Resources.Load("Bullet") as GameObject;
+        if (!animator) animator = GetComponentInChildren<Animator>();
+
     }
 
     private void Start()
@@ -67,7 +80,8 @@ public class BossBehavior : MonoBehaviour
         previousPhase = 1;
         actualPhase = 1;
         //InvokeRepeating("Shoot", 0, firstShootCooldown);
-        InvokeRepeating("Charge", 0, firstChargeCooldown);
+        //InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
+        //InvokeRepeating("Immobilize", 0, staticCooldown);
         //Instantiate(slimePrefab);
         //healthManager.OnHealthChange += phaseManager;
     }
@@ -75,33 +89,44 @@ public class BossBehavior : MonoBehaviour
 
     private void phaseManager()
     {
+        Debug.Log("in phaseManager");
+        Debug.Log("actual phase before change = " + actualPhase);
         bossHealth = healthManager.getHealth();
-        bossMaxHealth = healthManager.getMaxHealth();
+        Debug.Log("boss health = " + bossHealth);
+        int oneThird = 33;
+        int twoThird = 66;
 
-        if (bossHealth < bossMaxHealth * (2/3) &&  bossHealth > bossMaxHealth *(1/3))
+        if (bossHealth <= twoThird)
         {
-            actualPhase = 2;
+            if(bossHealth > oneThird)
+            {
+                actualPhase = 2;
+            }
+
+            else
+            {
+                actualPhase = 3;
+            }
         }
 
-        if (bossHealth <= bossMaxHealth * (1/3))
-        {
-            actualPhase = 3;
-        }
+        Debug.Log("actual phase after changer = " + actualPhase);
+        Debug.Log("previous phase = " + previousPhase);
 
         if (actualPhase != previousPhase)
         {
             if (actualPhase == 2)
             {
+                //Debug.Log("in phase 2");
                 CancelInvoke();
-                InvokeRepeating("Shoot", 0, secondShootCooldown);
-                InvokeRepeating("Charge", 0, firstChargeCooldown);
+                InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
                 previousPhase = 2;
             }
             else
             {
+                //Debug.Log("in phase 3");
                 CancelInvoke();
+                Immobilize();
                 InvokeRepeating("Charge", 0, secondChargeCooldown);
-                InvokeRepeating("Immobilize", 0, staticCooldown);
                 previousPhase = 3;
             }
         }
@@ -112,16 +137,18 @@ public class BossBehavior : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("is in Shoot");
+        //Debug.Log("is in Shoot");
         if (!player) return;
-        timer += Time.deltaTime;
-        Debug.Log("timer: " + timer);
-        if (true)
+        //Debug.Log("timer: " + timer);
+        animator.Play("Fire");
+        while (timer <= timeShoot)
         {
-            Debug.Log("in timer");
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            timer = 0f;
+            //Debug.Log("in timer");
+            timer += Time.deltaTime;
         }
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        timer = 0f;
+        animator.SetBool("IsFiring", false);
 
     }
 
@@ -129,20 +156,53 @@ public class BossBehavior : MonoBehaviour
     //--------------------------------------------------------------------------------------------------
     // Second third of life : charging
 
-    private void Charge()
+    private void ChargeManager()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radiusCharge);
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, maxDistance);
+        Debug.Log("in charge manager");
+        StartCoroutine(Charge());
+    }
+
+
+    private IEnumerator Charge()
+    {
+        Vector3 target = new Vector3();
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, searchRadius);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.gameObject.tag == "Player")
             {
-                hitCollider.GetComponent<Health>().Damage(damageCharge);
-                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackCharge);
-                Debug.Log("Hit " + hitCollider.gameObject.name);
+                target = hitCollider.gameObject.transform.position;
             }
         }
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        Debug.Log("is in charge");
+        isDashing = true;
+        rb.isKinematic = true;
+
+        animator.SetBool("IsBuildingUpCharge", true);
+        yield return new WaitForSeconds(buildingCharge);
+        animator.SetBool("IsBuildingUpCharge", false);
+
+        animator.SetBool("IsCharging", true);
+        Vector3 start = transform.position;
+        for (float time = 0; time < duration; time += Time.deltaTime)
+        {
+            Vector3 pos = Vector3.Lerp(start, target, time / duration);
+            transform.position = pos;
+            yield return null;
+        }
+        animator.SetBool("IsCharging", false);
+        rb.isKinematic = false;
+        isDashing = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isDashing && collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<Health>().Damage(5);
+            collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * knockbackCharge);
+            Debug.Log("Hit " + collision.gameObject.name);
+        }
     }
 
     //-------------------------------------------------------------------------------------------------------
@@ -150,34 +210,42 @@ public class BossBehavior : MonoBehaviour
 
     private void Immobilize()
     {
+        Debug.Log("is in immonilize");
+
+        //animator.SetBool("IsSummoning", true);
+        animator.Play("Summon");
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit) && hit.collider.tag == "Player") 
+        if(Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity) && hit.collider.tag == "Player")
+        {
+            Debug.DrawLine(transform.position, hit.point, Color.cyan, 80);
+            hit.rigidbody.velocity = Vector3.zero;
+            StartCoroutine(immobilization(immoTime));
+        }
+
+        if (Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.back), out hit) && hit.collider.tag == "Player")
         {
             hit.rigidbody.velocity = Vector3.zero;
             StartCoroutine(immobilization(immoTime));
         }
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit) && hit.collider.tag == "Player")
+        if (Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.right), out hit) && hit.collider.tag == "Player")
         {
             hit.rigidbody.velocity = Vector3.zero;
             StartCoroutine(immobilization(immoTime));
         }
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hit) && hit.collider.tag == "Player")
+        if (Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.left), out hit) && hit.collider.tag == "Player")
         {
             hit.rigidbody.velocity = Vector3.zero;
             StartCoroutine(immobilization(immoTime));
         }
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out hit) && hit.collider.tag == "Player")
-        {
-            hit.rigidbody.velocity = Vector3.zero;
-            StartCoroutine(immobilization(immoTime));
-        }
+        animator.SetBool("IsSummoning", false);
 
 
         IEnumerator immobilization(float time)
         {
+            Debug.Log("in immo coroutine");
             yield return new WaitForSeconds(time);
         }
     }
