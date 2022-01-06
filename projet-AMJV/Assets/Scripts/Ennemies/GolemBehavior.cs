@@ -132,7 +132,8 @@ public class GolemBehavior : MonoBehaviour
         Debug.Log("buildIp");
         buildUpObject.SetActive(true);
         anim.Play("Attack");
-        buildUpObject.transform.position = attackPos;
+        Vector3 markerPos = new Vector3(attackPos.x, buildUpObject.transform.position.y, attackPos.z);
+        buildUpObject.transform.position = markerPos;
         yield return new WaitForSeconds(0.25f);
         yield return new WaitForSeconds(0.5f);
         buildUpObject.SetActive(false);
