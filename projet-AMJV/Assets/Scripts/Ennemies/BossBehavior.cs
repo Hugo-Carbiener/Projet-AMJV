@@ -69,6 +69,7 @@ public class BossBehavior : MonoBehaviour
         if (!healthManager) healthManager = GetComponent<Health>();
         healthManager.setHealth(bossHealth);
         healthManager.setMaxHealth(bossMaxHealth);
+        healthManager.OnDeath += Death;
         if (!bulletPrefab) bulletPrefab = Resources.Load("Bullet") as GameObject;
         if (!animator) animator = GetComponentInChildren<Animator>();
 
@@ -80,7 +81,7 @@ public class BossBehavior : MonoBehaviour
         previousPhase = 1;
         actualPhase = 1;
         //InvokeRepeating("Shoot", 0, firstShootCooldown);
-        //InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
+        InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
         //InvokeRepeating("Immobilize", 0, staticCooldown);
         //Instantiate(slimePrefab);
         //healthManager.OnHealthChange += phaseManager;
@@ -166,14 +167,7 @@ public class BossBehavior : MonoBehaviour
     private IEnumerator Charge()
     {
         Vector3 target = new Vector3();
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, searchRadius);
-        foreach (var hitCollider in hitColliders)
-        {
-            if (hitCollider.gameObject.tag == "Player")
-            {
-                target = hitCollider.gameObject.transform.position;
-            }
-        }
+        target = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
         Debug.Log("is in charge");
         isDashing = true;
         rb.isKinematic = true;
@@ -250,7 +244,10 @@ public class BossBehavior : MonoBehaviour
         }
     }
 
-
+    private void Death()
+    {
+        Destroy(gameObject);
+    }
 
 
 
