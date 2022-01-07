@@ -80,11 +80,11 @@ public class BossBehavior : MonoBehaviour
         Debug.Log("is in Start()");
         previousPhase = 1;
         actualPhase = 1;
-        //InvokeRepeating("Shoot", 0, firstShootCooldown);
-        InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
+        InvokeRepeating("Shoot", 0, firstShootCooldown);
+        //InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
         //InvokeRepeating("Immobilize", 0, staticCooldown);
-        //Instantiate(slimePrefab);
-        //healthManager.OnHealthChange += phaseManager;
+        Instantiate(slimePrefab);
+        healthManager.OnHealthChange += phaseManager;
     }
 
 
@@ -126,7 +126,7 @@ public class BossBehavior : MonoBehaviour
             {
                 //Debug.Log("in phase 3");
                 CancelInvoke();
-                Immobilize();
+                //Immobilize();
                 InvokeRepeating("Charge", 0, secondChargeCooldown);
                 previousPhase = 3;
             }
@@ -159,7 +159,7 @@ public class BossBehavior : MonoBehaviour
 
     private void ChargeManager()
     {
-        Debug.Log("in charge manager");
+        //Debug.Log("in charge manager");
         StartCoroutine(Charge());
     }
 
@@ -168,7 +168,7 @@ public class BossBehavior : MonoBehaviour
     {
         Vector3 target = new Vector3();
         target = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
-        Debug.Log("is in charge");
+        //Debug.Log("is in charge");
         isDashing = true;
         rb.isKinematic = true;
 

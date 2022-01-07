@@ -72,22 +72,25 @@ public class EnemySpawner : MonoBehaviour
             player.transform.position = start_position;
             Health playerHealth = player.GetComponent<Health>();
             playerHealth.setHealth(playerHealth.getMaxHealth());
-            Debug.Log("nouvelle vague");
             NewWave();
             textCurrentWave.text = countNumberOfWave.ToString();
 
         }
         if (countNumberOfWave == numberOfWave-1)
         {
+            Debug.Log(count);
+            Debug.Log("boss");
             indexOfSpawner = Random.Range(0, spawners.Length);
             Instantiate(bossPrefab, spawners[indexOfSpawner].transform.position, Quaternion.identity);
+            Debug.Log(count);
             if (count == 0)
             {
                 countNumberOfWave++;
             }
         }
-        if (countNumberOfWave == numberOfWave)
+        if (countNumberOfWave == numberOfWave && count == 0)
         {
+            Debug.Log("fini");
             player.transform.position = start_position;
             timeVictory.text = string.Format("{0:00}:{1:00}", min, sec);
             Time.timeScale = 0;
