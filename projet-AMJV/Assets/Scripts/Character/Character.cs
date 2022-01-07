@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
@@ -24,11 +25,20 @@ public class Character : MonoBehaviour
 
     private GameObject defeatPopUp;
 
+    private string character_choice;
+    private GameObject mainCooldown;
+    private GameObject secondaryCooldown;
+    private GameObject movementCooldown;
+    private Image mainCooldownImage;
+    private Image secondaryCooldownImage;
+    private Image movementCooldownImage;
+
     protected List<string> spells = new List<string>(){ "MainSpell", "SecondarySpell", "MovementSpell" };
 
     protected virtual void OnAwake()
     {
         Time.timeScale = 1;
+        character_choice = PlayerPrefs.GetString("Character");
         animator = GetComponentInChildren<Animator>();
         MouseAngle = GetComponentInParent<MouseAngle>();
         rb = GetComponent<Rigidbody>();
@@ -36,6 +46,13 @@ public class Character : MonoBehaviour
         groundMarker = GameObject.Find("GroundMarker");
         healthManager = GetComponent<Health>();
         groundMarker.SetActive(false);
+
+        mainCooldown = GameObject.Find("MainCooldown");
+        secondaryCooldown = GameObject.Find("SecondaryCooldown");
+        movementCooldown = GameObject.Find("MovementCooldown");
+        mainCooldownImage = mainCooldown.GetComponent<Image>();
+        secondaryCooldownImage = secondaryCooldown.GetComponent<Image>();
+        movementCooldownImage = movementCooldown.GetComponent<Image>();
 
         lineRdr = GetComponent<LineRenderer>();
         lineRdr.positionCount = 2;
@@ -83,7 +100,45 @@ public class Character : MonoBehaviour
     {
         int spellIndex = spells.IndexOf(spell);
         OnCooldown[spellIndex] = true;
+        if (spell == "MainSpell")
+        {
+            Debug.Log("pouet");
+            var maintempColor = mainCooldownImage.color;
+            maintempColor.a = 0.5f;
+            mainCooldownImage.color = maintempColor;
+        }
+        if (spell == "SecondarySpell")
+        {
+            var secondtempColor = secondaryCooldownImage.color;
+            secondtempColor.a = 0.5f;
+            secondaryCooldownImage.color = secondtempColor;
+        }
+        if (spell == "MovementSpell")
+        {
+            var movtempColor = movementCooldownImage.color;
+            movtempColor.a = 0.5f;
+            movementCooldownImage.color = movtempColor;
+        }
         yield return new WaitForSeconds(cooldowns[spellIndex]);
+        if (spell == "MainSpell")
+        {
+            Debug.Log("pouet");
+            var maintempColor = mainCooldownImage.color;
+            maintempColor.a = 0f;
+            mainCooldownImage.color = maintempColor;
+        }
+        if (spell == "SecondarySpell")
+        {
+            var secondtempColor = secondaryCooldownImage.color;
+            secondtempColor.a = 0f;
+            secondaryCooldownImage.color = secondtempColor;
+        }
+        if (spell == "MovementSpell")
+        {
+            var movtempColor = movementCooldownImage.color;
+            movtempColor.a = 0f;
+            movementCooldownImage.color = movtempColor;
+        }
         OnCooldown[spellIndex] = false;
     }
 
