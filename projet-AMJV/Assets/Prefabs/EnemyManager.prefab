@@ -48,7 +48,7 @@ MonoBehaviour:
   - {fileID: 6808233465219161550, guid: a9a0e0a12a4edd24cb46dd55fc3f1a6c, type: 3}
   - {fileID: 4883475967952445081, guid: 0c7eea332c4b11440b845b77b13e94fa, type: 3}
   - {fileID: 2122947991657938305, guid: a8dd72317d9d7904ca8c182ce83151b0, type: 3}
-  bossPrefab: {fileID: 0}
+  bossPrefab: {fileID: 5816057709732875080, guid: 235bd61ba77e93548b77f3a7e3f20f8b, type: 3}
   textCurrentWave: {fileID: 0}
   textTimer: {fileID: 0}
   timeVictory: {fileID: 0}

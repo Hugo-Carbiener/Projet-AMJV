@@ -37,6 +37,7 @@ public class EnemySpawner : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         start_position = player.transform.position;
         numberOfWave = Random.Range(4, 8);
+        Debug.Log(numberOfWave);
         NewWave();
     }
     private void NewWave()
