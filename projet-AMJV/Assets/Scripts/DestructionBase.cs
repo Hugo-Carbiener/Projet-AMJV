@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DescructionBase : MonoBehaviour
+public class DestructionBase : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(collision.gameObject);
+        collision.gameObject.GetComponent<Health>().Damage(100);
     }
 }
