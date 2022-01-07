@@ -120,6 +120,8 @@ public class Character : MonoBehaviour
     private void Death()
     {
         defeatPopUp.SetActive(true);
+        Classes playerClass = GetComponent<PlayerManager>().getClass();
+        PlayerPrefs.SetInt(playerClass + "NbOfGames", PlayerPrefs.GetInt(playerClass + "NbOfGames") + 1);
         Time.timeScale = 0;
     }
 
