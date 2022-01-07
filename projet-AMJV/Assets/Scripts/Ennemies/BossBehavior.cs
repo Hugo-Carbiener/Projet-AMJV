@@ -80,11 +80,11 @@ public class BossBehavior : MonoBehaviour
         Debug.Log("is in Start()");
         previousPhase = 1;
         actualPhase = 1;
-        //InvokeRepeating("Shoot", 0, firstShootCooldown);
-        InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
+        InvokeRepeating("Shoot", 0, firstShootCooldown);
+        //InvokeRepeating("ChargeManager", 0, firstChargeCooldown);
         //InvokeRepeating("Immobilize", 0, staticCooldown);
         //Instantiate(slimePrefab);
-        //healthManager.OnHealthChange += phaseManager;
+        healthManager.OnHealthChange += phaseManager;
     }
 
 
