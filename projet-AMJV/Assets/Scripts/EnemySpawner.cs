@@ -12,7 +12,8 @@ public class EnemySpawner : MonoBehaviour
     private GameObject player;
     private Vector3 start_position;
     private int indexOfSpawner;
-    [SerializeField] GameObject enemyPrefab;
+    [SerializeField] private GameObject[] enemiesPrefab;
+    private int indexEnnemy;
     [SerializeField] GameObject bossPrefab;
     private int count;
     private GameObject victoryPopUp;
@@ -43,7 +44,8 @@ public class EnemySpawner : MonoBehaviour
         indexOfSpawner = Random.Range(0, spawners.Length);
         for (int i=0; i<numberOfEnnemy; i++)
         {
-            Instantiate(enemyPrefab, spawners[indexOfSpawner].transform.position, Quaternion.identity);
+            indexEnnemy = Random.Range(0, 3);
+            Instantiate(enemiesPrefab[indexEnnemy], spawners[indexOfSpawner].transform.position, Quaternion.identity);
             StartCoroutine(WaitOne());
         }
         int temp = numberOfEnnemy;

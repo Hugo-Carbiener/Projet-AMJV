@@ -102,7 +102,6 @@ public class Character : MonoBehaviour
         OnCooldown[spellIndex] = true;
         if (spell == "MainSpell")
         {
-            Debug.Log("pouet");
             var maintempColor = mainCooldownImage.color;
             maintempColor.a = 0.5f;
             mainCooldownImage.color = maintempColor;
@@ -122,7 +121,6 @@ public class Character : MonoBehaviour
         yield return new WaitForSeconds(cooldowns[spellIndex]);
         if (spell == "MainSpell")
         {
-            Debug.Log("pouet");
             var maintempColor = mainCooldownImage.color;
             maintempColor.a = 0f;
             mainCooldownImage.color = maintempColor;
