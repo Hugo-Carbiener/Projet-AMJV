@@ -89,6 +89,9 @@ public class EnemySpawner : MonoBehaviour
             timeVictory.text = string.Format("{0:00}:{1:00}", min, sec);
             Time.timeScale = 0;
             victoryPopUp.SetActive(true);
+            Classes playerClass = player.GetComponent<PlayerManager>().getClass();
+            PlayerPrefs.SetInt(playerClass + "HasWon", 1);
+            PlayerPrefs.SetInt(playerClass + "NbOfGames", PlayerPrefs.GetInt(playerClass + "NbOfGames") + 1);
         }
 
         if (Time.timeScale == 0 && countNumberOfWave != numberOfWave)
