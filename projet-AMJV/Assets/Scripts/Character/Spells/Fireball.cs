@@ -28,7 +28,7 @@ public class Fireball : MonoBehaviour
         startingPos = transform.position;
         if (!explosionPrefab) explosionPrefab = Resources.Load("Explosion") as GameObject;
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
-        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y+1, player.transform.position.z));
     }
 
     private void FixedUpdate()
