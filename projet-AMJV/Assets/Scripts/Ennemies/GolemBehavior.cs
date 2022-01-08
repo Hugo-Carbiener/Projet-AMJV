@@ -129,7 +129,7 @@ public class GolemBehavior : MonoBehaviour
         Vector3 attackPos = transform.position + new Vector3(attackRange * Mathf.Cos(angle), 1 - transform.position.y, attackRange * Mathf.Sin(angle));
 
         // build up
-        Debug.Log("buildIp");
+        //Debug.Log("buildIp");
         buildUpObject.SetActive(true);
         anim.Play("Attack");
         Vector3 markerPos = new Vector3(attackPos.x, buildUpObject.transform.position.y, attackPos.z);
@@ -140,7 +140,7 @@ public class GolemBehavior : MonoBehaviour
 
 
         // smash
-        Debug.Log("Smahs");
+        //Debug.Log("Smahs");
         Smash(attackPos);
         Instantiate(rockFallPrefab, attackPos, Quaternion.identity);
 
@@ -155,7 +155,7 @@ public class GolemBehavior : MonoBehaviour
             if (collider.gameObject.tag == "Player")
             {
                 float playerAttackDistance = Vector3.Distance(attackPos, player.position);
-                Debug.Log(attackDamage(playerAttackDistance, attackRadius));
+                //Debug.Log(attackDamage(playerAttackDistance, attackRadius));
                 player.GetComponent<Health>().Damage(attackDamage(playerAttackDistance, attackRadius));
                 player.GetComponent<Rigidbody>().AddForce((player.position - transform.position) * 200);
             }

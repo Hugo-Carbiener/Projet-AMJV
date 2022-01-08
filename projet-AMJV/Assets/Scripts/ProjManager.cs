@@ -13,7 +13,6 @@ public class ProjManager : MonoBehaviour
 
     private Vector3 direction;
     [SerializeField] private projType proj;
-    [SerializeField] private int dammages = 5;
     [SerializeField] private float speed;
     [SerializeField] [Range(1, 10)] private float knockbackForce = 1;
 
@@ -48,36 +47,8 @@ public class ProjManager : MonoBehaviour
             { 
                 playerRigidbody.AddForce(direction * knockbackForce, ForceMode.Impulse);
             }
-
-            //dammage
-            if (proj == projType.dammage)
-            {
-                //collision.gameObject.GetComponent<PlayerManager>().health = collision.gameObject.GetComponent<PlayerManager>().health - dammages;
-            }
             
         }
-
-/*        if (tag == "Monster")
-        {
-            // Testing if the rigidbody exist
-            Rigidbody monsterRigidbody = collision.gameObject.GetComponent<Rigidbody>();
-            if (!monsterRigidbody) return; // early return if null
-
-            MonsterManager monsterManager = collision.gameObject.GetComponent<MonsterManager>();
-            if (!monsterManager) return; // early return if null
-
-            //knockback
-            if (proj == projType.knockback)
-            {
-                monsterRigidbody.AddForce(direction * knockbackForce, ForceMode.Impulse);
-            }
-
-            //dammage
-            if (proj == projType.dammage)
-            {
-                collision.gameObject.GetComponent<MonsterManager>().health = collision.gameObject.GetComponent<MonsterManager>().health - dammages;
-            }
-        }*/
 
         Destroy(gameObject);
     }

@@ -29,7 +29,7 @@ public class EnnemyHealthBar : MonoBehaviour
     private void UpdateSlider()
     {
         slider.value = health.getHealth();
-        Debug.Log("Health was updated");
+        //Debug.Log("Health was updated");
     }
 
 }

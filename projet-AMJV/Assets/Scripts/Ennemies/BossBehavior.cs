@@ -16,8 +16,6 @@ public class BossBehavior : MonoBehaviour
     [Header("Boss variables")]
     private int bossHealth = 100;
     private int bossMaxHealth = 100;
-    [SerializeField]
-    private float reloadTimer = 0.05f;
 
     [Header("Shoot variables")]
     [SerializeField]
@@ -26,20 +24,14 @@ public class BossBehavior : MonoBehaviour
     private float timeShoot = 0.48f;
     [SerializeField]
     private float firstShootCooldown = 2;
-    [SerializeField]
-    private float secondShootCooldown = 1;
 
     [Header("Charge variables")]
     [SerializeField]
     private Animator animator;
     [SerializeField]
-    private float searchRadius = 10;
-    [SerializeField]
     private int buildingCharge = 5;
     [SerializeField]
     private float duration = 0.1f;
-    [SerializeField]
-    private int damageCharge = 10;
     [SerializeField]
     private float knockbackCharge = 5;
     [SerializeField]
@@ -51,8 +43,6 @@ public class BossBehavior : MonoBehaviour
     [SerializeField]
     private float immoTime;
     [SerializeField]
-    private float staticCooldown;
-    [SerializeField]
     private float immoRayRadius = 10;
 
 
@@ -60,7 +50,6 @@ public class BossBehavior : MonoBehaviour
     private int previousPhase;
     private int actualPhase;
     private bool isDashing;
-    private bool isImmobilised;
 
     private void Awake()
     {
@@ -77,7 +66,7 @@ public class BossBehavior : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("is in Start()");
+        //Debug.Log("is in Start()");
         previousPhase = 1;
         actualPhase = 1;
         InvokeRepeating("Shoot", 0, firstShootCooldown);
@@ -90,10 +79,10 @@ public class BossBehavior : MonoBehaviour
 
     private void phaseManager()
     {
-        Debug.Log("in phaseManager");
-        Debug.Log("actual phase before change = " + actualPhase);
+        //Debug.Log("in phaseManager");
+        //Debug.Log("actual phase before change = " + actualPhase);
         bossHealth = healthManager.getHealth();
-        Debug.Log("boss health = " + bossHealth);
+        //Debug.Log("boss health = " + bossHealth);
         int oneThird = 33;
         int twoThird = 66;
 
@@ -110,8 +99,8 @@ public class BossBehavior : MonoBehaviour
             }
         }
 
-        Debug.Log("actual phase after changer = " + actualPhase);
-        Debug.Log("previous phase = " + previousPhase);
+        //Debug.Log("actual phase after changer = " + actualPhase);
+        //Debug.Log("previous phase = " + previousPhase);
 
         if (actualPhase != previousPhase)
         {
@@ -195,7 +184,7 @@ public class BossBehavior : MonoBehaviour
         {
             collision.gameObject.GetComponent<Health>().Damage(5);
             collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * knockbackCharge);
-            Debug.Log("Hit " + collision.gameObject.name);
+            //Debug.Log("Hit " + collision.gameObject.name);
         }
     }
 
@@ -204,14 +193,13 @@ public class BossBehavior : MonoBehaviour
 
     private void Immobilize()
     {
-        Debug.Log("is in immonilize");
+        //Debug.Log("is in immonilize");
 
-        //animator.SetBool("IsSummoning", true);
         animator.Play("Summon");
         RaycastHit hit;
         if(Physics.SphereCast(transform.position, immoRayRadius, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity) && hit.collider.tag == "Player")
         {
-            Debug.DrawLine(transform.position, hit.point, Color.cyan, 80);
+            //Debug.DrawLine(transform.position, hit.point, Color.cyan, 80);
             hit.rigidbody.velocity = Vector3.zero;
             StartCoroutine(immobilization(immoTime));
         }
@@ -239,7 +227,7 @@ public class BossBehavior : MonoBehaviour
 
         IEnumerator immobilization(float time)
         {
-            Debug.Log("in immo coroutine");
+            //Debug.Log("in immo coroutine");
             yield return new WaitForSeconds(time);
         }
     }

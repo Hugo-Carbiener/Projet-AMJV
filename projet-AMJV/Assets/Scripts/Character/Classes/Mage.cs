@@ -72,8 +72,8 @@ public class Mage : Character
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            Debug.DrawRay(ray.origin, ray.direction);
-            Debug.Log(hit.collider.gameObject.name);
+            //Debug.DrawRay(ray.origin, ray.direction);
+            //Debug.Log(hit.collider.gameObject.name);
             if(hit.collider.gameObject.tag == "Monster")
             {
                 StartCoroutine(StartSpellCooldown("MovementSpell"));

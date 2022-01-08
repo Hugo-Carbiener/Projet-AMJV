@@ -38,7 +38,7 @@ public class Arrow : MonoBehaviour
 
         if(other.gameObject.tag != "Monster" && other.gameObject.name != "GroundDetector")
         {
-            Debug.Log("arrow hit" + other.name);
+            //Debug.Log("arrow hit" + other.name);
             if(other.gameObject.tag == "Player")
             {
                 player.GetComponent<Health>().Damage(5);

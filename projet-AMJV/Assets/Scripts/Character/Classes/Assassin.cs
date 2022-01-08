@@ -5,9 +5,6 @@ using UnityEngine;
 public class Assassin : Character
 {
 
-    [Header("Sprint variables")]
-    [SerializeField]
-    private float temps;
     [Header("PoisonFlask variables")]
     [SerializeField]
     private float throwHeight = 25;
@@ -149,7 +146,7 @@ public class Assassin : Character
         {
             collision.gameObject.GetComponent<Health>().Damage(5);
             collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * knockbackIntensity);
-            Debug.Log("Hit " + collision.gameObject.name);
+            //Debug.Log("Hit " + collision.gameObject.name);
         }
     }
 }

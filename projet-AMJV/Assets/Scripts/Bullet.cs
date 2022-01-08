@@ -22,7 +22,6 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("in onTriggerEnter");
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1);
         foreach (var hitCollider in hitColliders)
         {
@@ -30,7 +29,6 @@ public class Bullet : MonoBehaviour
             {
                 hitCollider.GetComponent<Health>().Damage(dammages);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackForce);
-                Debug.Log("Hit " + hitCollider.gameObject.name);
                 Destroy(gameObject);
             }
         }

@@ -24,6 +24,6 @@ public class SlimeSpawner : MonoBehaviour
         newSlime.GetComponentInChildren<SpriteRenderer>().color = slimeColor[level - 1];
         newSlime.transform.Find("SlimeSpriteManager").localScale = new Vector3(slimeScale[level - 1], slimeScale[level - 1], slimeScale[level - 1]) / 5;
 
-        Debug.Log("Instantiate new slime");
+        //Debug.Log("Instantiate new slime");
     }
 }

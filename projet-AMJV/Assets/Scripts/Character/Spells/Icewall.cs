@@ -35,7 +35,7 @@ public class Icewall : MonoBehaviour
         int childrenAmount = transform.childCount;
         for (int i = 0; i < childrenAmount; i++)
         {
-            Debug.Log("Kill a cube");
+            //Debug.Log("Kill a cube");
             int rd = Random.Range(0, transform.childCount);
             Destroy(transform.GetChild(rd).gameObject);
             yield return new WaitForSeconds(0.1f);

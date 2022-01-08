@@ -66,11 +66,11 @@ public class SlimeBehavior : MonoBehaviour
     private void Death()
     {
         SlimeSpawner slimeSpawner = GameObject.Find("SlimeSpawner").GetComponent<SlimeSpawner>();
-        Debug.Log("Slime is ded");
+        //Debug.Log("Slime is ded");
         if ( level > 1 ) {
             slimeSpawner.SpawnSlime(level - 1, gameObject);
             slimeSpawner.SpawnSlime(level - 1, gameObject);
-            Debug.Log("slime se divise et count augmente de deux");
+            //Debug.Log("slime se divise et count augmente de deux");
         }
         Destroy(gameObject);
     }

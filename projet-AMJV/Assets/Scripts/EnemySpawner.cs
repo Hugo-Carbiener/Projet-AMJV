@@ -37,7 +37,6 @@ public class EnemySpawner : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         start_position = player.transform.position;
         numberOfWave = Random.Range(4, 8);
-        Debug.Log(numberOfWave);
         NewWave();
     }
     private void NewWave()
@@ -78,11 +77,11 @@ public class EnemySpawner : MonoBehaviour
         }
         if (countNumberOfWave == numberOfWave-1)
         {
-            Debug.Log(count);
-            Debug.Log("boss");
+            //Debug.Log(count);
+            //Debug.Log("boss");
             indexOfSpawner = Random.Range(0, spawners.Length);
             Instantiate(bossPrefab, spawners[indexOfSpawner].transform.position, Quaternion.identity);
-            Debug.Log(count);
+            //Debug.Log(count);
             if (count == 0)
             {
                 countNumberOfWave++;
@@ -90,7 +89,7 @@ public class EnemySpawner : MonoBehaviour
         }
         if (countNumberOfWave == numberOfWave && count == 0)
         {
-            Debug.Log("fini");
+            //Debug.Log("fini");
             player.transform.position = start_position;
             timeVictory.text = string.Format("{0:00}:{1:00}", min, sec);
             Time.timeScale = 0;

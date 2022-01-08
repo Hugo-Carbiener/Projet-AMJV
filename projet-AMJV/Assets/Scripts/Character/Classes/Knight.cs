@@ -75,10 +75,10 @@ public class Knight : Character
         {
             if (hitCollider.gameObject.tag == "Monster")
             {
-                Debug.Log(hitCollider.name);
+                //Debug.Log(hitCollider.name);
                 hitCollider.GetComponent<Health>().Damage(5);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - center) * knockbackIntensity);
-                Debug.Log("Hit " + hitCollider.gameObject.name);
+                //Debug.Log("Hit " + hitCollider.gameObject.name);
             }
         }
     }
@@ -92,7 +92,7 @@ public class Knight : Character
             {
                 hitCollider.GetComponent<Health>().Damage(1);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * knockbackIntensity);
-                Debug.Log("Hit " + hitCollider.gameObject.name);
+                //Debug.Log("Hit " + hitCollider.gameObject.name);
             }
         }
     }

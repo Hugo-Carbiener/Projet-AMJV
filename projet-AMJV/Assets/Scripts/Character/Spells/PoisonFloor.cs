@@ -6,7 +6,7 @@ public class PoisonFloor : MonoBehaviour
 {
     private void Awake()
     {
-        Debug.Log("Awakening");
+        //Debug.Log("Awakening");
         InvokeRepeating("PoisonDamage", 0, 0.2f);
     }
 

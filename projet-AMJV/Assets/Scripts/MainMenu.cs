@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviour
     private string soundEffectsVolume = "SoundEffectsVolume";
     private string[] arenas = { "Arena", "Arena2", "Arena3" };
     private int indexArena;
-    // Start is called before the first frame update
+
     void Start()
     {
         mainMenu = GameObject.Find("MainMenuContainer");
@@ -121,17 +121,14 @@ public class MainMenu : MonoBehaviour
         if (resolutionDropdown.value == 0)
         {
             Screen.SetResolution(1680, 1050, true);
-            Debug.Log("1680x1050");
         }
         if (resolutionDropdown.value == 1)
         {
             Screen.SetResolution(1440, 900, true);
-            Debug.Log("1440x900");
         }
         if (resolutionDropdown.value == 2)
         {
             Screen.SetResolution(1280, 800, true);
-            Debug.Log("1280x800");
         }
     }
 
@@ -141,37 +138,31 @@ public class MainMenu : MonoBehaviour
         {
             QualitySettings.SetQualityLevel(5, true);
             int qualityLevel = QualitySettings.GetQualityLevel();
-            Debug.Log(qualityLevel);
         }
         if (qualityDropdown.value == 1)
         {
             QualitySettings.SetQualityLevel(4, true);
             int qualityLevel = QualitySettings.GetQualityLevel();
-            Debug.Log(qualityLevel);
         }
         if (qualityDropdown.value == 2)
         {
             QualitySettings.SetQualityLevel(3, true);
             int qualityLevel = QualitySettings.GetQualityLevel();
-            Debug.Log(qualityLevel);
         }
         if (qualityDropdown.value == 3)
         {
             QualitySettings.SetQualityLevel(2, true);
             int qualityLevel = QualitySettings.GetQualityLevel();
-            Debug.Log(qualityLevel);
         }
         if (qualityDropdown.value == 4)
         {
             QualitySettings.SetQualityLevel(1, true);
             int qualityLevel = QualitySettings.GetQualityLevel();
-            Debug.Log(qualityLevel);
         }
         if (qualityDropdown.value == 5)
         {
             QualitySettings.SetQualityLevel(0, true);
             int qualityLevel = QualitySettings.GetQualityLevel();
-            Debug.Log(qualityLevel);
         }
     }
 }
